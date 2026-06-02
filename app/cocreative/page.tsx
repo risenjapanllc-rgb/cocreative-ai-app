@@ -43,43 +43,43 @@ export default function CoCreativePage() {
   }, [submittedResponse]);
 
   const canonicalDescription = useMemo(() => {
-  if (!explored) return "";
+    if (!explored) return "";
 
-  const isRecognition =
-    submittedResponse.includes("ようこ") ||
-    submittedResponse.includes("呼んだ") ||
-    submittedResponse.includes("見つけ");
+    const isRecognition =
+      submittedResponse.includes("ようこ") ||
+      submittedResponse.includes("呼んだ") ||
+      submittedResponse.includes("見つけ");
 
-  const isApproach =
-    submittedResponse.includes("近づいて") ||
-    submittedResponse.includes("近付いて");
+    const isApproach =
+      submittedResponse.includes("近づいて") ||
+      submittedResponse.includes("近付いて");
 
-  const isEmbrace =
-    submittedResponse.includes("抱きしめ") ||
-    submittedResponse.includes("抱擁");
+    const isEmbrace =
+      submittedResponse.includes("抱きしめ") ||
+      submittedResponse.includes("抱擁");
 
-  let decisiveMoment = "";
-  let emotionalCore = "";
+    let decisiveMoment = "";
+    let emotionalCore = "";
 
-  if (isRecognition) {
-    decisiveMoment = "Grandmother recognized Yoko and called her name.";
-    emotionalCore = submittedSecondResponse
-      ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
-      : "Being recognized and known by grandmother.";
-  } else if (isApproach) {
-    decisiveMoment =
-      "Grandmother moved toward Yoko in order to embrace her.";
-    emotionalCore = submittedSecondResponse
-      ? `Being approached in love before physical reunion.\nThe felt response was: ${submittedSecondResponse}`
-      : "Being approached in love before physical reunion.";
-  } else if (isEmbrace) {
-    decisiveMoment = "Grandmother embraced Yoko.";
-    emotionalCore = submittedSecondResponse
-      ? `Reunion through physical closeness and affection.\nThe felt response was: ${submittedSecondResponse}`
-      : "Reunion through physical closeness and affection.";
-  }
+    if (isRecognition) {
+      decisiveMoment = "Grandmother recognized Yoko and called her name.";
+      emotionalCore = submittedSecondResponse
+        ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
+        : "Being recognized and known by grandmother.";
+    } else if (isApproach) {
+      decisiveMoment =
+        "Grandmother moved toward Yoko in order to embrace her.";
+      emotionalCore = submittedSecondResponse
+        ? `Being approached in love before physical reunion.\nThe felt response was: ${submittedSecondResponse}`
+        : "Being approached in love before physical reunion.";
+    } else if (isEmbrace) {
+      decisiveMoment = "Grandmother embraced Yoko.";
+      emotionalCore = submittedSecondResponse
+        ? `Reunion through physical closeness and affection.\nThe felt response was: ${submittedSecondResponse}`
+        : "Reunion through physical closeness and affection.";
+    }
 
-  return `Characters:
+    return `Characters:
 - Grandmother (appearing approximately 40 years old)
 - Dreamer (Yoko)
 
@@ -113,14 +113,35 @@ ${emotionalCore}`;
   }, [explored, submittedResponse, submittedSecondResponse]);
 
   const emergingInsight = useMemo(() => {
-    if (!explored) return "";
+  if (!explored) return "";
 
+  const emotionalTone = submittedSecondResponse;
+
+  if (
+    submittedResponse.includes("ようこ") ||
+    submittedResponse.includes("呼んだ") ||
+    submittedResponse.includes("見つけ")
+  ) {
     if (
-      submittedResponse.includes("ようこ") ||
-      submittedResponse.includes("呼んだ") ||
-      submittedResponse.includes("見つけ")
+      emotionalTone.includes("驚") ||
+      emotionalTone.includes("嬉") ||
+      emotionalTone.includes("喜")
     ) {
       return `Emerging Insight:
+
+The emotional center may be joyful recognition.
+
+Possible Themes:
+- Joyful recognition
+- Being found
+- Love that still knows your name
+
+Questions:
+- What did it mean to be called by name again?
+- Did being recognized feel like being found?`;
+    }
+
+    return `Emerging Insight:
 
 The emotional center may be recognition before embrace.
 
@@ -132,13 +153,28 @@ Possible Themes:
 Questions:
 - What changed when your grandmother called your name?
 - Why did recognition carry more weight than the embrace itself?`;
+  }
+
+  if (
+    submittedResponse.includes("近づいて") ||
+    submittedResponse.includes("近付いて")
+  ) {
+    if (emotionalTone.includes("嬉") || emotionalTone.includes("喜")) {
+      return `Emerging Insight:
+
+The emotional center may be the joyful movement toward reunion.
+
+Possible Themes:
+- Joyful reunion
+- Love returning
+- Anticipated connection
+
+Questions:
+- What made the reunion feel joyful?
+- Did the joy begin before the embrace itself?`;
     }
 
-    if (
-      submittedResponse.includes("近づいて") ||
-      submittedResponse.includes("近付いて")
-    ) {
-      return `Emerging Insight:
+    return `Emerging Insight:
 
 The emotional center may be the movement toward embrace, before the embrace itself.
 
@@ -150,13 +186,13 @@ Possible Themes:
 Questions:
 - What did it mean that your grandmother moved toward you?
 - Was the emotional weight in the embrace itself, or in seeing it come toward you?`;
-    }
+  }
 
-    if (
-      submittedResponse.includes("抱きしめ") ||
-      submittedResponse.includes("抱擁")
-    ) {
-      return `Emerging Insight:
+  if (
+    submittedResponse.includes("抱きしめ") ||
+    submittedResponse.includes("抱擁")
+  ) {
+    return `Emerging Insight:
 
 The emotional center may be the embrace itself.
 
@@ -168,9 +204,9 @@ Possible Themes:
 Questions:
 - What did the embrace communicate without words?
 - Did the embrace feel like arrival, healing, or reunion?`;
-    }
+  }
 
-    return `Emerging Insight:
+  return `Emerging Insight:
 
 The dream may be centered on reunion and restored connection.
 
@@ -182,7 +218,7 @@ Possible Themes:
 Questions:
 - Which moment carried the strongest emotional weight?
 - What did this dream allow you to receive?`;
-  }, [explored, submittedResponse]);
+}, [explored, submittedResponse, submittedSecondResponse]);
 
   return (
     <main style={{ maxWidth: "900px", margin: "0 auto", padding: "40px 20px" }}>
