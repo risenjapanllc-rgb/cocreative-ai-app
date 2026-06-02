@@ -12,6 +12,9 @@ export default function CoCreativePage() {
   const [secondResponse, setSecondResponse] = useState("");
   const [submittedSecondResponse, setSubmittedSecondResponse] = useState("");
 
+  const [thirdResponse, setThirdResponse] = useState("");
+  const [submittedThirdResponse, setSubmittedThirdResponse] = useState("");
+
   const [dialogueHistory, setDialogueHistory] = useState<string[]>([]);
 
   const nextQuestion = useMemo(() => {
@@ -42,44 +45,79 @@ export default function CoCreativePage() {
     return "その場面のどこが一番心に残っていますか？";
   }, [submittedResponse]);
 
-  const canonicalDescription = useMemo(() => {
-    if (!explored) return "";
+  const thirdQuestion = useMemo(() => {
+    if (!submittedSecondResponse) return "";
 
-    const isRecognition =
+    if (
       submittedResponse.includes("ようこ") ||
       submittedResponse.includes("呼んだ") ||
-      submittedResponse.includes("見つけ");
-
-    const isApproach =
-      submittedResponse.includes("近づいて") ||
-      submittedResponse.includes("近付いて");
-
-    const isEmbrace =
-      submittedResponse.includes("抱きしめ") ||
-      submittedResponse.includes("抱擁");
-
-    let decisiveMoment = "";
-    let emotionalCore = "";
-
-    if (isRecognition) {
-      decisiveMoment = "Grandmother recognized Yoko and called her name.";
-      emotionalCore = submittedSecondResponse
-        ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
-        : "Being recognized and known by grandmother.";
-    } else if (isApproach) {
-      decisiveMoment =
-        "Grandmother moved toward Yoko in order to embrace her.";
-      emotionalCore = submittedSecondResponse
-        ? `Being approached in love before physical reunion.\nThe felt response was: ${submittedSecondResponse}`
-        : "Being approached in love before physical reunion.";
-    } else if (isEmbrace) {
-      decisiveMoment = "Grandmother embraced Yoko.";
-      emotionalCore = submittedSecondResponse
-        ? `Reunion through physical closeness and affection.\nThe felt response was: ${submittedSecondResponse}`
-        : "Reunion through physical closeness and affection.";
+      submittedResponse.includes("見つけ")
+    ) {
+      return "お婆ちゃんに認められ、見つけてもらえた感覚は、あなたにどんな大切なことを思い出させますか？";
     }
 
-    return `Characters:
+    if (
+      submittedResponse.includes("近づいて") ||
+      submittedResponse.includes("近付いて")
+    ) {
+      return "お婆ちゃんが近づいてきたことは、あなたにどんな意味として残っていますか？";
+    }
+
+    if (
+      submittedResponse.includes("抱きしめ") ||
+      submittedResponse.includes("抱擁")
+    ) {
+      return "その抱擁は、あなたに何を受け取らせてくれましたか？";
+    }
+
+    return "この夢は、あなたにどんな意味を残していますか？";
+  }, [submittedResponse, submittedSecondResponse]);
+
+  const canonicalDescription = useMemo(() => {
+  if (!explored) return "";
+
+  const isRecognition =
+    submittedResponse.includes("ようこ") ||
+    submittedResponse.includes("呼んだ") ||
+    submittedResponse.includes("見つけ");
+
+  const isApproach =
+    submittedResponse.includes("近づいて") ||
+    submittedResponse.includes("近付いて");
+
+  const isEmbrace =
+    submittedResponse.includes("抱きしめ") ||
+    submittedResponse.includes("抱擁");
+
+  let decisiveMoment = "";
+  let emotionalCore = "";
+  let emergentMeaning = "";
+
+  if (isRecognition) {
+    decisiveMoment = "Grandmother recognized Yoko and called her name.";
+    emotionalCore = submittedSecondResponse
+      ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
+      : "Being recognized and known by grandmother.";
+    emergentMeaning =
+      "The recognition itself carried the joy of reunion.";
+  } else if (isApproach) {
+    decisiveMoment =
+      "Grandmother moved toward Yoko in order to embrace her.";
+    emotionalCore = submittedSecondResponse
+      ? `Being approached in love before physical reunion.\nThe felt response was: ${submittedSecondResponse}`
+      : "Being approached in love before physical reunion.";
+    emergentMeaning =
+      "The movement toward connection carried the meaning of reunion.";
+  } else if (isEmbrace) {
+    decisiveMoment = "Grandmother embraced Yoko.";
+    emotionalCore = submittedSecondResponse
+      ? `Reunion through physical closeness and affection.\nThe felt response was: ${submittedSecondResponse}`
+      : "Reunion through physical closeness and affection.";
+    emergentMeaning =
+      "The embrace revealed a bond that remained alive beyond separation.";
+  }
+
+  return `Characters:
 - Grandmother (appearing approximately 40 years old)
 - Dreamer (Yoko)
 
@@ -109,8 +147,35 @@ Decisive Moment:
 ${decisiveMoment}
 
 Emotional Core:
-${emotionalCore}`;
-  }, [explored, submittedResponse, submittedSecondResponse]);
+${emotionalCore}
+
+Emergent Meaning:
+${emergentMeaning}`;
+}, [explored, submittedResponse, submittedSecondResponse]);
+
+const fieldSummary = useMemo(() => {
+  if (!submittedThirdResponse) return "";
+
+  return `Core Moment:
+${submittedResponse}
+
+Core Emotion:
+${submittedSecondResponse}
+
+Core Meaning:
+${submittedThirdResponse}
+
+Gift Received:
+${
+  submittedThirdResponse.includes("つながり")
+    ? "温かさ"
+    : "A renewed sense of meaning"
+}`;
+}, [
+  submittedResponse,
+  submittedSecondResponse,
+  submittedThirdResponse,
+]);
 
   const emergingInsight = useMemo(() => {
   if (!explored) return "";
@@ -331,6 +396,50 @@ Questions:
                 {submittedSecondResponse}
               </p>
             )}
+            {submittedSecondResponse && (
+  <>
+    <p>
+      <strong>Q3:</strong>
+      <br />
+      {thirdQuestion}
+    </p>
+
+    <textarea
+      value={thirdResponse}
+      onChange={(e) => setThirdResponse(e.target.value)}
+      placeholder="Your response to the third question..."
+      rows={4}
+      style={{ width: "100%", padding: "12px" }}
+    />
+
+    <br />
+    <br />
+
+    <button
+      onClick={() => {
+        setSubmittedThirdResponse(thirdResponse);
+
+        setDialogueHistory([
+          "Q1: どの場面が最も強く心に残っていますか？",
+          `A1: ${submittedResponse}`,
+          `Q2: ${nextQuestion}`,
+          `A2: ${submittedSecondResponse}`,
+          `Q3: ${thirdQuestion}`,
+          `A3: ${thirdResponse}`,
+        ]);
+      }}
+    >
+      Submit Third Response
+    </button>
+  </>
+)}
+{submittedThirdResponse && (
+  <p>
+    <strong>Your Third Response:</strong>
+    <br />
+    {submittedThirdResponse}
+  </p>
+)}
 
             {dialogueHistory.length > 0 && (
               <>
@@ -369,6 +478,23 @@ Questions:
           <p>Insights will appear here.</p>
         )}
       </section>
+
+      {fieldSummary && (
+  <section>
+    <h2>Field Summary</h2>
+
+    <pre
+      style={{
+        whiteSpace: "pre-wrap",
+        background: "#f5f5f5",
+        padding: "16px",
+        borderRadius: "8px",
+      }}
+    >
+      {fieldSummary}
+    </pre>
+  </section>
+)}
     </main>
   );
 }
