@@ -43,9 +43,43 @@ export default function CoCreativePage() {
   }, [submittedResponse]);
 
   const canonicalDescription = useMemo(() => {
-    if (!explored) return "";
+  if (!explored) return "";
 
-    return `Characters:
+  const isRecognition =
+    submittedResponse.includes("ようこ") ||
+    submittedResponse.includes("呼んだ") ||
+    submittedResponse.includes("見つけ");
+
+  const isApproach =
+    submittedResponse.includes("近づいて") ||
+    submittedResponse.includes("近付いて");
+
+  const isEmbrace =
+    submittedResponse.includes("抱きしめ") ||
+    submittedResponse.includes("抱擁");
+
+  let decisiveMoment = "";
+  let emotionalCore = "";
+
+  if (isRecognition) {
+    decisiveMoment = "Grandmother recognized Yoko and called her name.";
+    emotionalCore = submittedSecondResponse
+      ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
+      : "Being recognized and known by grandmother.";
+  } else if (isApproach) {
+    decisiveMoment =
+      "Grandmother moved toward Yoko in order to embrace her.";
+    emotionalCore = submittedSecondResponse
+      ? `Being approached in love before physical reunion.\nThe felt response was: ${submittedSecondResponse}`
+      : "Being approached in love before physical reunion.";
+  } else if (isEmbrace) {
+    decisiveMoment = "Grandmother embraced Yoko.";
+    emotionalCore = submittedSecondResponse
+      ? `Reunion through physical closeness and affection.\nThe felt response was: ${submittedSecondResponse}`
+      : "Reunion through physical closeness and affection.";
+  }
+
+  return `Characters:
 - Grandmother (appearing approximately 40 years old)
 - Dreamer (Yoko)
 
@@ -69,44 +103,13 @@ Observed Elements:
 - Recognition
 - Approach
 - Embrace
-- Reunion${
-      submittedResponse.includes("ようこ") ||
-      submittedResponse.includes("呼んだ") ||
-      submittedResponse.includes("見つけ")
-        ? `
+- Reunion
 
 Decisive Moment:
-Grandmother recognized Yoko and called her name.
+${decisiveMoment}
 
-Emotional Focus:
-Being recognized and known by grandmother.`
-        : submittedResponse.includes("近づいて") ||
-            submittedResponse.includes("近付いて")
-          ? `
-
-Decisive Moment:
-Grandmother moved toward Yoko in order to embrace her.
-
-Emotional Focus:
-Being approached in love before physical reunion.`
-          : submittedResponse.includes("抱きしめ") ||
-              submittedResponse.includes("抱擁")
-            ? `
-
-Decisive Moment:
-Grandmother embraced Yoko.
-
-Emotional Focus:
-Reunion through physical closeness and affection.`
-            : ""
-    }${
-      submittedSecondResponse
-        ? `
-
-Second Dialogue Update:
-${submittedSecondResponse}`
-        : ""
-    }`;
+Emotional Core:
+${emotionalCore}`;
   }, [explored, submittedResponse, submittedSecondResponse]);
 
   const emergingInsight = useMemo(() => {
