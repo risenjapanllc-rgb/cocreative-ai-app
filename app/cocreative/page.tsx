@@ -93,13 +93,21 @@ export default function CoCreativePage() {
   let emotionalCore = "";
   let emergentMeaning = "";
 
-  if (isRecognition) {
-    decisiveMoment = "Grandmother recognized Yoko and called her name.";
-    emotionalCore = submittedSecondResponse
-      ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
-      : "Being recognized and known by grandmother.";
+ if (isRecognition) {
+  decisiveMoment = "Grandmother recognized Yoko and called her name.";
+
+  emotionalCore = submittedSecondResponse
+    ? `Being recognized and known by grandmother.\nThe felt response was: ${submittedSecondResponse}`
+    : "Being recognized and known by grandmother.";
+
+  if (submittedThirdResponse.includes("つながり")) {
+    emergentMeaning =
+      "The recognition itself carried the joy of reunion, revealing an enduring connection that remained alive beyond separation.";
+  } else {
     emergentMeaning =
       "The recognition itself carried the joy of reunion.";
+  }
+  
   } else if (isApproach) {
     decisiveMoment =
       "Grandmother moved toward Yoko in order to embrace her.";
@@ -151,7 +159,13 @@ ${emotionalCore}
 
 Emergent Meaning:
 ${emergentMeaning}`;
-}, [explored, submittedResponse, submittedSecondResponse]);
+}, [
+  explored,
+  submittedResponse,
+  submittedSecondResponse,
+  submittedThirdResponse,
+]);
+
 
 const fieldSummary = useMemo(() => {
   if (!submittedThirdResponse) return "";
