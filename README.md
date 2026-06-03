@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Co-Creative Field
 
-## Getting Started
+A dialogue-based reflection system designed to help users move from experience to emergent meaning.
 
-First, run the development server:
+## Core Flow
+
+Experience
+↓
+Q1: Scene Recognition
+↓
+Q2: Emotional Reflection
+↓
+Q3: Meaning Reflection
+↓
+Canonical Description
+↓
+Emotional Core
+↓
+Emergent Meaning
+↓
+Emerging Insight
+↓
+Field Summary
+
+## Purpose
+
+Co-Creative Field supports a process of:
+
+* noticing significant moments
+* exploring emotional responses
+* discovering personal meaning
+* integrating insights into a coherent summary
+
+The system is built around a three-layer dialogue structure:
+
+1. Scene (What stood out?)
+2. Emotion (What was felt?)
+3. Meaning (What did it reveal?)
+
+## Current Features
+
+* Experience input
+* Three-step guided dialogue
+* Canonical Description generation
+* Emotional Core extraction
+* Emergent Meaning generation
+* Emerging Insight generation
+* Field Summary generation
+
+## Development
+
+Run locally:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000/cocreative
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Version
 
-## Learn More
+Current Version: v1.0
 
-To learn more about Next.js, take a look at the following resources:
+Features completed:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Q1 Scene Layer
+* Q2 Emotion Layer
+* Q3 Meaning Layer
+* Emergent Meaning Integration
+* Field Summary
