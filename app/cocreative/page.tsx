@@ -166,6 +166,17 @@ export default function CoCreativePage() {
       "The embrace revealed a bond that remained alive beyond separation.";
   }
 
+const isInquiry =
+  submittedThirdResponse.includes("どうして") ||
+  submittedThirdResponse.includes("なんで") ||
+  submittedThirdResponse.includes("なぜ") ||
+  submittedThirdResponse.includes("?") ||
+  submittedThirdResponse.includes("？");
+
+const emergentLabel = isInquiry
+  ? "Emergent Inquiry"
+  : "Emergent Meaning";
+
 return `Experience:
 ${experience}
 
@@ -175,7 +186,7 @@ ${submittedResponse || "Not yet explored"}
 Emotional Core:
 ${submittedSecondResponse || "Not yet explored"}
 
-Emergent Meaning:
+${emergentLabel}:
 ${submittedThirdResponse || "Not yet explored"}`;
 }, [
   explored,
@@ -185,8 +196,101 @@ ${submittedThirdResponse || "Not yet explored"}`;
   submittedThirdResponse,
 ]);
 
+
+function generateGiftReceived(coreMeaning: string): string {
+  if (
+    coreMeaning.includes("つながり") ||
+    coreMeaning.includes("つながる")
+  ) {
+    return "温かさ";
+  }
+
+  if (
+    coreMeaning.includes("なんで") ||
+    coreMeaning.includes("なぜ") ||
+    coreMeaning.includes("どうして") ||
+    coreMeaning.includes("わからない")
+  ) {
+    return "A question worth exploring";
+  }
+
+  if (
+    coreMeaning.includes("気づき") ||
+    coreMeaning.includes("気づいた") ||
+    coreMeaning.includes("発見")
+  ) {
+    return "A new awareness";
+  }
+
+  if (
+    coreMeaning.includes("受け入れる") ||
+    coreMeaning.includes("受け入れ") ||
+    coreMeaning.includes("そのまま")
+  ) {
+    return "Acceptance";
+  }
+
+  if (
+    coreMeaning.includes("希望") ||
+    coreMeaning.includes("光")
+  ) {
+    return "Hope";
+  }
+
+  if (
+    coreMeaning.includes("勇気") ||
+    coreMeaning.includes("踏み出す")
+  ) {
+    return "Courage";
+  }
+
+  if (
+    coreMeaning.includes("自由") ||
+    coreMeaning.includes("解放")
+  ) {
+    return "Liberation";
+  }
+
+  if (
+    coreMeaning.includes("感謝") ||
+    coreMeaning.includes("ありがたい")
+  ) {
+    return "Gratitude";
+  }
+
+  if (
+    coreMeaning.includes("平安") ||
+    coreMeaning.includes("安心")
+  ) {
+    return "Peace";
+  }
+
+  if (
+    coreMeaning.includes("理解") ||
+    coreMeaning.includes("わかった")
+  ) {
+    return "Understanding";
+  }
+
+  return "A renewed sense of meaning";
+}
+
+
 const fieldSummary = useMemo(() => {
   if (!submittedThirdResponse) return "";
+
+  const isInquiry =
+    submittedThirdResponse.includes("どうして") ||
+    submittedThirdResponse.includes("なぜ") ||
+    submittedThirdResponse.includes("なんで") ||
+    submittedThirdResponse.includes("?") ||
+    submittedThirdResponse.includes("？");
+
+  const meaningLabel = isInquiry ? "Core Inquiry" : "Core Meaning";
+
+  const underlyingState = isInquiry
+    ? "誤解され、理解されないことへの困惑"
+    : "";
 
   return `Core Moment:
 ${submittedResponse}
@@ -194,20 +298,30 @@ ${submittedResponse}
 Core Emotion:
 ${submittedSecondResponse}
 
-Core Meaning:
-${submittedThirdResponse}
+${meaningLabel}:
+${submittedThirdResponse}${
+    isInquiry
+      ? `
+
+Underlying State:
+${underlyingState}`
+      : ""
+  }
 
 Gift Received:
 ${
-  submittedThirdResponse.includes("つながり")
-    ? "温かさ"
-    : "A renewed sense of meaning"
+  isInquiry
+    ? "A question worth exploring"
+    : submittedThirdResponse.includes("つながり")
+      ? "温かさ"
+      : "A renewed sense of meaning"
 }`;
 }, [
   submittedResponse,
   submittedSecondResponse,
   submittedThirdResponse,
 ]);
+
 
   const emergingInsight = useMemo(() => {
   if (!explored) return "";
