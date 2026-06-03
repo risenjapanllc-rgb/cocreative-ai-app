@@ -17,6 +17,31 @@ export default function CoCreativePage() {
 
   const [dialogueHistory, setDialogueHistory] = useState<string[]>([]);
 
+  const firstQuestion = useMemo(() => {
+  if (!experience) {
+    return `どの場面が最も強く心に残っていますか？`;
+  }
+
+  if (
+    experience.includes("老紳士") ||
+    experience.includes("門") ||
+    experience.includes("丘")
+  ) {
+    return `どの場面が最も強く心に残っていますか？
+1. 老紳士に「ここからは一人で向かいなさい」と言われた瞬間
+2. 古い大きな門の前で車を降りた場面
+3. 門を入り、丘へ続く小道を見上げた場面`;
+  }
+
+  return `どの場面が最も強く心に残っていますか？
+1. 最初に強く印象に残った場面
+2. 感情が大きく動いた場面
+3. もう一度見つめたい場面`;
+}, [experience]);
+
+
+
+  
   const nextQuestion = useMemo(() => {
     if (!submittedResponse) return "";
 
@@ -107,7 +132,7 @@ export default function CoCreativePage() {
     emergentMeaning =
       "The recognition itself carried the joy of reunion.";
   }
-  
+
   } else if (isApproach) {
     decisiveMoment =
       "Grandmother moved toward Yoko in order to embrace her.";
@@ -125,47 +150,24 @@ export default function CoCreativePage() {
       "The embrace revealed a bond that remained alive beyond separation.";
   }
 
-  return `Characters:
-- Grandmother (appearing approximately 40 years old)
-- Dreamer (Yoko)
+return `Experience:
+${experience}
 
-Setting:
-- Traditional Japanese tatami room
-- Kyoto-like atmosphere
-
-Dream Logic:
-- The dreamer existed with only the upper body emerging from the tatami.
-- This condition felt natural within the dream.
-
-Sequence:
-1. Grandmother entered the room.
-2. Grandmother saw Yoko.
-3. Grandmother said "ようこ!".
-4. Grandmother approached Yoko.
-5. Grandmother embraced Yoko.
-6. They remained together embracing.
-
-Observed Elements:
-- Recognition
-- Approach
-- Embrace
-- Reunion
-
-Decisive Moment:
-${decisiveMoment}
+Core Moment:
+${submittedResponse || "Not yet explored"}
 
 Emotional Core:
-${emotionalCore}
+${submittedSecondResponse || "Not yet explored"}
 
 Emergent Meaning:
-${emergentMeaning}`;
+${submittedThirdResponse || "Not yet explored"}`;
 }, [
   explored,
+  experience,
   submittedResponse,
   submittedSecondResponse,
   submittedThirdResponse,
 ]);
-
 
 const fieldSummary = useMemo(() => {
   if (!submittedThirdResponse) return "";
@@ -195,6 +197,30 @@ ${
   if (!explored) return "";
 
   const emotionalTone = submittedSecondResponse;
+  const meaningTone = submittedThirdResponse;
+
+  if (
+    meaningTone.includes("新しい") ||
+    meaningTone.includes("あたらしい") ||
+    meaningTone.includes("世界") ||
+    meaningTone.includes("確信") ||
+    submittedResponse.includes("門") ||
+    submittedResponse.includes("一人")
+  ) {
+    return `Emerging Insight:
+
+The dream may be centered on entering a new stage of life.
+
+Possible Themes:
+- Guidance
+- Trust
+- Initiation
+- New beginnings
+
+Questions:
+- What new path are you being invited to walk?
+- Why did the guide stop at the gate while you continued alone?`;
+  }
 
   if (
     submittedResponse.includes("ようこ") ||
@@ -287,17 +313,18 @@ Questions:
 
   return `Emerging Insight:
 
-The dream may be centered on reunion and restored connection.
+The experience may be pointing toward a meaningful inner transition.
 
 Possible Themes:
-- Reunion
-- Recognition
-- Enduring affection
+- Threshold
+- Guidance
+- Change
+- New perspective
 
 Questions:
-- Which moment carried the strongest emotional weight?
-- What did this dream allow you to receive?`;
-}, [explored, submittedResponse, submittedSecondResponse]);
+- What part of this experience feels like a threshold?
+- What are you being invited to receive or enter?`;
+}, [explored, submittedResponse, submittedSecondResponse, submittedThirdResponse]);
 
   return (
     <main style={{ maxWidth: "900px", margin: "0 auto", padding: "40px 20px" }}>
@@ -327,17 +354,11 @@ Questions:
           <p>AI dialogue will appear here.</p>
         ) : (
           <>
-            <p>
-              <strong>Q1:</strong>
-              <br />
-              どの場面が最も強く心に残っていますか？
-              <br />
-              1. お婆ちゃんが「ようこ！」と呼んだ瞬間
-              <br />
-              2. 抱きしめようと近づいてきた瞬間
-              <br />
-              3. 抱きしめ合っていた時間
-            </p>
+            <p style={{ whiteSpace: "pre-wrap" }}>
+  <strong>Q1:</strong>
+  <br />
+  {firstQuestion}
+</p>
 
             <textarea
               value={dialogueResponse}
