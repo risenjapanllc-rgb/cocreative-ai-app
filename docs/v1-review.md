@@ -1,5 +1,73 @@
 # Co-Creative Field v1 Review
 
+## Finding 000
+
+### The First Question Creates the Field
+
+Observation:
+
+The quality of the first question determines whether the user's subjectivity opens or remains closed.
+
+A successful first question does not merely categorize an experience.
+
+It illuminates a concrete moment that allows the user to re-enter the experience.
+
+Examples:
+
+Grandmother Dream:
+
+Q1 focused on the moment:
+「ようこ！」と呼ばれた瞬間
+
+This opened the path toward:
+
+驚きと喜び
+↓
+つながり
+
+Old Gentleman Dream:
+
+Q1 focused on the moment:
+「ここからは一人で向かいなさい」と言われた瞬間
+
+This opened the path toward:
+
+眼差し
+↓
+あたらしい世界への確信
+
+Village Dream:
+
+Q1 failed to identify a compelling scene.
+
+As a result, the dialogue lost focus and deeper exploration did not emerge.
+
+Insight:
+
+The purpose of Q1 is not classification.
+
+The purpose of Q1 is to create the field.
+
+Principle:
+
+Experience
+↓
+First Light
+↓
+Subjective Opening
+↓
+Emergence
+
+Status:
+
+Foundational Design Principle
+
+Target:
+
+All future versions
+
+
+
 ## Finding 001
 
 ### Q1 should identify scenes, not categories
