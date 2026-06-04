@@ -9,6 +9,8 @@ export default function CoCreativePage() {
   const [dialogueResponse, setDialogueResponse] = useState("");
   const [submittedResponse, setSubmittedResponse] = useState("");
 
+  const [customFirstResponse, setCustomFirstResponse] = useState("");
+
   const [secondResponse, setSecondResponse] = useState("");
   const [submittedSecondResponse, setSubmittedSecondResponse] = useState("");
 
@@ -22,16 +24,16 @@ export default function CoCreativePage() {
     return `どの場面が最も強く心に残っていますか？`;
   }
 
-  if (
-    experience.includes("老紳士") ||
-    experience.includes("門") ||
-    experience.includes("丘")
-  ) {
-    return `どの場面が最も強く心に残っていますか？
+ if (
+  experience.includes("老紳士") ||
+  experience.includes("門") ||
+  experience.includes("丘")
+) {
+  return `どの場面が最も強く心に残っていますか？
 1. 老紳士に「ここからは一人で向かいなさい」と言われた瞬間
 2. 古い大きな門の前で車を降りた場面
 3. 門を入り、丘へ続く小道を見上げた場面`;
-  }
+}
 
   if (
   experience.includes("お高く止まって") ||
@@ -49,15 +51,15 @@ export default function CoCreativePage() {
 4. 相手が去っていった瞬間`;
 }
 
-  return `どの場面が最も強く心に残っていますか？
-1. 最初に強く印象に残った場面
-2. 感情が大きく動いた場面
-3. もう一度見つめたい場面`;
+
+return `以下の質問に答えてください。
+
+あなたの体験の中で、最も強く心に残っている具体的な場面はどこですか？`;
 }, [experience]);
 
+const hasSceneChoices =
+  firstQuestion.includes("1.");
 
-
-  
   const nextQuestion = useMemo(() => {
     if (!submittedResponse) return "";
 
@@ -498,15 +500,40 @@ Questions:
               style={{ width: "100%", padding: "12px" }}
             />
 
+{hasSceneChoices && (
+  <>
+    <p>
+      <strong>その他の場合:</strong>
+    </p>
+
+    <textarea
+      value={customFirstResponse}
+      onChange={(e) => setCustomFirstResponse(e.target.value)}
+      placeholder="選択肢にない場合は、心に残った場面を書いてください..."
+      rows={3}
+      style={{ width: "100%", padding: "12px" }}
+    />
+
+    <br />
+    <br />
+  </>
+)}
+
+<br />
+<br />
+
             <br />
             <br />
 
             <button
               onClick={() => {
-                setSubmittedResponse(dialogueResponse);
+                const finalFirstResponse =
+  customFirstResponse.trim() || dialogueResponse;
+
+setSubmittedResponse(finalFirstResponse);
                 setDialogueHistory([
                   "Q1: どの場面が最も強く心に残っていますか？",
-                  `A1: ${dialogueResponse}`,
+                  `A1: ${finalFirstResponse}`,
                 ]);
               }}
             >
