@@ -225,3 +225,77 @@ Accepted as an emerging design principle.
 Target:
 
 v1.1.3 Underlying State Extraction
+
+
+---
+
+## Finding 004
+
+### The Dialogue May Reveal the Hidden Center
+
+Observation:
+
+A user may initially focus on one element of an experience.
+
+However, through dialogue, a different and deeper center of attention may emerge.
+
+Example:
+
+Village Dream
+
+Initial Focus:
+
+「これは永遠の世界が来たのだという掲示だと私は熱く語っていた」
+
+At first, the apparent center of the dream seemed to be:
+
+"I was passionately speaking."
+
+Q2:
+
+「その場面のどこが一番心に残っていますか？」
+
+Response:
+
+「若い人、村人たちがしっかりと理解し聞いていたこと」
+
+Insight:
+
+The true center was not speaking.
+
+The true center was being understood.
+
+Emergent Structure:
+
+Speaking
+↓
+Being Heard
+↓
+Being Understood
+↓
+Hope
+
+Result:
+
+Core Moment:
+私は熱く語っていた
+
+Hidden Center:
+人々が理解していた
+
+Core Meaning:
+イエスの真の福音が伝わる日が来る
+
+Principle:
+
+The role of dialogue is not merely to interpret an experience.
+
+The role of dialogue is to reveal the center that the experiencer may not yet see.
+
+Status:
+
+Accepted as an emerging design principle.
+
+Target:
+
+Future versions of Co-Creative Field
