@@ -299,3 +299,164 @@ Accepted as an emerging design principle.
 Target:
 
 Future versions of Co-Creative Field
+
+
+---
+
+## Finding 005
+
+### Understanding Creates the Space Where the True Self Emerges
+
+Observation:
+
+At first, the dream appeared to center on passionate speaking.
+
+However, dialogue revealed that the deeper center was not speaking itself.
+
+The deeper center was that people were truly listening and understanding.
+
+Initial Appearance:
+
+I was passionately proclaiming:
+
+「これは永遠の世界が来たのだ」
+
+Hidden Center:
+
+People were listening.
+People were understanding.
+
+Further Discovery:
+
+The dreamer realized:
+
+"It was because people understood that I was able to speak passionately."
+
+Emergent Structure:
+
+Understanding
+↓
+Safety
+↓
+Authentic Expression
+↓
+Passionate Speaking
+
+Insight:
+
+True expression does not create understanding.
+
+Rather, understanding creates the space in which true expression emerges.
+
+Spiritual Reflection:
+
+The dream points toward a field of understanding,
+wisdom, and shared participation.
+
+The dreamer described this as:
+
+"聖霊の場"
+"理解の場"
+"智慧の場"
+
+Principle:
+
+Understanding is not merely the result of communication.
+
+Understanding may be the generative environment from which new subjectivity emerges.
+
+Status:
+
+Emerging Design Principle
+
+Target:
+
+Future versions of Co-Creative Field
+
+
+---
+
+## Finding 006
+
+### The Spirit of Truth Creates the Field of Understanding
+
+Core Scripture:
+
+「しかし、その方、すなわち真理の御霊が来ると、
+あなたがたをすべての真理に導き入れます。」
+（ヨハネ16:13）
+
+Observation:
+
+The village dream initially appeared to center on speaking.
+
+Dialogue revealed a deeper center:
+
+People were listening.
+People were understanding.
+
+Further exploration revealed:
+
+Understanding itself was the condition that allowed authentic expression to emerge.
+
+The dreamer realized:
+
+"It was because people understood that I was able to speak passionately."
+
+Emergent Structure:
+
+Spirit of Truth
+↓
+Understanding
+↓
+Wisdom
+↓
+Authentic Self
+↓
+Living Expression
+
+Insight:
+
+Truth is not merely information.
+
+Truth is a field of participation.
+
+The Spirit of Truth does not simply transmit knowledge.
+
+The Spirit creates a space in which understanding becomes possible.
+
+Within that space:
+
+People understand.
+People are understood.
+The authentic self emerges.
+
+Reflection:
+
+The dreamer's final insight was:
+
+"真に理解し合える世界が現れること"
+
+This was understood not merely as a human longing,
+but as a divine promise.
+
+Principle:
+
+The goal is not correct interpretation.
+
+The goal is participation in the field where understanding becomes possible.
+
+The dreamer described this field as:
+
+聖霊の場
+理解の場
+智慧の場
+
+Status:
+
+Foundational Spiritual Insight
+
+Target:
+
+Future theological development of Co-Creative Field
+
