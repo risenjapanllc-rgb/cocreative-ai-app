@@ -673,3 +673,153 @@ Accepted as an emerging design principle.
 Target:
 
 Future development of Co-Creative Field
+
+
+
+# Co-Creative Field ハヌキヤー構造図 発見記録
+
+## 概要
+
+Co-Creative Field の探究を通して生まれた Finding 000〜008 を並べてみると、その構造は偶然にもハヌカの燭台（חֲנֻכִּיָּה / Chanukkiyah）と重なった。
+
+ハヌキヤーは、
+
+8つの灯火と、
+それらを灯す中央のシャマシュ（שַׁמָּשׁ / Shamash）
+
+から構成される。
+
+Co-Creative Field もまた、
+
+Finding 001〜008 の8つの発見と、
+それらすべてを照らす Finding 000
+
+から構成されていた。
+
+---
+
+## 中央の光（Shamash）
+
+### Finding 000
+
+The First Question Creates the Field
+
+最初の問いが場を開き、
+すべての始まりとなる。
+
+これは後から発見されたにもかかわらず、
+振り返ると全体を支える中心原理だった。
+
+---
+
+## 8つの灯火
+
+### Finding 001
+
+Scene Selection
+
+体験の中から最も心に残る場面が選ばれる。
+
+---
+
+### Finding 002
+
+Meaning ≠ Inquiry
+
+「意味」ではなく
+「問い」が生まれる。
+
+---
+
+### Finding 003
+
+Inquiry → Underlying State
+
+問いはその奥の状態へ導かれる。
+
+---
+
+### Finding 004
+
+The Dialogue May Reveal the Hidden Center
+
+対話を通して、
+本人も気づいていなかった焦点が浮かび上がる。
+
+---
+
+### Finding 005
+
+Understanding → Authentic Self
+
+理解に触れると、
+本来の自分が立ち上がる。
+
+---
+
+### Finding 006
+
+Spirit of Truth → Field of Understanding
+
+「真理の御霊が来ると、
+あなたがたをすべての真理に導く。」
+
+理解の場は、
+聖霊の働きによって形成される。
+
+---
+
+### Finding 007
+
+Shared Understanding → Embodied Reality
+
+理解が共有されると、
+現実の中で身体化される。
+
+---
+
+### Finding 008
+
+The Dream Becomes Worth Revisiting
+
+夢が説明されることではなく、
+
+「もう一度見つめたい」
+
+と思えること。
+
+体験そのものの価値が回復される。
+
+---
+
+## この場の目的
+
+Co-Creative Field の目的は、
+
+正しい解釈を与えることではない。
+
+体験の価値を回復し、
+
+参加者が
+
+「もう一度見てみたい」
+
+「振り返ってよかった」
+
+と思える場を創ることである。
+
+---
+
+## 最終洞察
+
+光は一つ。
+
+しかし多くの枝で照らす。
+
+すべては、
+
+体験の価値を回復するために。
+
+そしてその光は、
+
+理解し合える世界へと人を招いている。
