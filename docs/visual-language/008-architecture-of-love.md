@@ -128,3 +128,34 @@ Love is revealed.
 
 The role of design is to create the conditions in which love may be seen.
 
+---
+
+## Recognition and the Scaffold
+
+Recognition is often mistaken for the destination.
+
+It is not.
+
+Recognition is the scaffold.
+
+It helps what is already present become visible.
+
+It supports understanding.
+
+It connects fragments.
+
+It prepares the conditions in which the whole picture may appear.
+
+Yet the scaffold is not the building.
+
+When the building becomes visible, the scaffold fades into the background.
+
+Love is the architecture.
+
+Recognition serves the architecture, but it is not the architecture itself.
+
+---
+
+Recognition is the scaffold.
+
+Love is the architecture.
