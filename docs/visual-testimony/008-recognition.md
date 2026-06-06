@@ -120,3 +120,4 @@ A place where a person quietly realizes:
 
 "I may have been guided long before I knew it."
 
+Perhaps the light had been with me all along.
