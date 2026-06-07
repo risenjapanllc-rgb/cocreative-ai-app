@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # Visual Testimony 001 — White Light
 
 I was deep beneath the waters of a lake.
@@ -28,4 +25,4 @@ I reached out my hand.
 And took hold of it.
 
 Then I woke.
->>>>>>> aac7d55 (Create first visual testimony from white light dream)
+
