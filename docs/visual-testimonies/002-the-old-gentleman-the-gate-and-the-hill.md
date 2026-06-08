@@ -273,3 +273,11 @@ When I turn back, the gate is still closed.
 The hill is not visible before the gate is opened.
 
 The hill becomes visible only after entering through the gate.
+
+
+Boundary Structure
+
+- The gate was part of a larger boundary.
+- The gate did not appear as a standalone object.
+- The boundary extended to both sides of the gate.
+- Material and exact construction are uncertain.
