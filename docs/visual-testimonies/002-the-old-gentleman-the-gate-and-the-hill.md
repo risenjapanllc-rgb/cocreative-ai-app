@@ -71,8 +71,12 @@ The old gentleman said:
 6. I walk toward the gate.
 7. I turn around.
 8. The old gentleman is watching me.
-9. I enter through the gate.
-10. I walk the path toward the summit.
+9. I approach the gate.
+10. I open the gate.
+11. Beyond the gate I see a steep hill.
+12. A zigzag path leads toward the summit.
+13. I begin walking toward the summit.
+14. I pass an old wooden sign.
 
 ---
 
@@ -158,3 +162,15 @@ Do not reinterpret testimony.
 When details are uncertain, leave them simple.
 
 Remain faithful to the testimony.
+
+---
+
+### The Hill
+
+- Small hill.
+- The slope was noticeably steep.
+- The path did not go straight to the summit.
+- The path changed direction repeatedly.
+- The path climbed the hill in a zigzag pattern.
+- The path switched back right and left as it ascended.
+- The shape of the hill is remembered strongly.
