@@ -9,9 +9,24 @@ export type TestimonySpec = {
   mustNotLose: string[];
 };
 
-export function parseTestimonyMarkdown(markdown: string): TestimonySpec {
+export function parseTestimonyMarkdown(
+  markdown: string
+): TestimonySpec {
+  const coreWitness: string[] = [];
+
+  const coreWitnessMatch =
+    markdown.match(
+      /## Core Witness([\s\S]*?)(##|$)/
+    );
+
+  if (coreWitnessMatch) {
+    coreWitness.push(
+      coreWitnessMatch[1].trim()
+    );
+  }
+
   return {
-    coreWitness: [],
+    coreWitness,
     spatialStructure: [],
     boundaryStructure: [],
     temporalStructure: [],
