@@ -32,11 +32,21 @@ export function parseTestimonyMarkdown(
     spatialStructure.push(spatialMatch[1].trim());
   }
 
+  const temporalStructure: string[] = [];
+
+  const temporalMatch = markdown.match(
+    /## Temporal Structure([\s\S]*?)(##|$)/
+  );
+
+  if (temporalMatch) {
+    temporalStructure.push(temporalMatch[1].trim());
+  }
+
   return {
     coreWitness,
     spatialStructure,
     boundaryStructure: [],
-    temporalStructure: [],
+    temporalStructure,
     relationalStructure: [],
     mustNotLose: [],
   };
