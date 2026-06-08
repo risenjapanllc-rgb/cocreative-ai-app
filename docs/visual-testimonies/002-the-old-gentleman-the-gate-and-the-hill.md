@@ -174,3 +174,33 @@ Remain faithful to the testimony.
 - The path climbed the hill in a zigzag pattern.
 - The path switched back right and left as it ascended.
 - The shape of the hill is remembered strongly.
+
+
+## Spatial Structure (Highest Priority)
+
+Top-down spatial relationship:
+
+────────────────────────────
+
+　　　　　　　　　　　車
+　　　　　　　　███████
+　　　　　　　　███████
+
+未舗装道路（幅約10m）
+
+────────────────────────────
+
+
+
+　　　　　　　　　----------------
+　　　　　　　　　　 古い大きな門
+
+　　　　　　　　　　　　　丘
+
+- The road runs horizontally.
+- The gate is parallel to the road.
+- The gate is set back from the road.
+- The car is parked parallel to the gate.
+- The gate does not block the road.
+- The hill lies beyond the gate.
+- The hill becomes visible after entering through the gate.
