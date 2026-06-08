@@ -257,3 +257,19 @@ Top-down spatial relationship:
 
 ```
 ```
+Uncertain Details
+
+- It is not certain whether the old gentleman left the car.
+- The old gentleman may have remained inside the vehicle.
+- Only one fact is certain:
+  he was watching me as I turned back.
+
+The driver sits alone in the front seat.
+
+The old gentleman and I sit in the rear seat.
+
+When I turn back, the gate is still closed.
+
+The hill is not visible before the gate is opened.
+
+The hill becomes visible only after entering through the gate.
