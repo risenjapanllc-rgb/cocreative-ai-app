@@ -281,3 +281,33 @@ Boundary Structure
 - The gate did not appear as a standalone object.
 - The boundary extended to both sides of the gate.
 - Material and exact construction are uncertain.
+
+## Temporal Structure
+
+* The old gentleman and I were seated in the rear seat of the car.
+* A driver was seated in the front and held the steering wheel.
+* The car stopped near a large old gate.
+* The gate was closed when I approached it.
+* The old gentleman told me, "From here, go on alone."
+* I walked alone toward the gate.
+* Before entering, I turned around.
+* The old gentleman was watching and seeing me off.
+* Only after passing through the gate did the hill become visible.
+* The hill was high and steep.
+* A zigzag path led toward the summit.
+* Along the path stood an old wooden sign.
+* The sign indicated the direction of travel.
+* I continued toward the top of the hill.
+
+
+## What Remained
+
+The following elements remained especially vivid in memory:
+
+* The old gentleman.
+* His serious yet trusting gaze.
+* A sense of dignity.
+* A quiet and solemn atmosphere.
+* The large gate.
+* The old wooden sign along the path.
+* The feeling that something unseen was present.
