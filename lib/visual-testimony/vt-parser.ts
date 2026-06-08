@@ -14,20 +14,27 @@ export function parseTestimonyMarkdown(
 ): TestimonySpec {
   const coreWitness: string[] = [];
 
-  const coreWitnessMatch =
-    markdown.match(
-      /## Core Witness([\s\S]*?)(##|$)/
-    );
+  const coreWitnessMatch = markdown.match(
+    /## Core Witness([\s\S]*?)(##|$)/
+  );
 
   if (coreWitnessMatch) {
-    coreWitness.push(
-      coreWitnessMatch[1].trim()
-    );
+    coreWitness.push(coreWitnessMatch[1].trim());
+  }
+
+  const spatialStructure: string[] = [];
+
+  const spatialMatch = markdown.match(
+    /## Spatial Structure([\s\S]*?)(##|$)/
+  );
+
+  if (spatialMatch) {
+    spatialStructure.push(spatialMatch[1].trim());
   }
 
   return {
     coreWitness,
-    spatialStructure: [],
+    spatialStructure,
     boundaryStructure: [],
     temporalStructure: [],
     relationalStructure: [],
