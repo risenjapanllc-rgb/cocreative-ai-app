@@ -26,15 +26,17 @@ function Section({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     file?: string;
-  };
+  }>;
 }) {
+  const params = await searchParams;
+
   const testimonyFile =
-    searchParams.file ??
+    params.file ??
     "002-the-old-gentleman-the-gate-and-the-hill.md";
 
   const filePath = path.join(
@@ -54,12 +56,8 @@ export default function Page({
       <h2>Parsed from Markdown: {testimonyFile}</h2>
 
       <div style={{ marginBottom: 24 }}>
-        <a href="/vt-builder?file=001-white-light.md">
-          VT-001
-        </a>
-
+        <a href="/vt-builder?file=001-white-light.md">VT-001</a>
         {" | "}
-
         <a href="/vt-builder?file=002-the-old-gentleman-the-gate-and-the-hill.md">
           VT-002
         </a>
