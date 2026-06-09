@@ -27,9 +27,13 @@ function Section({ title, items }: { title: string; items: string[] }) {
 }
 
 export default function Page() {
+  const testimonyFile =
+    "002-the-old-gentleman-the-gate-and-the-hill.md";
+
   const filePath = path.join(
     process.cwd(),
-    "docs/visual-testimonies/002-the-old-gentleman-the-gate-and-the-hill.md"
+    "docs/visual-testimonies",
+    testimonyFile
   );
 
   const markdown = fs.readFileSync(filePath, "utf8");
@@ -40,7 +44,7 @@ export default function Page() {
     <main style={{ padding: 32, maxWidth: 1000 }}>
       <h1>Visual Testimony Builder v0.1</h1>
 
-      <h2>Parsed from Markdown: VT-002</h2>
+      <h2>Parsed from Markdown: {testimonyFile}</h2>
 
       <Section title="Core Witness" items={spec.coreWitness} />
       <Section title="Spatial Structure" items={spec.spatialStructure} />
@@ -48,15 +52,16 @@ export default function Page() {
       <Section title="Temporal Structure" items={spec.temporalStructure} />
       <Section title="Relational Structure" items={spec.relationalStructure} />
       <Section title="Must Not Lose" items={spec.mustNotLose} />
-      <section style={{ marginTop: 32 }}>
-  <h3>Fidelity Checklist</h3>
 
-   <ul>
+      <section style={{ marginTop: 32 }}>
+        <h3>Fidelity Checklist</h3>
+
+        <ul>
           {checklist.map((item, index) => (
             <li key={index}>□ {item}</li>
           ))}
         </ul>
-</section>
+      </section>
     </main>
   );
 }
