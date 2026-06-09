@@ -26,8 +26,15 @@ function Section({ title, items }: { title: string; items: string[] }) {
   );
 }
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: {
+    file?: string;
+  };
+}) {
   const testimonyFile =
+    searchParams.file ??
     "002-the-old-gentleman-the-gate-and-the-hill.md";
 
   const filePath = path.join(
@@ -45,6 +52,18 @@ export default function Page() {
       <h1>Visual Testimony Builder v0.1</h1>
 
       <h2>Parsed from Markdown: {testimonyFile}</h2>
+
+      <div style={{ marginBottom: 24 }}>
+        <a href="/vt-builder?file=001-white-light.md">
+          VT-001
+        </a>
+
+        {" | "}
+
+        <a href="/vt-builder?file=002-the-old-gentleman-the-gate-and-the-hill.md">
+          VT-002
+        </a>
+      </div>
 
       <Section title="Core Witness" items={spec.coreWitness} />
       <Section title="Spatial Structure" items={spec.spatialStructure} />
