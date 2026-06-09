@@ -42,10 +42,20 @@ export function parseTestimonyMarkdown(
     temporalStructure.push(temporalMatch[1].trim());
   }
 
+  const boundaryStructure: string[] = [];
+
+  const boundaryMatch = markdown.match(
+    /## Boundary Structure([\s\S]*?)(##|$)/
+  );
+
+  if (boundaryMatch) {
+    boundaryStructure.push(boundaryMatch[1].trim());
+  }
+
   return {
     coreWitness,
     spatialStructure,
-    boundaryStructure: [],
+    boundaryStructure,
     temporalStructure,
     relationalStructure: [],
     mustNotLose: [],
