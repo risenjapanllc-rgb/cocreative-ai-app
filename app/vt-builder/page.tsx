@@ -1,4 +1,6 @@
-import { buildVT002Spec } from "@/lib/visual-testimony/vt-builder";
+import fs from "fs";
+import path from "path";
+import { parseTestimonyMarkdown } from "@/lib/visual-testimony/vt-parser";
 
 function Section({ title, items }: { title: string; items: string[] }) {
   return (
@@ -14,15 +16,19 @@ function Section({ title, items }: { title: string; items: string[] }) {
 }
 
 export default function Page() {
-  const spec = buildVT002Spec();
+  const filePath = path.join(
+    process.cwd(),
+    "docs/visual-testimonies/002-the-old-gentleman-the-gate-and-the-hill.md"
+  );
+
+  const markdown = fs.readFileSync(filePath, "utf8");
+  const spec = parseTestimonyMarkdown(markdown);
 
   return (
     <main style={{ padding: 32, maxWidth: 1000 }}>
       <h1>Visual Testimony Builder v0.1</h1>
 
-      <h2>
-        {spec.id}: {spec.title}
-      </h2>
+      <h2>Parsed from Markdown: VT-002</h2>
 
       <Section title="Core Witness" items={spec.coreWitness} />
       <Section title="Spatial Structure" items={spec.spatialStructure} />

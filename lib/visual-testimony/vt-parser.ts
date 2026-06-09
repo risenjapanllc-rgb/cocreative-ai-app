@@ -9,55 +9,78 @@ export type TestimonySpec = {
   mustNotLose: string[];
 };
 
+function extractSection(
+  markdown: string,
+  headings: string[]
+): string[] {
+  for (const heading of headings) {
+    const match = markdown.match(
+      new RegExp(
+        `^## ${heading}\\s*([\\s\\S]*?)(?=^## |$)`,
+        "m"
+      )
+    );
+
+    if (match) {
+      return [match[1].trim()];
+    }
+  }
+
+  return [];
+}
+
 export function parseTestimonyMarkdown(
   markdown: string
 ): TestimonySpec {
-  const coreWitness: string[] = [];
-
-  const coreWitnessMatch = markdown.match(
-    /## Core Witness([\s\S]*?)(##|$)/
+  const coreWitness = extractSection(
+    markdown,
+    ["Core Witness"]
   );
 
-  if (coreWitnessMatch) {
-    coreWitness.push(coreWitnessMatch[1].trim());
-  }
-
-  const spatialStructure: string[] = [];
-
-  const spatialMatch = markdown.match(
-    /## Spatial Structure([\s\S]*?)(##|$)/
+  const spatialStructure = extractSection(
+    markdown,
+    ["Spatial Structure (Highest Priority)"]
   );
 
-  if (spatialMatch) {
-    spatialStructure.push(spatialMatch[1].trim());
-  }
-
-  const temporalStructure: string[] = [];
-
-  const temporalMatch = markdown.match(
-    /## Temporal Structure([\s\S]*?)(##|$)/
+  const boundaryStructure = extractSection(
+    markdown,
+    ["Boundary Structure"]
   );
 
-  if (temporalMatch) {
-    temporalStructure.push(temporalMatch[1].trim());
-  }
-
-  const boundaryStructure: string[] = [];
-
-  const boundaryMatch = markdown.match(
-    /## Boundary Structure([\s\S]*?)(##|$)/
+  const temporalStructure = extractSection(
+    markdown,
+    ["Temporal Structure"]
   );
 
-  if (boundaryMatch) {
-    boundaryStructure.push(boundaryMatch[1].trim());
-  }
+  const relationalStructure = extractSection(
+    markdown,
+    ["Relational Structure"]
+  );
+
+  const mustNotLose = extractSection(
+    markdown,
+    [
+      "Must Not Lose",
+      "What Remains Most Strongly",
+      "What Remained",
+    ]
+  );
+
+  console.log({
+    coreWitness,
+    spatialStructure,
+    boundaryStructure,
+    temporalStructure,
+    relationalStructure,
+    mustNotLose,
+  });
 
   return {
     coreWitness,
     spatialStructure,
     boundaryStructure,
     temporalStructure,
-    relationalStructure: [],
-    mustNotLose: [],
+    relationalStructure,
+    mustNotLose,
   };
 }
