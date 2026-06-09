@@ -9,15 +9,17 @@ export type TestimonySpec = {
   mustNotLose: string[];
 };
 
-function extractSection(
-  markdown: string,
-  headings: string[]
-): string[] {
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function extractSection(markdown: string, headings: string[]): string[] {
   for (const heading of headings) {
+    const escapedHeading = escapeRegExp(heading);
+
     const match = markdown.match(
       new RegExp(
-        `^## ${heading}\\s*([\\s\\S]*?)(?=^## |$)`,
-        "m"
+        `(?:^|\\n)## ${escapedHeading}\\s*\\n([\\s\\S]*?)(?=\\n## |$)`
       )
     );
 
@@ -29,51 +31,26 @@ function extractSection(
   return [];
 }
 
-export function parseTestimonyMarkdown(
-  markdown: string
-): TestimonySpec {
-  const coreWitness = extractSection(
-    markdown,
-    ["Core Witness"]
-  );
+export function parseTestimonyMarkdown(markdown: string): TestimonySpec {
+  const coreWitness = extractSection(markdown, ["Core Witness"]);
 
-  const spatialStructure = extractSection(
-    markdown,
-    ["Spatial Structure (Highest Priority)"]
-  );
+  const spatialStructure = extractSection(markdown, [
+    "Spatial Structure (Highest Priority)",
+    "Spatial Structure",
+  ]);
 
-  const boundaryStructure = extractSection(
-    markdown,
-    ["Boundary Structure"]
-  );
+  const boundaryStructure = extractSection(markdown, ["Boundary Structure"]);
 
-  const temporalStructure = extractSection(
-    markdown,
-    ["Temporal Structure"]
-  );
+  const temporalStructure = extractSection(markdown, ["Temporal Structure"]);
 
-  const relationalStructure = extractSection(
-    markdown,
-    ["Relational Structure"]
-  );
+  const relationalStructure = extractSection(markdown, ["Relational Structure"]);
 
-  const mustNotLose = extractSection(
-    markdown,
-    [
-      "Must Not Lose",
-      "What Remains Most Strongly",
-      "What Remained",
-    ]
-  );
-
-  console.log({
-    coreWitness,
-    spatialStructure,
-    boundaryStructure,
-    temporalStructure,
-    relationalStructure,
-    mustNotLose,
-  });
+  const mustNotLose = extractSection(markdown, [
+    "Witness Preservation Analysis",
+    "Must Not Lose",
+    "What Remains Most Strongly",
+    "What Remained",
+  ]);
 
   return {
     coreWitness,
