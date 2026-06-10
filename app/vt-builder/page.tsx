@@ -52,10 +52,11 @@ export default async function Page({
   const markdown = fs.readFileSync(filePath, "utf8");
   const spec = parseTestimonyMarkdown(markdown);
   const prompt = buildVisualPrompt(spec);
+
   const checklist =
-  testimonyFile === "001-white-light.md"
-    ? buildVT001FidelityChecklist()
-    : buildVT002FidelityChecklist();
+    testimonyFile === "001-white-light.md"
+      ? buildVT001FidelityChecklist()
+      : buildVT002FidelityChecklist();
 
   return (
     <main style={{ padding: 32, maxWidth: 1000 }}>
@@ -77,20 +78,27 @@ export default async function Page({
       <Section title="Temporal Structure" items={spec.temporalStructure} />
       <Section title="Relational Structure" items={spec.relationalStructure} />
       <Section title="Must Not Lose" items={spec.mustNotLose} />
-      <section style={{ marginTop: 32 }}>
-  <h3>Visual Prompt</h3>
 
-  <pre
-    style={{
-      whiteSpace: "pre-wrap",
-      background: "#f5f5f5",
-      padding: 16,
-      borderRadius: 8,
-    }}
-  >
-    {prompt}
-  </pre>
-</section>
+      <section style={{ marginTop: 32 }}>
+        <h3>Visual Prompt</h3>
+
+        <textarea
+          readOnly
+          value={prompt}
+          style={{
+            width: "100%",
+            minHeight: 360,
+            background: "#f5f5f5",
+            padding: 16,
+            borderRadius: 8,
+            border: "1px solid #ddd",
+            fontFamily: "monospace",
+            fontSize: 14,
+            lineHeight: 1.6,
+            resize: "vertical",
+          }}
+        />
+      </section>
 
       <section style={{ marginTop: 32 }}>
         <h3>Fidelity Checklist</h3>
