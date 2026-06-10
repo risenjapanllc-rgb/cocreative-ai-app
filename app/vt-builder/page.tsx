@@ -1,4 +1,7 @@
-import { buildVT002FidelityChecklist } from "@/lib/visual-testimony/fidelity-checklist";
+import {
+  buildVT001FidelityChecklist,
+  buildVT002FidelityChecklist,
+} from "@/lib/visual-testimony/fidelity-checklist";
 import fs from "fs";
 import path from "path";
 import { parseTestimonyMarkdown } from "@/lib/visual-testimony/vt-parser";
@@ -47,7 +50,10 @@ export default async function Page({
 
   const markdown = fs.readFileSync(filePath, "utf8");
   const spec = parseTestimonyMarkdown(markdown);
-  const checklist = buildVT002FidelityChecklist();
+  const checklist =
+  testimonyFile === "001-white-light.md"
+    ? buildVT001FidelityChecklist()
+    : buildVT002FidelityChecklist();
 
   return (
     <main style={{ padding: 32, maxWidth: 1000 }}>
