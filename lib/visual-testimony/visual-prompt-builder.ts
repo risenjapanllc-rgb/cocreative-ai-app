@@ -2,9 +2,7 @@ import { TestimonySpec } from "./vt-parser";
 
 export function buildVisualPrompt(spec: TestimonySpec) {
   const coreWitness = spec.coreWitness.join("\n");
-
   const scene = spec.spatialStructure.join("\n");
-
   const fidelity = spec.mustNotLose.join("\n");
 
   return `
@@ -22,16 +20,18 @@ CRITICAL FIDELITY REQUIREMENTS
 
 ${fidelity}
 
-IMPORTANT
+IMAGE CONSTRAINTS
 
-Preserve all critical elements.
+The scene must remain faithful to the testimony.
+
+IMPORTANT
 
 Do not change the spatial relationships.
 
-Do not introduce symbols, people, animals, objects, or light sources that are not present in the testimony.
+Do not remove key elements.
 
-The emotional atmosphere must remain faithful to the testimony.
+Do not introduce symbols, objects, people, animals, buildings, light sources, or scenery that are not present in the testimony.
 
-The image should feel like a remembered experience rather than a fantasy illustration.
+The image should feel like a remembered experience rather than fantasy art.
 `.trim();
 }
