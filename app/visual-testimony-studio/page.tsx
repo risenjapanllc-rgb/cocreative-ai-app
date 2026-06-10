@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 export default function VisualTestimonyStudioPage() {
   const [dreamText, setDreamText] = useState("");
@@ -9,19 +9,13 @@ export default function VisualTestimonyStudioPage() {
     title: "Visual Testimony",
     coreWitness: "",
     coreEmotion: "",
+    coreMeaning: "",
     scripture: "",
     essence: "",
   });
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "#111827",
-        padding: 24,
-      }}
-    >
+    <main style={{ minHeight: "100vh", background: "#0f172a", color: "#111827", padding: 24 }}>
       <header style={{ color: "white", marginBottom: 24 }}>
         <h1 style={{ margin: 0 }}>Visual Testimony Studio</h1>
         <p style={{ marginTop: 8, color: "#cbd5e1" }}>
@@ -29,13 +23,7 @@ export default function VisualTestimonyStudioPage() {
         </p>
       </header>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1.15fr",
-          gap: 24,
-        }}
-      >
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr", gap: 24 }}>
         <section style={{ background: "#ffffff", borderRadius: 20, padding: 24 }}>
           <h2>共創思考AIとの対話</h2>
 
@@ -57,11 +45,12 @@ export default function VisualTestimonyStudioPage() {
           <button
             onClick={() => {
               setCard({
-                title: "Visual Testimony",
-                coreWitness: dreamText,
-                coreEmotion: "未抽出",
-                scripture: "未選択",
-                essence: "未抽出",
+                title: "The Gate and the Hill",
+                coreWitness: "「さあここからは一人で向かいなさい」",
+                coreEmotion: "始まり・信頼・決意",
+                coreMeaning: "一人で進む段階に入った。見捨てられたのではなく託された。",
+                scripture: "「これが道だ。これに歩め。」 イザヤ書 30:21",
+                essence: "託されて、一人で進む旅が始まった。",
               });
             }}
             style={{
@@ -82,29 +71,24 @@ export default function VisualTestimonyStudioPage() {
           <h2>Visual Testimony Card</h2>
 
           <div style={cardHeroStyle}>
-            <p style={{ margin: 0, fontSize: 14 }}>VT</p>
-            <h1 style={{ margin: "8px 0" }}>{card.title}</h1>
-            <p style={{ fontSize: 22, fontWeight: "bold" }}>
-              {card.coreWitness || "Core Witness"}
+            <p style={{ letterSpacing: 3, fontSize: 12, opacity: 0.8, margin: 0 }}>
+              VISUAL TESTIMONY
             </p>
+
+            <h1 style={{ marginTop: 12, marginBottom: 24, fontSize: 38 }}>
+              {card.title}
+            </h1>
+
+            <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.5, maxWidth: 700, margin: "0 auto" }}>
+              {card.coreWitness || "Core Witness"}
+            </div>
           </div>
 
           <div style={gridStyle}>
-            <Card title="Core Witness">
-              {card.coreWitness || "未抽出"}
-            </Card>
-
-            <Card title="Core Emotion">
-              {card.coreEmotion || "未抽出"}
-            </Card>
-
-            <Card title="Scripture Reflection">
-              {card.scripture || "未選択"}
-            </Card>
-
-            <Card title="One Line Essence">
-              {card.essence || "未抽出"}
-            </Card>
+            <Card title="Core Emotion">{card.coreEmotion || "未抽出"}</Card>
+            <Card title="Core Meaning">{card.coreMeaning || "未抽出"}</Card>
+            <Card title="Scripture Reflection">{card.scripture || "未選択"}</Card>
+            <Card title="One Line Essence">{card.essence || "未抽出"}</Card>
           </div>
         </section>
       </div>
@@ -112,7 +96,7 @@ export default function VisualTestimonyStudioPage() {
   );
 }
 
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div
       style={{
