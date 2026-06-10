@@ -27,12 +27,17 @@ And took hold of it.
 Then I woke.
 
 
-## Core Witness
+## Spatial Structure
 
-In the darkness,
-I noticed a tiny light.
+Deep beneath the waters of a lake.
 
-Drawn toward it naturally,
-I approached it and grasped it.
+Dark water surrounded the dreamer.
 
-The certainty of grasping the light remained.
+The lakebed was visible below.
+
+A tiny light rested in the sand.
+
+The light was small but intensely bright.
+
+The dreamer moved through the water toward the light.
+
