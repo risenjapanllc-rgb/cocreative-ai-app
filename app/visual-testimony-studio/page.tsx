@@ -2,22 +2,19 @@
 
 import { useState, type ReactNode } from "react";
 
-const questions = [
-  "この夢の中で、最も強く残っているものは何ですか？",
-  "その中に、どんな感情がありましたか？",
-  "その体験は、あなたに何を語っているように感じますか？",
-  "この体験と共鳴する聖句はありますか？",
-  "この証言を一言で表すなら？",
-];
+type Message = {
+  role: "あなた" | "共創思考AI";
+  text: string;
+};
 
 export default function VisualTestimonyStudioPage() {
-  const [answer, setAnswer] = useState("");
-  const [step, setStep] = useState(0);
+  const [input, setInput] = useState("");
 
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       role: "共創思考AI",
-      text: questions[0],
+      text:
+        "夢や体験を書いてください。\n\n私はまず受け取ります。\n\nまだ解釈はしません。",
     },
   ]);
 
@@ -30,66 +27,27 @@ export default function VisualTestimonyStudioPage() {
     essence: "",
   });
 
-  function handleSend() {
-    if (!answer.trim()) return;
+  function handleReceive() {
+    if (!input.trim()) return;
 
-    const userAnswer = answer.trim();
+    const testimony = input.trim();
 
     setMessages((prev) => [
       ...prev,
-      { role: "あなた", text: userAnswer },
+      { role: "あなた", text: testimony },
+      {
+        role: "共創思考AI",
+        text:
+          "私はこう受け取りました。\n\n・人物\n・場所\n・言葉\n・印象に残る場面\n\nまだ確定ではありません。\n\n違うところがあれば教えてください。",
+      },
     ]);
 
-    if (step === 0) {
-      setCard((prev) => ({
-        ...prev,
-        coreWitness: userAnswer,
-      }));
-    }
+    setCard((prev) => ({
+      ...prev,
+      coreWitness: "未確定",
+    }));
 
-    if (step === 1) {
-      setCard((prev) => ({
-        ...prev,
-        coreEmotion: userAnswer,
-      }));
-    }
-
-    if (step === 2) {
-      setCard((prev) => ({
-        ...prev,
-        coreMeaning: userAnswer,
-      }));
-    }
-
-    if (step === 3) {
-      setCard((prev) => ({
-        ...prev,
-        scripture: userAnswer,
-      }));
-    }
-
-    if (step === 4) {
-      setCard((prev) => ({
-        ...prev,
-        essence: userAnswer,
-      }));
-    }
-
-    const nextStep = step + 1;
-
-    if (nextStep < questions.length) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "共創思考AI",
-          text: questions[nextStep],
-        },
-      ]);
-
-      setStep(nextStep);
-    }
-
-    setAnswer("");
+    setInput("");
   }
 
   return (
@@ -130,11 +88,10 @@ export default function VisualTestimonyStudioPage() {
                 key={index}
                 style={{
                   background:
-                    message.role === "共創思考AI"
-                      ? "#f8fafc"
-                      : "#eef2ff",
+                    message.role === "共創思考AI" ? "#f8fafc" : "#eef2ff",
                   padding: 16,
                   borderRadius: 12,
+                  whiteSpace: "pre-wrap",
                 }}
               >
                 <strong>{message.role}</strong>
@@ -144,12 +101,12 @@ export default function VisualTestimonyStudioPage() {
           </div>
 
           <textarea
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="ここに答えを書いてください..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="夢や体験、または修正したいことを書いてください..."
             style={{
               width: "100%",
-              minHeight: 140,
+              minHeight: 160,
               marginTop: 24,
               padding: 16,
               borderRadius: 12,
@@ -159,7 +116,7 @@ export default function VisualTestimonyStudioPage() {
           />
 
           <button
-            onClick={handleSend}
+            onClick={handleReceive}
             style={{
               marginTop: 12,
               padding: "10px 18px",
@@ -170,7 +127,7 @@ export default function VisualTestimonyStudioPage() {
               cursor: "pointer",
             }}
           >
-            送信
+            受け取ってもらう
           </button>
         </section>
 
@@ -181,7 +138,7 @@ export default function VisualTestimonyStudioPage() {
             padding: 24,
           }}
         >
-          <h2>Visual Testimony Card</h2>
+          <h2>Visual Testimony</h2>
 
           <div style={cardHeroStyle}>
             <p
@@ -195,13 +152,7 @@ export default function VisualTestimonyStudioPage() {
               VISUAL TESTIMONY
             </p>
 
-            <h1
-              style={{
-                marginTop: 12,
-                marginBottom: 24,
-                fontSize: 38,
-              }}
-            >
+            <h1 style={{ marginTop: 12, marginBottom: 24, fontSize: 38 }}>
               {card.title}
             </h1>
 
@@ -214,26 +165,17 @@ export default function VisualTestimonyStudioPage() {
                 margin: "0 auto",
               }}
             >
-              {card.coreWitness || "Core Witness"}
+              {card.coreWitness || "Core Witness will emerge through dialogue"}
             </div>
           </div>
 
           <div style={gridStyle}>
-            <Card title="Core Emotion">
-              {card.coreEmotion || "未抽出"}
-            </Card>
-
-            <Card title="Core Meaning">
-              {card.coreMeaning || "未抽出"}
-            </Card>
-
+            <Card title="Core Emotion">{card.coreEmotion || "未確定"}</Card>
+            <Card title="Core Meaning">{card.coreMeaning || "未確定"}</Card>
             <Card title="Scripture Reflection">
               {card.scripture || "未選択"}
             </Card>
-
-            <Card title="One Line Essence">
-              {card.essence || "未抽出"}
-            </Card>
+            <Card title="One Line Essence">{card.essence || "未確定"}</Card>
           </div>
         </section>
       </div>
@@ -241,13 +183,7 @@ export default function VisualTestimonyStudioPage() {
   );
 }
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div
       style={{
