@@ -48,19 +48,22 @@ Visual form currently appears to be a Triptych rather than a Single Image.
 * The sign indicated the destination.
 
 ### Atmosphere
+Beginning.
 
-* Solemn.
-* Quiet.
-* The atmosphere changed.
-* Conversation stopped.
-* No sound was heard.
+Trust.
+
+Resolve.
+
+Natural acceptance.
+
+Quiet dignity.
+
+Silence.
 
 ### Words
-
 The old gentleman said:
 
 > "Now from here, go on alone."
-
 ### Sequence
 
 1. The old gentleman and I are seated in the rear seat.
