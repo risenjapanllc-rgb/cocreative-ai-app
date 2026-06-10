@@ -50,8 +50,12 @@ export default async function Page({
   );
 
   const markdown = fs.readFileSync(filePath, "utf8");
-  const spec = parseTestimonyMarkdown(markdown);
-  const prompt = buildVisualPrompt(spec);
+const spec = parseTestimonyMarkdown(markdown);
+
+const prompt = buildVisualPrompt(
+  spec,
+  testimonyFile
+);
 
   const checklist =
     testimonyFile === "001-white-light.md"

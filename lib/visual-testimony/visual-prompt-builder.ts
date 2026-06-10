@@ -1,11 +1,19 @@
 import { TestimonySpec } from "./vt-parser";
+import { getImageConstraints } from "./testimony-image-constraints";
 
-export function buildVisualPrompt(spec: TestimonySpec) {
-  const coreWitness = spec.coreWitness.join("\n");
-  const scene = spec.spatialStructure.join("\n");
-  const fidelity = spec.mustNotLose.join("\n");
+export function buildVisualPrompt(
+spec: TestimonySpec,
+testimonyFile?: string
+) {
+const coreWitness = spec.coreWitness.join("\n");
+const scene = spec.spatialStructure.join("\n");
+const fidelity = spec.mustNotLose.join("\n");
 
-  return `
+const constraints = testimonyFile
+? getImageConstraints(testimonyFile)
+: "";
+
+return `
 Create a faithful visual testimony scene.
 
 CORE WITNESS
@@ -22,7 +30,7 @@ ${fidelity}
 
 IMAGE CONSTRAINTS
 
-The scene must remain faithful to the testimony.
+${constraints}
 
 IMPORTANT
 
