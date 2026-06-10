@@ -5,6 +5,7 @@ import {
 import fs from "fs";
 import path from "path";
 import { parseTestimonyMarkdown } from "@/lib/visual-testimony/vt-parser";
+import { buildVisualPrompt } from "@/lib/visual-testimony/visual-prompt-builder";
 
 function Section({ title, items }: { title: string; items: string[] }) {
   return (
@@ -50,6 +51,7 @@ export default async function Page({
 
   const markdown = fs.readFileSync(filePath, "utf8");
   const spec = parseTestimonyMarkdown(markdown);
+  const prompt = buildVisualPrompt(spec);
   const checklist =
   testimonyFile === "001-white-light.md"
     ? buildVT001FidelityChecklist()
@@ -75,6 +77,20 @@ export default async function Page({
       <Section title="Temporal Structure" items={spec.temporalStructure} />
       <Section title="Relational Structure" items={spec.relationalStructure} />
       <Section title="Must Not Lose" items={spec.mustNotLose} />
+      <section style={{ marginTop: 32 }}>
+  <h3>Visual Prompt</h3>
+
+  <pre
+    style={{
+      whiteSpace: "pre-wrap",
+      background: "#f5f5f5",
+      padding: 16,
+      borderRadius: 8,
+    }}
+  >
+    {prompt}
+  </pre>
+</section>
 
       <section style={{ marginTop: 32 }}>
         <h3>Fidelity Checklist</h3>
