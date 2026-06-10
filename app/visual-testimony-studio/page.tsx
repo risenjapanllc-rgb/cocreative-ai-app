@@ -11,12 +11,14 @@ export default function VisualTestimonyStudioPage() {
   const [input, setInput] = useState("");
 
   const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "共創思考AI",
-      text:
-        "夢や体験を書いてください。\n\n私はまず受け取ります。\n\nまだ解釈はしません。",
-    },
-  ]);
+  {
+    role: "共創思考AI",
+    text:
+      "夢や体験を書いてください。\n\n" +
+      "私はまず受け取ります。\n\n" +
+      "まだ解釈はしません。",
+  },
+]);
 
   const [card, setCard] = useState({
     title: "Visual Testimony",
@@ -36,10 +38,23 @@ export default function VisualTestimonyStudioPage() {
       ...prev,
       { role: "あなた", text: testimony },
       {
-        role: "共創思考AI",
-        text:
-          "私はこう受け取りました。\n\n・人物\n・場所\n・言葉\n・印象に残る場面\n\nまだ確定ではありません。\n\n違うところがあれば教えてください。",
-      },
+  role: "共創思考AI",
+  text:
+    "私はこう受け取りました。\n\n" +
+    "・黒いハットを被り、長い白い髭を生やした老紳士\n" +
+    "・老紳士と共に後部座席に乗った車\n" +
+    "・ハンドルを握る運転手\n" +
+    "・古い大きな門\n" +
+    "・門と並行して伸びる舗装されていない道\n" +
+    "・「さあここからは一人で向かいなさい」という言葉\n" +
+    "・一人で門へ向かって歩くあなた\n" +
+    "・振り返った時に見送っていた老紳士\n" +
+    "・門の向こうにあった乾いた高い丘\n" +
+    "・頂上へ続くジグザグの小道\n" +
+    "・途中にあった古い木製の看板\n\n" +
+    "まだ意味づけはしていません。\n\n" +
+    "この中で、あなた自身の目が止まるものはどこですか？",
+},
     ]);
 
     setCard((prev) => ({
