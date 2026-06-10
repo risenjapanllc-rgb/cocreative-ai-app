@@ -26,3 +26,13 @@ And took hold of it.
 
 Then I woke.
 
+
+## Core Witness
+
+In the darkness,
+I noticed a tiny light.
+
+Drawn toward it naturally,
+I approached it and grasped it.
+
+The certainty of grasping the light remained.
