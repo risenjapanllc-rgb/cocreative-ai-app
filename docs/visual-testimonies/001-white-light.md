@@ -84,7 +84,7 @@ Grasping.
 
 ### Response
 
-Natural curiosity.
+Drawn toward the light naturally.
 
 Natural movement toward the light.
 
@@ -94,9 +94,9 @@ Stillness.
 
 No resistance.
 
-No fear.
+Reality-like certainty.
 
-The experience felt like reality.
+Quiet movement toward the light.
 
 ### Central Movement
 
