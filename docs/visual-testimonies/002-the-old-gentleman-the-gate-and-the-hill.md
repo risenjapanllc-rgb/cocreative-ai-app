@@ -109,6 +109,14 @@ The old gentleman said:
 * The silence.
 * A sense that something unseen was present.
 
+## What Remained
+
+A sense of beginning.
+
+Trust.
+
+Resolve.
+
 ---
 
 ## Core Witness
