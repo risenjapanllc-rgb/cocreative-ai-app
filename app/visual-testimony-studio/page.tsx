@@ -22,42 +22,58 @@ export default function VisualTestimonyStudioPage() {
 
  const [card, setCard] = useState({
   title: "Visual Testimony",
+  recognition: "",
   coreWitness: "",
   coreEmotion: "",
   coreMeaning: "",
   scripture: "",
   essence: "",
 });
+const [isLoading, setIsLoading] = useState(false);
 
-const [responseState, setResponseState] = useState("");
-  
 
-  function handleReceive() {
-    if (!input.trim()) return;
+ async function handleReceive() {
+  if (!input.trim()) return;
 
-    const testimony = input.trim();
+  const userMessage = input.trim();
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "あなた", text: testimony },
-     {
-  role: "共創思考AI",
-  text:
-    "ありがとうございます。\n\n" +
-    "私はまず、あなたが書いてくださったことを受け取りました。\n\n" +
-    "ここに残っているものを、\n" +
-    "一緒に見つめていきましょう。\n\n" +
-    "この中で、いま最も印象に残っている場面や言葉はありますか？",
-},
-    ]);
+  setIsLoading(true);
 
-    setCard((prev) => ({
-      ...prev,
-      coreWitness: "未確定",
-    }));
+  setMessages((prev) => [
+    ...prev,
+    { role: "あなた", text: userMessage },
+  ]);
 
-    setInput("");
-  }
+  setInput("");
+
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+   body: JSON.stringify({
+  messages: [
+    ...messages,
+    { role: "あなた", text: userMessage },
+  ],
+}),
+  });
+
+  const data = await res.json();
+
+  setMessages((prev) => [
+    ...prev,
+    {
+      role: "共創思考AI",
+      text: data.text,
+    },
+  ]);
+  setCard((prev) => ({
+  ...prev,
+  recognition: "君なら大丈夫",
+}));
+  setIsLoading(false);
+}
 
   return (
     <main
@@ -108,6 +124,20 @@ const [responseState, setResponseState] = useState("");
               </div>
             ))}
           </div>
+
+          {isLoading && (
+  <div
+    style={{
+      background: "#f8fafc",
+      padding: 16,
+      borderRadius: 12,
+      color: "#64748b",
+      marginTop: 12,
+    }}
+  >
+    共創思考AIが受け取っています...
+  </div>
+)}
 
           <textarea
             value={input}
@@ -184,8 +214,8 @@ const [responseState, setResponseState] = useState("");
   </p>
 
   <p style={{ lineHeight: 1.8 }}>
-    まだ認識は生まれていません。
-  </p>
+  {card.recognition || "まだ認識は生まれていません。"}
+</p>
 </div>
 
 <div style={cardHeroStyle}>
