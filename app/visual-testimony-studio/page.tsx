@@ -20,14 +20,17 @@ export default function VisualTestimonyStudioPage() {
   },
 ]);
 
-  const [card, setCard] = useState({
-    title: "Visual Testimony",
-    coreWitness: "",
-    coreEmotion: "",
-    coreMeaning: "",
-    scripture: "",
-    essence: "",
-  });
+ const [card, setCard] = useState({
+  title: "Visual Testimony",
+  coreWitness: "",
+  coreEmotion: "",
+  coreMeaning: "",
+  scripture: "",
+  essence: "",
+});
+
+const [responseState, setResponseState] = useState("");
+  
 
   function handleReceive() {
     if (!input.trim()) return;
@@ -37,23 +40,14 @@ export default function VisualTestimonyStudioPage() {
     setMessages((prev) => [
       ...prev,
       { role: "あなた", text: testimony },
-      {
+     {
   role: "共創思考AI",
   text:
-    "私はこう受け取りました。\n\n" +
-    "・黒いハットを被り、長い白い髭を生やした老紳士\n" +
-    "・老紳士と共に後部座席に乗った車\n" +
-    "・ハンドルを握る運転手\n" +
-    "・古い大きな門\n" +
-    "・門と並行して伸びる舗装されていない道\n" +
-    "・「さあここからは一人で向かいなさい」という言葉\n" +
-    "・一人で門へ向かって歩くあなた\n" +
-    "・振り返った時に見送っていた老紳士\n" +
-    "・門の向こうにあった乾いた高い丘\n" +
-    "・頂上へ続くジグザグの小道\n" +
-    "・途中にあった古い木製の看板\n\n" +
-    "まだ意味づけはしていません。\n\n" +
-    "この中で、あなた自身の目が止まるものはどこですか？",
+    "ありがとうございます。\n\n" +
+    "私はまず、あなたが書いてくださったことを受け取りました。\n\n" +
+    "ここに残っているものを、\n" +
+    "一緒に見つめていきましょう。\n\n" +
+    "この中で、いま最も印象に残っている場面や言葉はありますか？",
 },
     ]);
 
@@ -118,7 +112,7 @@ export default function VisualTestimonyStudioPage() {
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="夢や体験、または修正したいことを書いてください..."
+            placeholder="夢・体験・気づき・修正したいことを書いてください..."
             style={{
               width: "100%",
               minHeight: 160,
@@ -142,8 +136,10 @@ export default function VisualTestimonyStudioPage() {
               cursor: "pointer",
             }}
           >
-            受け取ってもらう
+            送信
           </button>
+　　　　　　　　　
+          
         </section>
 
         <section
@@ -155,7 +151,44 @@ export default function VisualTestimonyStudioPage() {
         >
           <h2>Visual Testimony</h2>
 
-          <div style={cardHeroStyle}>
+<div
+  style={{
+    marginTop: 16,
+    marginBottom: 24,
+    padding: 20,
+    borderRadius: 16,
+    background: "#f8fafc",
+    border: "1px solid #cbd5e1",
+  }}
+>
+  <h3 style={{ marginTop: 0 }}>Recognition</h3>
+
+  <p
+    style={{
+      fontSize: 12,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      color: "#64748b",
+    }}
+  >
+    Status
+  </p>
+
+  <p
+    style={{
+      fontWeight: 600,
+      marginBottom: 12,
+    }}
+  >
+    Listening...
+  </p>
+
+  <p style={{ lineHeight: 1.8 }}>
+    まだ認識は生まれていません。
+  </p>
+</div>
+
+<div style={cardHeroStyle}>
             <p
               style={{
                 letterSpacing: 3,
