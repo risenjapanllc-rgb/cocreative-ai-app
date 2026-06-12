@@ -26,7 +26,7 @@ export default function VisualTestimonyStudioPage() {
   coreWitness: "",
   coreEmotion: "",
   coreMeaning: "",
-  scripture: "",
+  giftedWord: "",
   essence: "",
 });
 const [isLoading, setIsLoading] = useState(false);
@@ -73,6 +73,14 @@ const [isLoading, setIsLoading] = useState(false);
   recognition: "君なら大丈夫",
 }));
   setIsLoading(false);
+}
+
+function handleRecognitionAccepted() {
+  setCard((prev) => ({
+    ...prev,
+    coreEmotion:
+      prev.recognition || "愛・安心感・信頼感",
+  }));
 }
 
   return (
@@ -214,9 +222,72 @@ const [isLoading, setIsLoading] = useState(false);
   </p>
 
   <p style={{ lineHeight: 1.8 }}>
-  {card.recognition || "まだ認識は生まれていません。"}
+  {card.recognition || "対話の中から認識が現れるのを待っています。"}
 </p>
+<div
+  style={{
+    display: "flex",
+    gap: 8,
+    marginTop: 16,
+  }}
+>
+  <button style={smallButtonStyle}>違う</button>
+  <button style={smallButtonStyle}>近い</button>
+  <button
+  style={smallButtonStyle}
+  onClick={handleRecognitionAccepted}
+>
+  それだ
+</button>
 </div>
+</div>
+
+<div
+  style={{
+    marginTop: 16,
+    marginBottom: 24,
+    padding: 20,
+    borderRadius: 16,
+    background: "#f8fafc",
+    border: "1px solid #cbd5e1",
+  }}
+>
+  <h3 style={{ marginTop: 0 }}>Core Formation</h3>
+
+  <p
+    style={{
+      fontSize: 12,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      color: "#64748b",
+    }}
+  >
+    Core Emotion
+  </p>
+
+  <p>
+    {card.coreEmotion ||
+      "対話の中から現れるのを待っています。"}
+  </p>
+
+  <p
+    style={{
+      fontSize: 12,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      color: "#64748b",
+      marginTop: 16,
+    }}
+  >
+    Core Meaning
+  </p>
+
+  <p>
+    {card.coreMeaning ||
+      "対話の中から現れるのを待っています。"}
+  </p>
+</div>
+
 
 <div style={cardHeroStyle}>
             <p
@@ -250,9 +321,9 @@ const [isLoading, setIsLoading] = useState(false);
           <div style={gridStyle}>
             <Card title="Core Emotion">{card.coreEmotion || "未確定"}</Card>
             <Card title="Core Meaning">{card.coreMeaning || "未確定"}</Card>
-            <Card title="Scripture Reflection">
-              {card.scripture || "未選択"}
-            </Card>
+            <Card title="Gifted Word">
+  {card.giftedWord || "対話の中から現れるのを待っています。"}
+</Card>
             <Card title="One Line Essence">{card.essence || "未確定"}</Card>
           </div>
         </section>
@@ -291,4 +362,11 @@ const gridStyle = {
   gridTemplateColumns: "1fr 1fr",
   gap: 16,
   marginTop: 20,
+};
+const smallButtonStyle = {
+  padding: "8px 12px",
+  borderRadius: 10,
+  border: "1px solid #cbd5e1",
+  background: "white",
+  cursor: "pointer",
 };
