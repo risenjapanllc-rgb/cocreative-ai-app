@@ -14,9 +14,9 @@ export default function VisualTestimonyStudioPage() {
   {
     role: "共創思考AI",
     text:
-      "夢や体験を書いてください。\n\n" +
-      "私はまず受け取ります。\n\n" +
-      "まだ解釈はしません。",
+      "印象に残っている夢や体験、\n" +
+"感じていること、\n" +
+"疑問などを自由に書いてください。",
   },
 ]);
 
@@ -222,24 +222,26 @@ function handleRecognitionAccepted() {
   </p>
 
   <p style={{ lineHeight: 1.8 }}>
-  {card.recognition || "対話の中から認識が現れるのを待っています。"}
-</p>
-<div
-  style={{
-    display: "flex",
-    gap: 8,
-    marginTop: 16,
-  }}
->
-  <button style={smallButtonStyle}>違う</button>
-  <button style={smallButtonStyle}>近い</button>
-  <button
+    {card.recognition ||
+      "対話の中から認識が現れるのを待っています。"}
+  </p>
+
+  <div
+    style={{
+      display: "flex",
+      gap: 8,
+      marginTop: 16,
+    }}
+  >
+    <button style={smallButtonStyle}>違う</button>
+    <button style={smallButtonStyle}>近い</button>
+    <button
   style={smallButtonStyle}
   onClick={handleRecognitionAccepted}
 >
   それだ
 </button>
-</div>
+  </div>
 </div>
 
 <div
