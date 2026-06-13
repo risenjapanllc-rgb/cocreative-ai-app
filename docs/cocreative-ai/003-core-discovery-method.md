@@ -461,3 +461,40 @@ A relationship may remain.
 Do not assume that recognition begins with a scene.
 
 Recognition appears to be closely related to what remained.
+
+## Finding
+
+001 and 002 do not begin with scene selection.
+
+They begin with witness preservation.
+
+The first task is not:
+
+"What scene should be drawn?"
+
+The first task is:
+
+"What remained?"
+
+Only afterward can visual form be discovered.
+
+---
+
+## Observation
+
+A scene may remain.
+
+A word may remain.
+
+A gaze may remain.
+
+A feeling may remain.
+
+A presence may remain.
+
+A relationship may remain.
+
+Do not assume that recognition begins with a scene.
+
+Recognition appears to be closely related to what remained.
+
