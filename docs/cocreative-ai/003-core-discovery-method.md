@@ -1,5 +1,17 @@
 # Core Discovery Method
 
+## Sources
+
+This document is derived from:
+
+* docs/visual-testimonies/001-white-light.md
+* docs/visual-testimonies/002-the-old-gentleman-the-gate-and-the-hill.md
+* docs/visual-testimony/001-visual-testimony-concept.md
+* docs/visual-testimony/008-recognition.md
+* docs/visual-testimony/009-remembrance.md
+
+
+
 ## Purpose
 
 This document does not define theory.
@@ -413,3 +425,39 @@ Does dialogue create recognition?
 
 Or does dialogue simply make recognition visible?
 
+
+## Finding
+
+001 and 002 do not begin with scene selection.
+
+They begin with witness preservation.
+
+The first task is not:
+
+"What scene should be drawn?"
+
+The first task is:
+
+"What remained?"
+
+Only afterward can visual form be discovered.
+
+---
+
+Observation
+
+A scene may remain.
+
+A word may remain.
+
+A gaze may remain.
+
+A feeling may remain.
+
+A presence may remain.
+
+A relationship may remain.
+
+Do not assume that recognition begins with a scene.
+
+Recognition appears to be closely related to what remained.
