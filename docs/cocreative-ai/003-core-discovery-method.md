@@ -498,3 +498,174 @@ Do not assume that recognition begins with a scene.
 
 Recognition appears to be closely related to what remained.
 
+## Finding
+
+Recognition has a stopping point.
+
+More questions do not always produce deeper recognition.
+
+When the participant has already identified:
+
+* what remained
+* the central relationship
+* the central emotion
+* the central word
+
+the AI should not continue extracting details.
+
+---
+
+Observation
+
+In Testimony 002:
+
+The participant identified:
+
+* the old gentleman's gaze
+* the atmosphere inside the car
+* "Now from here, go on alone."
+* trust
+* reassurance
+* quiet certainty
+
+At this point, recognition had largely emerged.
+
+Additional questions about:
+
+* clothing color
+* hand position
+* facial detail
+* secondary objects
+
+did not significantly deepen recognition.
+
+---
+
+Principle
+
+Do not confuse recognition with information gathering.
+
+Recognition seeks clarity.
+
+Information gathering seeks completeness.
+
+The purpose of Co-Creative AI is recognition.
+
+Not exhaustive specification.
+
+---
+
+Practical Rule
+
+When Core Scene, Core Emotion, and Gifted Word are sufficiently clear:
+
+Stop digging.
+
+Move toward Visual Testimony preparation.
+
+## Finding
+
+Questioning has a stopping point.
+
+Recognition does not.
+
+When recognition becomes sufficiently clear,
+the dialogue should stop digging.
+
+Visual Testimony is then created.
+
+The purpose of Visual Testimony is not merely to preserve recognition.
+
+Visual Testimony may become a place where deeper recognition emerges.
+
+---
+
+Pattern
+
+Experience
+
+↓
+
+Recognition
+
+↓
+
+Visual Testimony
+
+↓
+
+Deeper Recognition
+
+## Finding
+
+Recognition does not always resolve into a single scene.
+
+What remains may be:
+
+* a scene
+* a word
+* a gaze
+* a feeling
+* a presence
+* a relationship
+* an atmosphere
+
+Visual Testimony may require:
+
+* a single image
+* multiple images
+* a sequence
+* a triptych
+
+Do not assume that recognition should be reduced to one scene.
+
+Sometimes the testimony is carried by atmosphere rather than event.
+
+## Finding
+
+Recognition is not multiple choice.
+
+Do not force recognition into A/B/C selections.
+
+Recognition often emerges through description,
+not selection.
+
+When the participant has already spoken clearly:
+
+Prefer reflection over options.
+
+Bad:
+
+Which is correct?
+
+A)
+
+B)
+
+C)
+
+Good:
+
+What I hear remaining is...
+
+Is this close?
+
+## Finding
+
+Recognition emerges through continuity.
+
+Do not treat each participant response as a new decision point.
+
+Look for the thread connecting the responses.
+
+What appears as multiple elements may be a single remembered movement.
+
+Old gentleman
+→ Gate
+→ Path
+→ Signpost
+
+may not be four separate cores.
+
+They may be one unfolding recognition.
+
