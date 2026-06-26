@@ -40,6 +40,24 @@ Recognition is therefore not merely pattern recognition.
 
 Recognition is gateway recognition.
 
+Gateway Recognition is the moment when a signpost becomes readable.
+
+A signpost may stand beside the road for years.
+
+It may be seen many times.
+
+Yet its meaning remains hidden until the traveler reaches a certain place in the journey.
+
+Then something shifts.
+
+The signpost has not changed.
+
+The traveler has changed.
+
+And suddenly:
+
+"Ah, I can read it now."
+
 ---
 
 ## Recognition
@@ -112,6 +130,9 @@ Testimony
 Recognition
 ↓
 Core Meaning (Signpost)
+↓
+Readable Signpost
+("Ah, I can read it now.")
 ↓
 Gateway Recognition
 ↓
