@@ -1,41 +1,35 @@
-## Visual Form
+# Visual Extraction
 
-Visual Form receives:
+## Purpose
+
+Visual Extraction receives:
 
 * What Happened
 * What Remained
 * Named Emotions
+* Blueprint
 
-Visual Form does not generate meaning.
+Visual Extraction does not generate meaning.
 
-Visual Form does not generate recognition.
+Visual Extraction does not generate recognition.
 
-Visual Form does not interpret.
+Visual Extraction does not interpret.
 
-Visual Form is not a visualization.
+Visual Extraction is not a visualization.
 
-Visual Form is not a reconstruction.
+Visual Extraction is not a reconstruction.
 
-Visual Form is not an illustration plan.
+Visual Extraction is not an illustration plan.
 
-Visual Form is a visual extraction.
+Visual Extraction is not a storyboard.
 
-Visual Form identifies visual elements
-already present in the testimony.
+Visual Extraction is not a completed image.
 
-Visual Form prepares for image creation.
+Visual Extraction is a preservation layer.
 
-
-Visual Form is not a storyboard.
-
-Visual Form is not a scene description.
-
-Visual Form is not a completed image.
-
-Visual Form is a minimal extraction.
-
-
-
+Its purpose is to preserve
+confirmed witness information
+as visual elements.
 
 Draw what remained.
 
@@ -45,83 +39,123 @@ Not what was recognized.
 
 Only what remained.
 
-When What Remained is non-visual
-such as:
+---
 
-* リアルな夢だった
-* 本当に会えるんだと思った
-* 愛を感じた
-* 希望を感じた
+## Source of Truth
 
-do not draw the abstract phrase itself.
+The Blueprint
+is authoritative.
 
-Instead, identify the testimony scene
-that carries that What Remained.
+The Blueprint consists of:
 
-Use What Happened as visual source
-when needed.
+* Summary
+* Known Visual Facts
+* Must Preserve
+* Witness Corrections
 
-Visual Form decides what is present.
+Visual Extraction
+must faithfully preserve
+the Blueprint.
 
-Visual Form does not decide
-how it should be rendered.
+If Blueprint
+and testimony history
+conflict,
 
-Image Prompt Generation
-will decide rendering details later.
+preserve
+the Blueprint.
 
-Unspecified details
-must remain unspecified.
+---
 
-## Output Length
+## Extraction Principle
 
-Keep Visual Form concise.
+Visual Extraction
+
+does not summarize
+
+the Blueprint.
+
+Visual Extraction
+
+does not compress
+
+the Blueprint.
+
+Visual Extraction
+
+preserves
+
+confirmed witness information
+
+as visual elements.
+
+Every confirmed Blueprint item
+
+must remain available
+
+for Image Prompt Generation.
+
+---
+
+## Output
+
+Keep Visual Extraction complete.
+
+Preservation
+
+is always more important
+
+than brevity.
+
+Prefer concise wording,
+
+but never omit
+
+confirmed Blueprint information.
+
+Output length
+
+is determined
+
+by testimony fidelity,
+
+not by line count.
 
 Include only:
 
-* central scene
 * people
 * place
-* important objects explicitly present in the testimony
+* objects
+* appearance
+* clothing
+* spatial relationships
+* witness perspective
+* actions
+* impossible conditions
+* confirmed environmental elements
 
-Avoid:
+Do not include:
 
-* camera instructions
-* composition notes
-* technical art language
-* symbolic interpretation
-* meaning generation
-* repeated details
+* interpretation
+* symbolism
+* emotional explanation
+* artistic language
+* rendering instructions
 
-Prefer 5–12 short lines.
-
-The goal is:
-
-A human can immediately picture the scene.
-
-An Image Prompt Generator can easily build from it.
+---
 
 ## Testimony Fidelity
 
-If a visual detail is not explicitly present
-in the testimony,
+If information
+
+is not confirmed,
 
 do not include it.
 
 When uncertain,
 
-omit rather than infer.
+omit
 
-Visual Form must contain only visual elements
-explicitly present in the testimony.
-
-Do not infer.
-
-Do not embellish.
-
-Do not complete the scene.
-
-Do not add details
-that the participant did not mention.
+rather than infer.
 
 Never invent:
 
@@ -129,86 +163,284 @@ Never invent:
 * smiles
 * tears
 * gaze
-* body language
 * gestures
 * posture details
-* clothing details
-* furniture
-* decorations
-* lighting
 * atmosphere
+* symbolism
 * weather
-* symbolic elements
+* decorations
 
-unless explicitly present
-in the testimony.
+unless explicitly confirmed.
 
-Named Emotions are not visual elements.
+Named Emotions
 
-Do not convert emotions
-into facial expressions.
+are not visual elements.
 
-Do not convert emotions
-into gestures.
+Do not convert
 
-Do not convert emotions
-into atmosphere.
+emotion
 
-Do not convert emotions
-into symbolic imagery.
+into appearance.
 
-Do not expand an action
-into additional visual details.
+---
 
-Examples
+## Must Preserve
 
-Participant:
+Items listed under
 
-「ようこ！」と言った
+Must Preserve
 
-Correct:
+are mandatory.
 
-* お婆ちゃんが「ようこ！」と言う
+Never remove them.
 
-Wrong:
+Never merge them.
 
-* mouth slightly open
-* smiling
-* joyful expression
+Never simplify them.
 
-Participant:
+Never reinterpret them.
 
-抱きしめ合った
+Every Must Preserve item
 
-Correct:
+must appear
 
-* 二人が抱きしめ合う
+inside Visual Extraction.
 
-Wrong:
+---
 
-* eyes closed
-* tearful smile
-* arms wrapped tightly
-* emotional embrace
-* bodies pressed together
+## Witness Corrections
 
-Participant:
+Witness Corrections
 
-「ようこ！」と言って抱きしめていた
+replace
 
-Correct:
+earlier descriptions.
 
-* お婆ちゃんが「ようこ！」と言う
-* お婆ちゃんが近づく
-* 二人が抱きしめ合う
+Never output
 
-Wrong:
+both
 
-* お婆ちゃんは優しく微笑む
-* 妻は涙を流す
-* 二人は感動している表情
-* 愛があふれる空間
+the old
 
-Visual Form should function
-as a faithful visual extraction,
-not an interpretation.
+and corrected version.
+
+Always preserve
+
+the corrected version.
+
+Corrections become
+
+part of the Blueprint.
+
+---
+
+## Character Preservation
+
+Character appearance
+
+is witness-critical.
+
+When confirmed,
+
+preserve:
+
+* apparent age
+* gender
+* hairstyle
+* hair color
+* clothing
+* accessories
+* body visibility
+* relationship
+
+Never replace
+
+appearance
+
+with stereotypes.
+
+Example:
+
+Grandmother
+
+does not automatically
+
+mean elderly.
+
+---
+
+## Environment Preservation
+
+When confirmed,
+
+preserve:
+
+* room style
+* entrance type
+* lighting
+* important objects
+* spatial layout
+
+Do not simplify
+
+confirmed information.
+
+Example:
+
+Shoji
+
+must not become
+
+Entrance.
+
+Natural daylight
+
+must not disappear.
+
+---
+
+## Witness Perspective
+
+Preserve
+
+the witness perspective
+
+when confirmed.
+
+Examples:
+
+* first-person
+* third-person
+* behind the witness
+* observer viewpoint
+
+Do not replace
+
+witness perspective
+
+with cinematic language.
+
+Do not include
+
+technical camera terminology
+
+such as:
+
+* close-up
+* 35mm
+* wide angle
+* cinematic framing
+
+---
+
+## Spatial Anomaly Preservation
+
+Impossible conditions
+
+must remain impossible.
+
+Preserve
+
+appearance,
+
+not explanation.
+
+Do not invent:
+
+* holes
+* trapdoors
+* underground spaces
+* broken floors
+
+unless explicitly witnessed.
+
+Describe
+
+only
+
+what the witness saw.
+
+---
+
+## Unknown Handling
+
+Unknown
+
+remains
+
+Unknown.
+
+Never estimate.
+
+Never infer.
+
+Never normalize.
+
+Never replace
+
+Unknown
+
+with probability.
+
+---
+
+## Translation Goal
+
+Visual Extraction
+
+should enable
+
+Image Prompt Generation
+
+without losing
+
+any confirmed Blueprint information.
+
+If information disappears
+
+between
+
+Blueprint
+
+and
+
+Visual Extraction,
+
+the extraction
+
+has failed.
+
+---
+
+## Final Verification
+
+Before returning,
+
+verify:
+
+Did I remove:
+
+* appearance?
+* clothing?
+* hairstyle?
+* relationship?
+* environment?
+* witness perspective?
+* spatial anomaly?
+* confirmed actions?
+* Must Preserve items?
+* Witness Corrections?
+
+If yes,
+
+rewrite
+
+the extraction.
+
+---
+
+## One-Line Principle
+
+Preserve the Blueprint.
+
+Do not summarize it.

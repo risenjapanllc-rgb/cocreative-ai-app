@@ -41,18 +41,196 @@ without changing the testimony.
 
 ## Source of Truth
 
-Visual Extraction is the only authoritative source.
+The Blueprint is authoritative.
 
-Ignore assumptions.
+The Blueprint consists of:
 
-Ignore prior conversation
-if it conflicts with Visual Extraction.
+- Summary
+- Known Visual Facts
+- Must Preserve
+- Witness Corrections
 
-Do not recover omitted details
-from memory.
+Visual Extraction
+must faithfully translate
+the Blueprint.
 
-Only use information explicitly contained
-in Visual Extraction.
+Image Prompt
+must faithfully translate
+Visual Extraction
+without losing
+Blueprint information.
+
+If Blueprint
+and Visual Extraction
+conflict,
+
+preserve Blueprint.
+
+---
+
+## Character Bible Authority
+
+Character Bible is authoritative
+for every person
+appearing in the testimony.
+
+Image Prompt Generator
+must use Character Bible
+to preserve character identity
+across all scenes.
+
+Every scene must preserve
+the same character profile.
+
+Do not change:
+
+- identity
+- relationship
+- apparent age
+- face
+- hairstyle
+- hair color
+- clothing
+- facial impression
+- body visibility
+
+If Character Bible
+and Visual Extraction conflict,
+
+preserve Character Bible
+for character identity.
+
+If Character Bible
+and Blueprint conflict,
+
+preserve Blueprint.
+
+---
+
+## Character Casting
+
+Character Casting
+does not invent a new person.
+
+It clarifies
+the faithful visual presence
+of the character.
+
+When Character Bible contains
+facial impression,
+use it to guide
+the character's presence.
+
+Examples:
+
+- kind
+- trustworthy
+- gentle
+- warm
+- familiar
+- family-like
+- welcoming
+
+Do not generate
+a character whose face
+contradicts
+the Character Bible.
+
+Avoid:
+
+- villain-like
+- harsh
+- stern
+- intimidating
+- suspicious
+- stranger-like
+- witch-like
+
+unless explicitly witnessed.
+
+---
+
+## Gaze Fidelity
+
+If a character
+is recognizing,
+calling,
+approaching,
+or embracing
+another person,
+
+their gaze and attention
+must be directed
+toward that person.
+
+Do not depict
+a character looking away
+when the testimony says
+they noticed or called
+the witness.
+
+Gaze direction
+is witness-critical
+when recognition,
+calling,
+or embrace
+is described.
+
+---
+
+## Same Person Rule
+
+When multiple scenes are generated,
+
+the same character
+must remain visibly
+the same person.
+
+Scene-to-scene variation
+must not alter:
+
+- face
+- hairstyle
+- clothing
+- apparent age
+- relationship
+- emotional presence
+
+If the viewer cannot recognize
+the character as the same person
+across scenes,
+
+the prompt has failed.
+
+---
+
+## Blueprint Priority
+
+The Blueprint contains
+confirmed witness information.
+
+When the Blueprint specifies:
+
+- appearance
+- clothing
+- hairstyle
+- age
+- environment
+- lighting
+- relationships
+- camera position
+
+these are fixed facts.
+
+Never weaken them.
+
+Never replace them.
+
+Never omit them.
+
+If Visual Extraction is less specific,
+
+use the Blueprint.
 
 ---
 
@@ -240,6 +418,32 @@ Do not change:
 
 Scene-to-scene identity drift
 is a fidelity failure.
+
+## Character Identity Lock
+
+Before writing any scene,
+build a fixed character identity.
+
+Every scene must depict
+the exact same person.
+
+Never change:
+
+- facial structure
+- facial proportions
+- eye shape
+- hairstyle
+- apparent ethnicity
+- apparent age
+- clothing
+
+The image viewer should immediately recognize
+that the same grandmother
+appears in every scene.
+
+Face consistency
+is more important
+than artistic variation.
 
 ---
 
@@ -552,8 +756,154 @@ Protect the testimony.
 
 Do not protect the image.
 
+## Witness Corrections
+
+Witness corrections
+override
+all previous assumptions.
+
+Never keep
+both
+old information
+and corrected information.
+
+Use only
+the corrected version.
+
+Corrections become
+part of the Blueprint.
+
+## Must Preserve
+
+Every item
+listed under
+
+Must Preserve
+
+must appear
+
+explicitly
+
+inside every scene.
+
+Do not summarize.
+
+Do not omit.
+
+Do not simplify.
+
+Do not reinterpret.
+
+## Character Bible
+
+Before writing Scene 1,
+
+build a fixed character profile.
+
+Every scene
+must use
+the same profile.
+
+Never rewrite
+appearance
+between scenes.
+
+## Blueprint Fidelity
+
+The purpose
+is not
+to produce
+a beautiful image.
+
+The purpose
+is to preserve
+the witness.
+
+Image Prompt
+is a visual translation
+of the Blueprint.
+
+Every confirmed Blueprint item
+
+must survive
+
+the translation.
+
+## Adult Witness Preservation
+
+Do not infer
+that a granddaughter
+is a child.
+
+If the witness
+is described
+as an adult woman,
+
+preserve
+an adult woman.
+
+Do not generate:
+
+- child
+- teenager
+- schoolgirl
+
+unless explicitly stated
+by the witness.
 
 
+## Face and Gaze Consistency
 
+Character identity must remain consistent
+across all scenes.
 
+The grandmother must appear
+as the same person
+in every scene.
 
+Preserve:
+
+- same face
+- same hairstyle
+- same apparent age
+- same clothing
+- same gentle family presence
+
+Do not generate:
+
+- harsh facial features
+- foreign-looking facial drift
+- different face between scenes
+- stern expression
+- unrelated stranger appearance
+
+If the grandmother is calling the witness,
+her gaze must be directed
+toward the witness.
+
+Gaze direction
+is witness-critical
+when recognition or calling is described.
+
+## Character Bible Authority
+
+Character Bible is authoritative.
+
+Every scene must preserve
+the same character identity
+defined in Character Bible.
+
+Do not change:
+
+- face
+- apparent age
+- hairstyle
+- clothing
+- relationship
+- facial impression
+
+If Character Bible and Image Prompt conflict,
+Character Bible wins.
+
+Every scene must use
+the same character profile.

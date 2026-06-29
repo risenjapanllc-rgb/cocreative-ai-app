@@ -25,15 +25,11 @@ type ImagePromptScene = {
 };
 
 function fallbackToSinglePrompt(outputText: string): ImagePromptScene[] {
-  const imagePrompt = outputText
-    .replace(/^Image Prompt:\s*/i, "")
-    .trim();
-
   return [
     {
       scene: 1,
       title: "Scene 1",
-      prompt: imagePrompt,
+      prompt: outputText.replace(/^Image Prompt:\s*/i, "").trim(),
     },
   ];
 }
@@ -45,6 +41,11 @@ export async function POST(req: Request) {
       whatRemained,
       namedEmotions,
       visualExtraction,
+      characterBible,
+      environmentBible,
+      compositionBible,
+      objectBible,
+      sceneBible,
     } = await req.json();
 
     const response = await openai.responses.create({
@@ -60,7 +61,12 @@ export async function POST(req: Request) {
             `What Happened:\n${whatHappened || ""}\n\n` +
             `What Remained:\n${whatRemained || ""}\n\n` +
             `Named Emotions:\n${namedEmotions || ""}\n\n` +
-            `Visual Extraction:\n${visualExtraction || ""}`,
+            `Visual Extraction:\n${visualExtraction || ""}\n\n` +
+            `Character Bible:\n${JSON.stringify(characterBible || {}, null, 2)}\n\n` +
+            `Environment Bible:\n${JSON.stringify(environmentBible || {}, null, 2)}\n\n` +
+            `Composition Bible:\n${JSON.stringify(compositionBible || {}, null, 2)}\n\n` +
+            `Object Bible:\n${JSON.stringify(objectBible || {}, null, 2)}\n\n` +
+            `Scene Bible:\n${JSON.stringify(sceneBible || {}, null, 2)}`,
         },
       ],
     });
@@ -100,6 +106,11 @@ export async function POST(req: Request) {
     console.log("IMAGE_PROMPTS =", JSON.stringify(imagePrompts, null, 2));
 
     return NextResponse.json({
+      characterBible,
+      environmentBible,
+      compositionBible,
+      objectBible,
+      sceneBible,
       imagePrompts,
       imagePrompt: imagePrompts[0]?.prompt ?? "",
     });

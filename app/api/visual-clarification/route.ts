@@ -16,6 +16,13 @@ export async function POST(req: Request) {
   try {
     const { testimony, previousClarification, answer } = await req.json();
 
+    console.log("=== OPENAI REQUEST START ===");
+    console.log({
+      testimony,
+      answer,
+      previousClarification,
+    });
+
     const response = await openai.responses.create({
       model: "gpt-5",
       input: [
@@ -41,6 +48,9 @@ Use this exact format:
 }
 
 Rules:
+- Always respond in Japanese.
+- Use Japanese for all field values.
+- Keep exact quoted witness words unchanged.
 - Ask only visual fidelity questions.
 - Do not ask about emotions.
 - Do not ask about meaning.
@@ -62,12 +72,22 @@ Rules:
               null,
               2
             )}\n\n` +
-            `Witness Answer:\n${answer || ""}`,
+            `Witness Answer / Correction:\n${answer || ""}\n\n` +
+            `Instruction:\n` +
+            `Update the Previous Clarification using the Witness Answer / Correction.\n` +
+            `If the witness correction contradicts the previous clarification, the correction wins.\n` +
+            `Remove corrected items from unknowns.\n` +
+            `Do not keep old incorrect descriptions.\n` +
+            `Return the updated Blueprint only.`,
         },
       ],
     });
 
+    console.log("=== OPENAI RESPONSE RECEIVED ===");
+
     const outputText = response.output_text.trim();
+
+    console.log(outputText);
 
     let parsed;
 
@@ -91,12 +111,18 @@ Rules:
       missingInformation: Array.isArray(parsed.missingInformation)
         ? parsed.missingInformation
         : [],
-      questions: Array.isArray(parsed.questions) ? parsed.questions : [],
+      questions: Array.isArray(parsed.questions)
+        ? parsed.questions
+        : [],
       mustPreserve: Array.isArray(parsed.mustPreserve)
         ? parsed.mustPreserve
         : [],
-      unknowns: Array.isArray(parsed.unknowns) ? parsed.unknowns : [],
-      readyForVisualExtraction: Boolean(parsed.readyForVisualExtraction),
+      unknowns: Array.isArray(parsed.unknowns)
+        ? parsed.unknowns
+        : [],
+      readyForVisualExtraction: Boolean(
+        parsed.readyForVisualExtraction
+      ),
     });
   } catch (error) {
     console.error("VISUAL CLARIFICATION ERROR =", error);

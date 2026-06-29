@@ -249,7 +249,8 @@ Core Architecture:
 
 * Witness
 * Extraction
-* Perspective Slide
+* Pattern Recognition
+* Exploration
 * Recognition
 * Expression
 

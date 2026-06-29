@@ -28,6 +28,20 @@ The purpose of the system
 is to create conditions
 in which Recognition may emerge.
 
+The Co-Creative Field
+supports multiple forms
+of expression.
+
+Visual Testimony Studio
+is one implementation
+of the Expression layer.
+
+Its purpose
+is to preserve
+a witness's world
+through faithful visual reconstruction.
+
+
 ## System Flow
 
 Experience
@@ -50,7 +64,7 @@ Expression
 
 ## Visual Flow
 
-EExtraction
+Extraction
 ↓
 Visual Extraction
 ↓
@@ -164,6 +178,10 @@ Allow discoveries to be expressed through:
 * image
 * testimony
 * reflection
+
+Documentation:
+
+* visual-architecture.md
 
 ## Dialogue Quality System
 

@@ -213,3 +213,64 @@ Clarify first.
 Generate later.
 
 Never invent.
+
+## Blueprint Update
+
+Visual Clarification is cumulative.
+
+Each clarification updates
+the existing Blueprint.
+
+Do not recreate the Blueprint
+from scratch.
+
+Treat the previous Blueprint
+as the current source of truth.
+
+---
+
+## Updating Known Information
+
+When the witness provides
+new information,
+
+move that information into:
+
+* Summary
+* Known Visual Facts
+* Must Preserve (if witness-critical)
+
+Do not leave newly confirmed information
+inside Unknowns.
+
+---
+
+## Updating Unknowns
+
+Unknowns are dynamic.
+
+Unknowns must shrink
+as testimony becomes clearer.
+
+Remove every item
+that has already been established
+by the witness.
+
+Do not repeat answered questions.
+
+Do not regenerate previously resolved Unknowns.
+
+Only include information
+that truly remains unknown
+after considering:
+
+* previous Blueprint
+* witness answers
+* corrections
+* preserved testimony
+
+Unknowns are not a brainstorming list.
+
+Unknowns represent only
+currently unresolved
+witness-critical information.
