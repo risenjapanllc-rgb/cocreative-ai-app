@@ -15,12 +15,12 @@ what a person truly experienced.
 
 A testimony contains
 
-- people
-- places
-- objects
-- relationships
-- time
-- meaning
+* people
+* places
+* objects
+* relationships
+* time
+* meaning
 
 Our goal is to preserve
 that witnessed world
@@ -223,15 +223,15 @@ not to the AI.
 Every generated scene
 must faithfully preserve
 
-- identity
-- relationships
-- environment
-- objects
-- viewpoint
-- lighting
-- chronology
-- impossible conditions
-- witness corrections
+* identity
+* relationships
+* environment
+* objects
+* viewpoint
+* lighting
+* chronology
+* impossible conditions
+* witness corrections
 
 Visual fidelity
 is more important
@@ -244,14 +244,14 @@ than cinematic quality.
 The Witness World
 may generate
 
-- images
-- comics
-- animation
-- films
-- VR experiences
-- interactive experiences
-- educational material
-- digital archives
+* images
+* comics
+* animation
+* films
+* VR experiences
+* interactive experiences
+* educational material
+* digital archives
 
 The world
 is primary.
@@ -266,17 +266,17 @@ is secondary.
 The same architecture
 may support
 
-- dream preservation
-- family memories
-- oral history
-- historical testimony
-- accident reconstruction
-- disaster reconstruction
-- crime scene reconstruction
-- legal testimony support
-- education
-- cultural preservation
-- digital archives
+* dream preservation
+* family memories
+* oral history
+* historical testimony
+* accident reconstruction
+* disaster reconstruction
+* crime scene reconstruction
+* legal testimony support
+* education
+* cultural preservation
+* digital archives
 
 The architecture
 is reusable.
@@ -291,14 +291,14 @@ the world.
 
 This project does not
 
-- rewrite testimony
-- improve memories
-- invent missing facts
-- optimize for cinematic beauty
-- replace witness interpretation
-- create fictional stories
-- alter relationships
-- modify identities
+* rewrite testimony
+* improve memories
+* invent missing facts
+* optimize for cinematic beauty
+* replace witness interpretation
+* create fictional stories
+* alter relationships
+* modify identities
 
 Faithfulness
 always comes first.
@@ -328,3 +328,61 @@ reconstructed,
 understood,
 and shared
 across generations.
+
+---
+
+## Project Identity
+
+Witness World is not an image generation system.
+
+It is an engine for structuring human testimony and faithfully reconstructing the witness's remembered world.
+
+Images are not the goal.
+
+They are one possible expression of a faithfully reconstructed Witness World.
+
+The true objective is witness recognition.
+
+The witness should be able to say:
+
+> "Yes. This is the person I saw."
+
+> "Yes. This is the place I remember."
+
+> "Yes. This is the world I experienced."
+
+Blueprint describes the world.
+
+Bible structures the world.
+
+Locks preserve the world.
+
+Images express the world.
+
+Witness World is not a prompt generator.
+
+It is a compiler that transforms human testimony into a faithfully reconstructed world.
+
+---
+
+## Recognition Engineering
+
+Recognition Engineering is the discipline of designing systems that preserve a witness's ability to recognize their remembered world.
+
+Traditional image generation optimizes for visual quality.
+
+Recognition Engineering optimizes for witness recognition.
+
+Its objective is not to generate better images.
+
+Its objective is to preserve recognition.
+
+In Witness World, every component exists to support recognition:
+
+Blueprint describes the world.
+
+Bible structures the world.
+
+Locks preserve the world.
+
+Images express the world.

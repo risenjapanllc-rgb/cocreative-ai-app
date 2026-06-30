@@ -10,6 +10,7 @@ const openai = new OpenAI({
 const promptFiles = [
   "prompts/image-prompt-generator.md",
   "docs/identity-fidelity.md",
+  "prompts/locks/identity-lock.md",
   "docs/perspective-selection.md",
   "docs/scene-count-decision.md",
 ];
@@ -47,6 +48,13 @@ export async function POST(req: Request) {
       objectBible,
       sceneBible,
     } = await req.json();
+
+    console.log("SYSTEM PROMPT LENGTH =", systemPrompt.length);
+    console.log("CHARACTER BIBLE LENGTH =", JSON.stringify(characterBible || {}).length);
+    console.log("ENVIRONMENT BIBLE LENGTH =", JSON.stringify(environmentBible || {}).length);
+    console.log("COMPOSITION BIBLE LENGTH =", JSON.stringify(compositionBible || {}).length);
+    console.log("OBJECT BIBLE LENGTH =", JSON.stringify(objectBible || {}).length);
+    console.log("SCENE BIBLE LENGTH =", JSON.stringify(sceneBible || {}).length);
 
     const response = await openai.responses.create({
       model: "gpt-5",
