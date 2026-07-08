@@ -1,3 +1,7 @@
+import { compilePrompt } from "@/lib/prompt-compiler";
+import { buildWitnessWorld } from "@/lib/world";
+import { createJournalEntry } from "@/lib/world/history";
+import { updateWorld } from "@/lib/world/world-updater";
 import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
@@ -8,9 +12,21 @@ const openai = new OpenAI({
 });
 
 const promptFiles = [
+  // Core Prompt
   "prompts/image-prompt-generator.md",
-  "docs/identity-fidelity.md",
+
+  // Translation Layer
+  "prompts/cinematic-translation.md",
+
+  // Lock Layer
+  "prompts/locks/director-lock.md",
   "prompts/locks/identity-lock.md",
+  "prompts/locks/room-lock.md",
+  "prompts/locks/impossible-condition-lock.md",
+  "prompts/locks/scene-continuity-lock.md",
+
+  // Supporting Guides
+  "docs/identity-fidelity.md",
   "docs/perspective-selection.md",
   "docs/scene-count-decision.md",
 ];
@@ -56,28 +72,39 @@ export async function POST(req: Request) {
     console.log("OBJECT BIBLE LENGTH =", JSON.stringify(objectBible || {}).length);
     console.log("SCENE BIBLE LENGTH =", JSON.stringify(sceneBible || {}).length);
 
+    const witnessWorld = buildWitnessWorld({
+      characterBible,
+      environmentBible,
+      compositionBible,
+      objectBible,
+      sceneBible,
+    });
+    const updatedWorld = updateWorld({
+      world: witnessWorld.world.world,
+      whatHappened,
+      whatRemained,
+      namedEmotions,
+    });
+
+witnessWorld.world.world = updatedWorld;
+
+    console.log("WITNESS WORLD =", JSON.stringify(witnessWorld, null, 2));
+
     const response = await openai.responses.create({
       model: "gpt-5",
       input: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content:
-            `What Happened:\n${whatHappened || ""}\n\n` +
-            `What Remained:\n${whatRemained || ""}\n\n` +
-            `Named Emotions:\n${namedEmotions || ""}\n\n` +
-            `Visual Extraction:\n${visualExtraction || ""}\n\n` +
-            `Character Bible:\n${JSON.stringify(characterBible || {}, null, 2)}\n\n` +
-            `Environment Bible:\n${JSON.stringify(environmentBible || {}, null, 2)}\n\n` +
-            `Composition Bible:\n${JSON.stringify(compositionBible || {}, null, 2)}\n\n` +
-            `Object Bible:\n${JSON.stringify(objectBible || {}, null, 2)}\n\n` +
-            `Scene Bible:\n${JSON.stringify(sceneBible || {}, null, 2)}`,
-        },
-      ],
-    });
+    {
+      role: "system",
+      content: systemPrompt,
+    },
+    {
+      role: "user",
+      content: compilePrompt({
+        witnessWorld,
+      }),
+    },
+  ],
+});
 
     const outputText = response.output_text.trim();
 
@@ -111,6 +138,15 @@ export async function POST(req: Request) {
 
     imagePrompts = imagePrompts.filter((item) => item.prompt.trim());
 
+    const journalEntry = createJournalEntry({
+      world: witnessWorld.world.world,
+      director: witnessWorld.director,
+      imagePrompt: imagePrompts[0]?.prompt ?? "",
+      whatHappened,
+      whatRemained,
+      namedEmotions,
+});
+
     console.log("IMAGE_PROMPTS =", JSON.stringify(imagePrompts, null, 2));
 
     return NextResponse.json({
@@ -119,9 +155,12 @@ export async function POST(req: Request) {
       compositionBible,
       objectBible,
       sceneBible,
+      witnessWorld,
+      journalEntry,
       imagePrompts,
       imagePrompt: imagePrompts[0]?.prompt ?? "",
-    });
+});
+
   } catch (error) {
     console.error("IMAGE PROMPT API ERROR =", error);
 

@@ -43,34 +43,42 @@ Do not include explanations.
 
     let parsed;
 
-    try {
-      parsed = JSON.parse(outputText);
-    } catch {
-      return NextResponse.json(
-        {
-          error: "Failed to parse character bible JSON",
-          raw: outputText,
-        },
-        { status: 500 }
-      );
-    }
+try {
+  const cleaned = outputText
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/\s*```$/, "")
+    .trim();
 
-    return NextResponse.json({
-      characters: Array.isArray(parsed.characters)
-        ? parsed.characters
-        : [],
-    });
-  } catch (error) {
-    console.error("CHARACTER BIBLE ERROR =", error);
+  parsed = JSON.parse(cleaned);
+} catch (error) {
+  console.error("RAW OUTPUT =", outputText);
 
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "character bible failed",
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      error: "Failed to parse character bible JSON",
+      raw: outputText,
+    },
+    { status: 500 }
+  );
+}
+
+return NextResponse.json({
+  characters: Array.isArray(parsed.characters)
+    ? parsed.characters
+    : [],
+});
+} catch (error) {
+  console.error("CHARACTER BIBLE ERROR =", error);
+
+  return NextResponse.json(
+    {
+      error:
+        error instanceof Error
+          ? error.message
+          : "character bible failed",
+    },
+    { status: 500 }
+  );
+}
 }

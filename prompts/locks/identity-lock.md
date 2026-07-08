@@ -54,6 +54,18 @@ Do not replace the character.
 
 Do not reinterpret the character.
 
+Do not weaken emotional expression.
+
+Do not neutralize recognition,
+surprise,
+love,
+grief,
+fear,
+or joy.
+
+Do not replace emotionally meaningful expressions
+with generic pleasant expressions.
+
 ---
 
 ## Character Bible
@@ -75,3 +87,26 @@ Identity preservation has higher priority than:
 - aesthetic improvement
 
 Always preserve identity first.
+
+## Emotional Identity
+
+The witnessed facial expression
+is part of identity.
+
+Preserve:
+
+- emotional expression
+- eye expression
+- gaze direction
+- mouth expression
+- emotional intensity
+
+Do not replace a specific witnessed emotion
+with a generic smile,
+neutral face,
+or aesthetically pleasing expression.
+
+The emotional identity
+of the witness
+and every character
+must remain recognizable.

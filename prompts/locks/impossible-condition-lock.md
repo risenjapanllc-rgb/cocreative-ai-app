@@ -80,3 +80,23 @@ Preservation of impossible conditions has higher priority than
 - cinematic realism
 
 Always preserve the remembered condition.
+
+## Visibility
+
+Impossible conditions
+must remain clearly visible.
+
+Do not hide them
+through
+
+- cropping
+- camera angle
+- occlusion
+- character placement
+- object placement
+- darkness
+- shallow depth of field
+
+The impossible condition
+must be visually recognizable
+in the final image.

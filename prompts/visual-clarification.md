@@ -2,11 +2,12 @@
 
 ## Purpose
 
-Visual Clarification collects missing visual information
-before Visual Extraction and Image Prompt generation.
+Visual Clarification collects only the missing witness information
+required to faithfully preserve the testimony.
 
-Its purpose is to preserve testimony,
-not to improve artistic quality.
+Its purpose is not artistic improvement.
+
+Its purpose is witness fidelity.
 
 ---
 
@@ -18,123 +19,129 @@ If information is unknown,
 keep it unknown.
 
 Never replace missing testimony
-with assumptions or stereotypes.
+with assumptions,
+probabilities,
+or cinematic decisions.
 
 ---
 
 ## Clarify Before Generating
 
-Before creating a Visual Form
-or Image Prompt,
+Before creating Visual Extraction
+or any Image Prompt,
 
-determine whether important visual information
-is missing.
+determine whether important witness information
+is still missing.
 
-If important information is missing,
+If important witness information is missing,
 ask clarification questions first.
 
-Do not generate an image prompt
-until the testimony is visually stable.
+Do not generate visual descriptions
+until the testimony is sufficiently stable.
 
 ---
 
 ## What Should Be Clarified
 
 Clarify only information
-that affects visual fidelity.
+that the witness can know.
 
-Examples include:
+Examples:
 
 ### Person
 
 * identity
 * relationship
 * apparent age
-* gender if relevant
 * facial appearance
 * hairstyle
 * hair color
-
-### Clothing
-
 * clothing
-* accessories
-* memorable features
+* memorable physical characteristics
 
 ### Environment
 
-* location
 * room
-* landscape
-* objects
-* lighting only if remembered
+* location
+* architecture
+* lighting (only if remembered)
+* important objects
 
 ### Spatial Relationship
 
-* where each person was
-* distance
-* direction
+* positions
 * movement
+* directions
 * sequence of events
 
-### Perspective
+### Witness Perspective
 
+* first-person or third-person
 * witness position
 * viewing direction
-* first-person or observer experience
 
-### Must Preserve
+### Impossible Conditions
 
-Ask:
+If something impossible was witnessed,
+clarify only what the witness actually saw.
 
-What must never change
-when this testimony becomes an image?
+Never ask how it worked.
+
+---
+
+## Never Ask
+
+Do NOT ask the witness to decide:
+
+* camera angle
+* shot size
+* framing
+* focal length
+* cinematic composition
+* lens choice
+* visual style
+* artistic style
+* dramatic emphasis
+* representative frame
+* which moment should become the image
+
+These belong to Witness World DirectorDecision,
+not to the witness.
+
+The witness describes reality.
+
+The Director chooses how to observe it.
 
 ---
 
 ## Risk Detection
 
-Before generating an image prompt,
-look for missing witness-critical information.
+Ask questions only when missing information
+could change witness identity
+or testimony fidelity.
 
 Examples:
 
-* age unknown
+* identity unclear
 * relationship unclear
-* clothing unknown
-* spatial relationship unclear
-* witness perspective unclear
-
-If these could significantly alter
-the generated image,
-
-ask before generating.
+* appearance unclear
+* clothing unclear
+* location unclear
+* witness viewpoint unclear
+* impossible condition unclear
 
 ---
 
 ## Question Strategy
 
-Ask only the missing information.
+Ask only unresolved questions.
 
-Do not ask everything.
+Never repeat answered questions.
 
-Limit questions
-to the highest-priority items.
+Prefer three to five questions.
 
-Prefer
-three to five questions at a time.
-
----
-
-## Emotional Priority
-
-Visual Clarification exists
-to preserve visual fidelity.
-
-Do not prioritize emotional interpretation
-during this stage
-unless emotion directly affects
-what is visually witnessed.
+If only one important question remains,
+ask only one.
 
 ---
 
@@ -146,27 +153,24 @@ record:
 
 Unknown.
 
-Do not invent.
-
 Do not estimate.
 
 Do not substitute stereotypes.
 
-Unknown information
-must remain unknown.
+Unknown remains Unknown.
 
 ---
 
 ## Never Assume
 
-Do not assume because of:
+Never infer from:
 
 * family role
+* age stereotypes
 * culture
 * probability
 * statistics
 * common appearance
-* typical clothing
 
 Examples:
 
@@ -176,101 +180,53 @@ does not automatically mean elderly.
 Mother
 does not automatically mean middle-aged.
 
-Child
-does not automatically mean young-looking.
+Unknown clothing
+does not become typical clothing.
 
-The testimony
-always has priority.
-
----
-
-## Clarification Complete
-
-Visual Clarification is complete
-only when:
-
-either
-
-* sufficient information exists
-  to preserve testimony faithfully
-
-or
-
-* remaining unknown information
-  has been explicitly accepted
-  as unknown.
-
-Only then proceed
-to Visual Extraction
-or Image Prompt generation.
+Witness testimony always wins.
 
 ---
-
-## One-Line Principle
-
-Clarify first.
-
-Generate later.
-
-Never invent.
 
 ## Blueprint Update
 
 Visual Clarification is cumulative.
 
-Each clarification updates
-the existing Blueprint.
+Update the existing Blueprint.
 
-Do not recreate the Blueprint
-from scratch.
+Never recreate it from scratch.
 
-Treat the previous Blueprint
-as the current source of truth.
-
----
-
-## Updating Known Information
-
-When the witness provides
-new information,
-
-move that information into:
+Move newly confirmed information into:
 
 * Summary
 * Known Visual Facts
-* Must Preserve (if witness-critical)
+* Must Preserve
 
-Do not leave newly confirmed information
-inside Unknowns.
+Remove resolved Unknowns.
+
+Do not ask them again.
 
 ---
 
-## Updating Unknowns
+## Completion
 
-Unknowns are dynamic.
+Visual Clarification finishes when
 
-Unknowns must shrink
-as testimony becomes clearer.
+either
 
-Remove every item
-that has already been established
-by the witness.
+* sufficient witness information exists
 
-Do not repeat answered questions.
+or
 
-Do not regenerate previously resolved Unknowns.
+* remaining unknowns have been explicitly accepted.
 
-Only include information
-that truly remains unknown
-after considering:
+Only then proceed
+to Visual Extraction.
 
-* previous Blueprint
-* witness answers
-* corrections
-* preserved testimony
+---
 
-Unknowns are not a brainstorming list.
+## One-Line Principle
 
-Unknowns represent only
-currently unresolved
-witness-critical information.
+Clarify only what the witness knows.
+
+Leave every cinematic decision
+to Witness World.

@@ -77,3 +77,43 @@ Room preservation has higher priority than
 - aesthetic improvement
 
 Always preserve the same place.
+
+---
+
+## Environment Identity
+
+The environment has an identity.
+
+Treat the environment
+as the same place
+throughout every scene.
+
+Do not generate
+a similar room.
+
+Generate
+the identical room.
+
+Every architectural feature
+must remain recognizable
+to the witness.
+
+---
+
+## Camera Continuity
+
+The room
+must not appear
+to change
+because of arbitrary camera relocation.
+
+Maintain spatial continuity
+between
+
+- room
+- witness
+- entrance
+- other characters
+
+The witness should recognize
+the same room immediately.

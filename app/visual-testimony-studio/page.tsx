@@ -2,8 +2,8 @@
 
 import LivingSpiral from "@/components/LivingSpiral";
 import { useLivingSpiral } from "@/hooks/useLivingSpiral";
-
 import { useState, type ReactNode } from "react";
+import { ReferenceImage } from "@/lib/world/reference-image";
 
 type Message = {
   role: "あなた" | "共創思考AI";
@@ -32,9 +32,10 @@ const [blueprintUpdateMessage, setBlueprintUpdateMessage] = useState("");
     },
   ]);
 
-  const [imagePrompt, setImagePrompt] = useState("");
+const [imagePrompt, setImagePrompt] = useState("");
 const [imagePrompts, setImagePrompts] = useState<any[]>([]);
 const [generatedImages, setGeneratedImages] = useState<any[]>([]);
+const [referenceImage, setReferenceImage] = useState<ReferenceImage | null>(null);
 const [witnessReflection, setWitnessReflection] = useState<any>(null);
 const [memoryEmergence, setMemoryEmergence] = useState<any>(null);
 const [fidelityReport, setFidelityReport] = useState<any>(null);
@@ -187,16 +188,54 @@ if (
     });
 
     if (!res.ok) {
-      const errorText = await res.text();
-      console.error("VISUAL CLARIFICATION ERROR", res.status, errorText);
-      return;
-    }
+  const errorText = await res.text();
 
-    const data = await res.json();
+  console.error(
+    "VISUAL CLARIFICATION ERROR",
+    res.status,
+    errorText
+  );
 
-    console.log("VISUAL CLARIFICATION =", data);
+  setVisualFormStatus(
+    "Visual Clarification の生成に失敗しました。"
+  );
 
-    setVisualClarification(data);
+  setIsGeneratingVisualForm(false);
+
+  return;
+}
+
+const data = await res.json();
+
+console.log("VISUAL CLARIFICATION =", data);
+
+setVisualClarification(data);
+
+const hasUnknowns =
+  Array.isArray(data.unknowns) && data.unknowns.length > 0;
+
+const hasQuestions =
+  Array.isArray(data.questions) && data.questions.length > 0;
+
+const shouldProceed =
+  data.readyForVisualExtraction || (!hasUnknowns && !hasQuestions);
+
+if (!shouldProceed) {
+  setVisualFormStatus(
+    "追加情報が必要です。\n\n表示された質問に答えて、もう一度送信してください。"
+  );
+
+  setBlueprintUpdateMessage(
+    "追加情報が必要です。表示された質問に答えて、もう一度送信してください。"
+  );
+
+  setIsGeneratingVisualForm(false);
+
+  spiral.goTo("clarification");
+
+  return;
+}
+
 setClarificationAnswer("");
 setBlueprintCorrection("");
 
@@ -204,17 +243,14 @@ setBlueprintUpdateMessage(
   "修正を反映し、Blueprintを更新しました。\n\n次は「Build Witness World」を押して、証言世界を構築してください。"
 );
 
-    if (data.readyForVisualExtraction) {
-  spiral.goTo("visual-extraction");
-} else {
-  spiral.goTo("clarification");
+spiral.goTo("visual-extraction");
+
+} catch (error) {
+  console.error("VISUAL CLARIFICATION ERROR =", error);
+} finally {
+  setIsLoading(false);
+  setIsClarifying(false);
 }
-  } catch (error) {
-    console.error("VISUAL CLARIFICATION ERROR =", error);
-  } finally {
-    setIsLoading(false);
-    setIsClarifying(false);
-  }
 }
 
   function handleRecognitionAccepted() {
@@ -535,6 +571,18 @@ async function handleGenerateSceneBible(
   visualExtraction: string
 ) {
   try {
+
+    console.log("CHARACTER BIBLE =", characterBible);
+console.log("ENVIRONMENT BIBLE =", environmentBible);
+console.log("COMPOSITION BIBLE =", compositionBible);
+console.log("OBJECT BIBLE =", objectBible);
+console.log("SCENE INPUT =", {
+  blueprint,
+  visualExtraction,
+});
+
+
+
     const res = await fetch("/api/scene-bible", {
       method: "POST",
       headers: {
@@ -568,10 +616,18 @@ setWitnessWorldStep("Witness World が完成しました。");
 spiral.goTo("image-prompt");
 
 setVisualFormStatus(
-  "Witness World Completed.\n\nPrepare Light を押してください。"
+  "Witness World Completed.\n\nImage Prompt を準備しています..."
 );
 
 setIsGeneratingVisualForm(false);
+
+await handleGenerateImagePrompt({
+  characterBible,
+  environmentBible,
+  compositionBible,
+  objectBible,
+  sceneBible: data,
+});
   } catch (error) {
     setIsGeneratingVisualForm(false);
     setVisualFormStatus("Scene Bible の生成中にエラーが発生しました。");
@@ -581,77 +637,95 @@ setIsGeneratingVisualForm(false);
   
 
   async function handleGenerateImage() {
-    setImageGenerationStatus("画像を生成しています...");
-    const promptsToGenerate =
-      imagePrompts.length > 0
-        ? imagePrompts
-        : [
-            {
-              scene: 1,
-              title: "Scene 1",
-              prompt: card.imagePrompt || imagePrompt,
-            },
-          ];
-
-    try {
-      const generated: any[] = [];
-
-      for (const item of promptsToGenerate) {
-        setImageGenerationStatus(
-  `Scene ${item.scene} を生成しています...`
-);
-        const res = await fetch("/api/generate-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            imagePrompts: [item],
-          }),
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.error(
-            `IMAGE GENERATION API ERROR scene ${item.scene}`,
-            res.status,
-            errorText
-          );
-          continue;
-        }
-
-        const data = await res.json();
-
-        if (Array.isArray(data.images)) {
-          generated.push(...data.images);
-        } else if (data.imageUrl) {
-          generated.push({
-            scene: item.scene,
-            title: item.title,
-            imageUrl: data.imageUrl,
-          });
-        }
-      }
-
-      setGeneratedImages(generated);
-      setImageGenerationStatus(
-  "画像生成が完了しました。Compare with Blueprint を押してください。"
-);
-
-      setCard((prev) => ({
-        ...prev,
-        generatedImage: generated[0]?.imageUrl || "",
-      }));
-      spiral.next();
-
-    } catch (error) {
   setImageGenerationStatus(
-    "画像生成中にエラーが発生しました。"
+    referenceImage
+      ? "基準画像を使って編集生成しています..."
+      : "画像を生成しています..."
   );
 
-  console.error("IMAGE GENERATION ERROR", error);
-}
-  }
+  const promptsToGenerate =
+    imagePrompts.length > 0
+      ? imagePrompts
+      : [
+          {
+            scene: 1,
+            title: "Scene 1",
+            prompt: card.imagePrompt || imagePrompt,
+          },
+        ];
 
-async function handleGenerateImagePrompt() {
+  try {
+    const generated: any[] = [];
+
+    for (const item of promptsToGenerate) {
+      setImageGenerationStatus(
+        referenceImage
+          ? `Scene ${item.scene} を基準画像から編集しています...`
+          : `Scene ${item.scene} を生成しています...`
+      );
+
+      const res = await fetch("/api/generate-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode: referenceImage ? "edit" : "generate",
+          referenceImageUrl: referenceImage?.imageUrl,
+          imagePrompts: [item],
+        }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+
+        console.error(
+          `IMAGE GENERATION API ERROR scene ${item.scene}`,
+          res.status,
+          errorText
+        );
+
+        continue;
+      }
+
+      const data = await res.json();
+
+      if (Array.isArray(data.images)) {
+        generated.push(...data.images);
+      } else if (data.imageUrl) {
+        generated.push({
+          scene: item.scene,
+          title: item.title,
+          imageUrl: data.imageUrl,
+        });
+      }
+    }
+
+    setGeneratedImages(generated);
+
+    setImageGenerationStatus(
+      referenceImage
+        ? "基準画像からの編集生成が完了しました。"
+        : "画像生成が完了しました。Compare with Blueprint を押してください。"
+    );
+
+    setCard((prev) => ({
+      ...prev,
+      generatedImage: generated[0]?.imageUrl || "",
+    }));
+
+    spiral.next();
+  } catch (error) {
+    setImageGenerationStatus("画像生成中にエラーが発生しました。");
+
+    console.error("IMAGE GENERATION ERROR", error);
+  }
+}
+async function handleGenerateImagePrompt(overrides?: {
+  characterBible?: any;
+  environmentBible?: any;
+  compositionBible?: any;
+  objectBible?: any;
+  sceneBible?: any;
+}) {
   setImagePromptStatus("Image Prompt を生成しています...");
 
   try {
@@ -664,22 +738,31 @@ async function handleGenerateImagePrompt() {
         namedEmotions: card.namedEmotions,
         visualExtraction: card.visualForm,
 
-        characterBible,
-        environmentBible,
-        compositionBible,
-        objectBible,
-        sceneBible,
+        characterBible: overrides?.characterBible ?? characterBible,
+        environmentBible: overrides?.environmentBible ?? environmentBible,
+        compositionBible: overrides?.compositionBible ?? compositionBible,
+        objectBible: overrides?.objectBible ?? objectBible,
+        sceneBible: overrides?.sceneBible ?? sceneBible,
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
       console.error("IMAGE PROMPT API ERROR", res.status, errorText);
+
       setImagePromptStatus("Image Prompt の生成に失敗しました。");
+      setVisualFormStatus("Image Prompt の生成に失敗しました。");
+      setIsGeneratingVisualForm(false);
+
       return;
     }
 
     const data = await res.json();
+
+    console.log("IMAGE PROMPT RESPONSE =", data);
+    console.log("imagePrompts =", data.imagePrompts);
+    console.log("imagePrompt =", data.imagePrompt);
+    console.log("card.imagePrompt(before setCard) =", card.imagePrompt);
 
     if (Array.isArray(data.imagePrompts)) {
       setImagePrompts(data.imagePrompts);
@@ -698,13 +781,19 @@ async function handleGenerateImagePrompt() {
       "Image Prompt を受け取りました。Reveal Light を押してください。"
     );
 
-    spiral.next();
+    setVisualFormStatus(
+      "Witness World Completed.\n\nImage Prompt Ready.\nReveal Light を押してください。"
+    );
+
+    setIsGeneratingVisualForm(false);
   } catch (error) {
+    console.error("IMAGE PROMPT ERROR =", error);
+
     setImagePromptStatus("Image Prompt の生成に失敗しました。");
-    console.error("IMAGE PROMPT ERROR", error);
+    setVisualFormStatus("Image Prompt の生成に失敗しました。");
+    setIsGeneratingVisualForm(false);
   }
 }
-
 
   async function handleVisualFidelityCheck() {
   console.log("VISUAL FIDELITY CLICKED");
@@ -1098,16 +1187,21 @@ async function handleMemoryEmergence() {
               </>
             )}
 
-           {visualStage === "visual-extraction" && card.whatRemained && (
+           {card.whatRemained && !card.visualForm && (
   <button
     onClick={handleGenerateVisualForm}
+    disabled={isGeneratingVisualForm}
     style={{
       ...sendButtonStyle,
       marginTop: 16,
       width: "100%",
+      opacity: isGeneratingVisualForm ? 0.6 : 1,
+      cursor: isGeneratingVisualForm ? "wait" : "pointer",
     }}
   >
-    Generate Visual Extraction
+    {isGeneratingVisualForm
+      ? "Witness World を構築しています..."
+      : "Build Witness World"}
   </button>
 )}
 
@@ -1262,34 +1356,41 @@ async function handleMemoryEmergence() {
               </p>
             )}
 
-            {visualStage === "image-prompt" && (
+ {imagePrompts.length === 0 && !card.imagePrompt && !imagePrompt && (
   <button
-  onClick={handleGenerateImagePrompt}
-  disabled={!card.visualForm || imagePromptStatus === "Image Prompt を生成しています..."}
-  style={{
-    ...generateButtonStyle,
-    marginBottom: 12,
-    background:
-      !card.visualForm
-        ? "#cbd5e1"
-        : imagePromptStatus === "Image Prompt を生成しています..."
-        ? "#94a3b8"
-        : "#2563eb",
-    cursor:
-      !card.visualForm
-        ? "not-allowed"
-        : imagePromptStatus === "Image Prompt を生成しています..."
-        ? "wait"
-        : "pointer",
-  }}
->
-  {imagePromptStatus === "Image Prompt を生成しています..."
-    ? "Image Prompt を生成しています..."
-    : "Prepare Light"}
-</button>
+    type="button"
+    onClick={() => {
+      console.log("🔥 BUILD BUTTON CLICKED");
+      handleGenerateImagePrompt();
+    }}
+    disabled={
+      !card.visualForm ||
+      imagePromptStatus === "Image Prompt を生成しています..."
+    }
+    style={{
+      ...generateButtonStyle,
+      marginBottom: 12,
+      background:
+        !card.visualForm
+          ? "#cbd5e1"
+          : imagePromptStatus === "Image Prompt を生成しています..."
+          ? "#94a3b8"
+          : "#2563eb",
+      cursor:
+        !card.visualForm
+          ? "not-allowed"
+          : imagePromptStatus === "Image Prompt を生成しています..."
+          ? "wait"
+          : "pointer",
+    }}
+  >
+    {imagePromptStatus === "Image Prompt を生成しています..."
+      ? "Image Prompt を生成しています..."
+      : "Image Prompt を生成"}
+  </button>
 )}
 
-{visualStage === "image-generation" && (
+{(imagePrompts.length > 0 || card.imagePrompt || imagePrompt) && (
   <button
   onClick={handleGenerateImage}
   disabled={
@@ -1469,38 +1570,73 @@ async function handleMemoryEmergence() {
   </div>
 )}
 
-            {generatedImages.length > 0 ? (
-              <div style={{ display: "grid", gap: 24, marginTop: 16 }}>
-                {generatedImages.map((image) => (
-                  <div key={image.scene}>
-                    <h3 style={{ color: "#111827", marginBottom: 8 }}>
-                      Scene {image.scene}: {image.title}
-                    </h3>
+           {generatedImages.length > 0 ? (
+  <div style={{ display: "grid", gap: 24, marginTop: 16 }}>
+    {generatedImages.map((image) => (
+      <div key={image.scene}>
+        <h3 style={{ color: "#111827", marginBottom: 8 }}>
+          Scene {image.scene}: {image.title}
+        </h3>
 
-                    <img
-                      src={image.imageUrl}
-                      alt={image.title}
-                      style={{
-                        width: "100%",
-                        borderRadius: 12,
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              card.generatedImage && (
-                <img
-                  src={card.generatedImage}
-                  alt="Generated Visual Testimony"
-                  style={{
-                    width: "100%",
-                    borderRadius: 12,
-                    marginTop: 16,
-                  }}
-                />
-              )
-            )}
+        <img
+          src={image.imageUrl}
+          alt={image.title}
+          style={{
+            width: "100%",
+            borderRadius: 12,
+          }}
+        />
+
+        <button
+          type="button"
+          onClick={() =>
+            setReferenceImage({
+              scene: image.scene,
+              imageUrl: image.imageUrl,
+              createdAt: new Date().toISOString(),
+            })
+          }
+          style={{
+            marginTop: 12,
+            padding: "10px 16px",
+            borderRadius: 8,
+            border: "none",
+            background: "#2563eb",
+            color: "#fff",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+        >
+          ⭐ この画像を基準画像にする
+        </button>
+
+        {referenceImage?.imageUrl === image.imageUrl && (
+          <div
+            style={{
+              marginTop: 8,
+              color: "#16a34a",
+              fontWeight: 700,
+            }}
+          >
+            ✅ 現在の基準画像
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+) : (
+  card.generatedImage && (
+    <img
+      src={card.generatedImage}
+      alt="Generated Visual Testimony"
+      style={{
+        width: "100%",
+        borderRadius: 12,
+        marginTop: 16,
+      }}
+    />
+  )
+)}
           </Panel>
 
           <Panel title="Core Formation">
