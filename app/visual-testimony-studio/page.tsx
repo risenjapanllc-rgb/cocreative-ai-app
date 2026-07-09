@@ -3,7 +3,15 @@
 import LivingSpiral from "@/components/LivingSpiral";
 import { useLivingSpiral } from "@/hooks/useLivingSpiral";
 import { useState, type ReactNode } from "react";
-import { ReferenceImage } from "@/lib/world/reference-image";
+
+import {
+  ReferenceImage,
+} from "@/lib/world/reference-image";
+
+import {
+  WorldSeed,
+  createWorldSeed,
+} from "@/lib/world/world-seed";
 
 type Message = {
   role: "あなた" | "共創思考AI";
@@ -11,17 +19,27 @@ type Message = {
 };
 
 export default function VisualTestimonyStudioPage() {
+  const spiral = useLivingSpiral();
+  const visualStage = spiral.stage;
 
-const spiral = useLivingSpiral();
-const visualStage = spiral.stage;
+  const [testimony, setTestimony] = useState("");
+  const [originalTestimony, setOriginalTestimony] =
+    useState("");
 
-const [testimony, setTestimony] = useState("");
-const [originalTestimony, setOriginalTestimony] = useState("");
-const [visualClarification, setVisualClarification] = useState<any>(null);
-const [clarificationAnswer, setClarificationAnswer] = useState("");
+  const [visualClarification, setVisualClarification] =
+    useState<any>(null);
 
-const [blueprintCorrection, setBlueprintCorrection] = useState("");
-const [blueprintUpdateMessage, setBlueprintUpdateMessage] = useState("");
+  const [clarificationAnswer, setClarificationAnswer] =
+    useState("");
+
+  const [blueprintCorrection, setBlueprintCorrection] =
+    useState("");
+
+  const [
+    blueprintUpdateMessage,
+    setBlueprintUpdateMessage,
+  ] = useState("");
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "共創思考AI",
@@ -32,28 +50,74 @@ const [blueprintUpdateMessage, setBlueprintUpdateMessage] = useState("");
     },
   ]);
 
-const [imagePrompt, setImagePrompt] = useState("");
-const [imagePrompts, setImagePrompts] = useState<any[]>([]);
-const [generatedImages, setGeneratedImages] = useState<any[]>([]);
-const [referenceImage, setReferenceImage] = useState<ReferenceImage | null>(null);
-const [witnessReflection, setWitnessReflection] = useState<any>(null);
-const [memoryEmergence, setMemoryEmergence] = useState<any>(null);
-const [fidelityReport, setFidelityReport] = useState<any>(null);
-const [characterBible, setCharacterBible] = useState<any>(null);
-const [environmentBible, setEnvironmentBible] = useState<any>(null);
-const [compositionBible, setCompositionBible] = useState<any>(null);
-const [objectBible, setObjectBible] = useState<any>(null);
-const [sceneBible, setSceneBible] = useState<any>(null);
-const [isLoading, setIsLoading] = useState(false);
-const [isClarifying, setIsClarifying] = useState(false);
-const [isCheckingFidelity, setIsCheckingFidelity] = useState(false);
-const [isGeneratingVisualForm, setIsGeneratingVisualForm] = useState(false);
-const [fidelityStatus, setFidelityStatus] = useState("");
-const [visualFormStatus, setVisualFormStatus] = useState("");
-const [imagePromptStatus, setImagePromptStatus] = useState("");
-const [imageGenerationStatus, setImageGenerationStatus] = useState("");
-const [witnessWorldProgress, setWitnessWorldProgress] = useState(0);
-const [witnessWorldStep, setWitnessWorldStep] = useState("");
+  const [imagePrompt, setImagePrompt] = useState("");
+  const [imagePrompts, setImagePrompts] = useState<any[]>([]);
+  const [generatedImages, setGeneratedImages] = useState<any[]>([]);
+
+  const [referenceImage, setReferenceImage] =
+    useState<ReferenceImage | null>(null);
+
+  const [worldSeed, setWorldSeed] =
+    useState<WorldSeed | null>(null);
+
+  const [witnessReflection, setWitnessReflection] =
+    useState<any>(null);
+
+  const [memoryEmergence, setMemoryEmergence] =
+    useState<any>(null);
+
+  const [fidelityReport, setFidelityReport] =
+    useState<any>(null);
+
+  const [characterBible, setCharacterBible] =
+    useState<any>(null);
+
+  const [environmentBible, setEnvironmentBible] =
+    useState<any>(null);
+
+  const [compositionBible, setCompositionBible] =
+    useState<any>(null);
+
+  const [objectBible, setObjectBible] =
+    useState<any>(null);
+
+  const [sceneBible, setSceneBible] =
+    useState<any>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isClarifying, setIsClarifying] =
+    useState(false);
+
+  const [isCheckingFidelity, setIsCheckingFidelity] =
+    useState(false);
+
+  const [
+    isGeneratingVisualForm,
+    setIsGeneratingVisualForm,
+  ] = useState(false);
+
+  const [fidelityStatus, setFidelityStatus] =
+    useState("");
+
+  const [visualFormStatus, setVisualFormStatus] =
+    useState("");
+
+  const [imagePromptStatus, setImagePromptStatus] =
+    useState("");
+
+  const [
+    imageGenerationStatus,
+    setImageGenerationStatus,
+  ] = useState("");
+
+  const [
+    witnessWorldProgress,
+    setWitnessWorldProgress,
+  ] = useState(0);
+
+  const [witnessWorldStep, setWitnessWorldStep] =
+    useState("");
+
   const [card, setCard] = useState({
     title: "Visual Testimony",
     whatHappened: "",
@@ -72,8 +136,6 @@ const [witnessWorldStep, setWitnessWorldStep] = useState("");
     giftedWord: "",
     essence: "",
   });
-
-
 
 async function handleReceive() {
   if (!testimony.trim()) return;
@@ -153,11 +215,13 @@ async function handleReceive() {
 async function handleVisualClarification() {
   const baseTestimony = originalTestimony || testimony.trim();
 
-if (
-  !baseTestimony &&
-  !clarificationAnswer.trim() &&
-  !blueprintCorrection.trim()
-) return;
+  if (
+    !baseTestimony &&
+    !clarificationAnswer.trim() &&
+    !blueprintCorrection.trim()
+  ) {
+    return;
+  }
 
   setIsLoading(true);
   setIsClarifying(true);
@@ -167,93 +231,97 @@ if (
       setOriginalTestimony(testimony.trim());
     }
 
+    const answer =
+      clarificationAnswer.trim() || blueprintCorrection.trim();
+
     console.log("SENDING VISUAL CLARIFICATION", {
-  testimony: baseTestimony,
-  answer:
-    clarificationAnswer.trim() ||
-    blueprintCorrection.trim(),
-  previousClarification: visualClarification,
-});
+      testimony: baseTestimony,
+      answer,
+      previousClarification: visualClarification,
+    });
 
     const res = await fetch("/api/visual-clarification", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         testimony: baseTestimony,
         previousClarification: visualClarification,
-       answer:
-  clarificationAnswer.trim() ||
-  blueprintCorrection.trim(),
+        answer,
       }),
     });
 
     if (!res.ok) {
-  const errorText = await res.text();
+      const errorText = await res.text();
 
-  console.error(
-    "VISUAL CLARIFICATION ERROR",
-    res.status,
-    errorText
-  );
+      console.error(
+        "VISUAL CLARIFICATION ERROR",
+        res.status,
+        errorText
+      );
 
-  setVisualFormStatus(
-    "Visual Clarification の生成に失敗しました。"
-  );
+      setVisualFormStatus(
+        "Visual Clarification の生成に失敗しました。"
+      );
 
-  setIsGeneratingVisualForm(false);
+      return;
+    }
 
-  return;
-}
+    const data = await res.json();
 
-const data = await res.json();
+    console.log("VISUAL CLARIFICATION =", data);
 
-console.log("VISUAL CLARIFICATION =", data);
+    setVisualClarification(data);
 
-setVisualClarification(data);
-
-const hasUnknowns =
-  Array.isArray(data.unknowns) && data.unknowns.length > 0;
-
-const hasQuestions =
+    const hasQuestions =
   Array.isArray(data.questions) && data.questions.length > 0;
 
+const answerText =
+  clarificationAnswer.trim() || blueprintCorrection.trim();
+
+const witnessAcceptedUnknowns =
+  /不明|わからない|覚えていない|unknown/i.test(answerText);
+
 const shouldProceed =
-  data.readyForVisualExtraction || (!hasUnknowns && !hasQuestions);
+  data.readyForVisualExtraction ||
+  !hasQuestions ||
+  witnessAcceptedUnknowns;
 
-if (!shouldProceed) {
-  setVisualFormStatus(
-    "追加情報が必要です。\n\n表示された質問に答えて、もう一度送信してください。"
-  );
+    if (!shouldProceed) {
+      setVisualFormStatus(
+        "追加情報が必要です。\n\n表示された質問に答えて、もう一度送信してください。"
+      );
 
-  setBlueprintUpdateMessage(
-    "追加情報が必要です。表示された質問に答えて、もう一度送信してください。"
-  );
+      setBlueprintUpdateMessage(
+        "追加情報が必要です。表示された質問に答えて、もう一度送信してください。"
+      );
 
-  setIsGeneratingVisualForm(false);
+      spiral.goTo("clarification");
+      return;
+    }
 
-  spiral.goTo("clarification");
+    setClarificationAnswer("");
+    setBlueprintCorrection("");
 
-  return;
+    setBlueprintUpdateMessage(
+      "修正を反映しました。Build Witness World を押してください。"
+    );
+
+    spiral.goTo("visual-extraction");
+  } catch (error) {
+    console.error("VISUAL CLARIFICATION ERROR =", error);
+
+    setVisualFormStatus(
+      "Visual Clarification の生成中にエラーが発生しました。"
+    );
+  } finally {
+    setIsLoading(false);
+    setIsClarifying(false);
+  }
 }
 
-setClarificationAnswer("");
-setBlueprintCorrection("");
-
-setBlueprintUpdateMessage(
-  "修正を反映し、Blueprintを更新しました。\n\n次は「Build Witness World」を押して、証言世界を構築してください。"
-);
-
-spiral.goTo("visual-extraction");
-
-} catch (error) {
-  console.error("VISUAL CLARIFICATION ERROR =", error);
-} finally {
-  setIsLoading(false);
-  setIsClarifying(false);
-}
-}
-
-  function handleRecognitionAccepted() {
+function handleRecognitionAccepted() {
   if (!card.recognition) return;
 
   setCard((prev) => ({
@@ -262,36 +330,32 @@ spiral.goTo("visual-extraction");
     title: prev.recognition.replace(/^- /, "") || "Visual Testimony",
   }));
 
-  // Recognition becomes New Witness
   setTestimony(card.recognition);
 
-    // 次の循環へ
   setVisualClarification(null);
-setClarificationAnswer("");
-setOriginalTestimony("");
-setBlueprintCorrection("");
+  setClarificationAnswer("");
+  setOriginalTestimony("");
+  setBlueprintCorrection("");
 
-setImagePrompt("");
-setImagePrompts([]);
-setGeneratedImages([]);
-setFidelityReport(null);
-setWitnessReflection(null);
-setMemoryEmergence(null);
+  setImagePrompt("");
+  setImagePrompts([]);
+  setGeneratedImages([]);
+  setFidelityReport(null);
+  setWitnessReflection(null);
+  setMemoryEmergence(null);
+
   spiral.restart();
 }
 
-
 async function handleGenerateVisualForm() {
-
   setIsGeneratingVisualForm(true);
 
   setWitnessWorldProgress(0);
   setWitnessWorldStep("証言を整理しています...");
 
-  setVisualFormStatus(
-    "Witness World を構築しています..."
-  );
-    try {
+  setVisualFormStatus("Witness World を構築しています...");
+
+  try {
     const visualClarificationText = visualClarification
       ? [
           `Summary:\n${visualClarification.summary || ""}`,
@@ -312,23 +376,33 @@ async function handleGenerateVisualForm() {
 
     const res = await fetch("/api/visual-extraction", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         whatHappened:
           visualClarification?.summary ||
           originalTestimony ||
           testimony ||
           "",
-
         whatRemained: visualClarificationText,
-
         namedEmotions: "",
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error("VISUAL EXTRACTION API ERROR", res.status, errorText);
+
+      console.error(
+        "VISUAL EXTRACTION API ERROR",
+        res.status,
+        errorText
+      );
+
+      setVisualFormStatus(
+        "Visual Extraction の生成に失敗しました。"
+      );
+
       return;
     }
 
@@ -337,37 +411,32 @@ async function handleGenerateVisualForm() {
     console.log("VISUAL EXTRACTION RESPONSE", data);
 
     setWitnessWorldProgress(17);
-setWitnessWorldStep("登場人物を整理しています...");
+    setWitnessWorldStep("登場人物を整理しています...");
 
+    setCard((prev) => ({
+      ...prev,
+      whatHappened:
+        visualClarification?.summary || prev.whatHappened,
+      whatRemained: visualClarificationText,
+      visualForm: data.visualForm || "",
+    }));
 
+    await handleGenerateCharacterBible(
+      visualClarificationText,
+      data.visualForm
+    );
+  } catch (error) {
+    setVisualFormStatus(
+      "Visual Extraction の生成に失敗しました。"
+    );
 
-setCard((prev) => ({
-  ...prev,
-  whatHappened:
-    visualClarification?.summary || prev.whatHappened,
-  whatRemained: visualClarificationText,
-  visualForm: data.visualForm || "",
-}));
-
-await handleGenerateCharacterBible(
-  visualClarificationText,
-  data.visualForm
-);
-
-setIsGeneratingVisualForm(false);
-
-} catch (error) {
-  setIsGeneratingVisualForm(false);
-
-  setVisualFormStatus(
-    "Visual Extraction の生成に失敗しました。"
-  );
-
-  console.error("VISUAL EXTRACTION ERROR", error);
-}
+    console.error("VISUAL EXTRACTION ERROR", error);
+  } finally {
+    setIsGeneratingVisualForm(false);
+  }
 }
 
-  async function handleGenerateCharacterBible(
+async function handleGenerateCharacterBible(
   blueprint: string,
   visualExtraction: string
 ) {
@@ -385,11 +454,13 @@ setIsGeneratingVisualForm(false);
 
     if (!res.ok) {
       const errorText = await res.text();
+
       console.error(
         "CHARACTER BIBLE API ERROR",
         res.status,
         errorText
       );
+
       return;
     }
 
@@ -400,19 +471,14 @@ setIsGeneratingVisualForm(false);
     setCharacterBible(data);
 
     setWitnessWorldProgress(33);
-setWitnessWorldStep("場所を整理しています...");
+    setWitnessWorldStep("場所を整理しています...");
 
-    // Environment Bible を続けて生成
     await handleGenerateEnvironmentBible(
       blueprint,
       visualExtraction
     );
-
   } catch (error) {
-    console.error(
-      "CHARACTER BIBLE ERROR =",
-      error
-    );
+    console.error("CHARACTER BIBLE ERROR =", error);
   }
 }
 
@@ -637,10 +703,12 @@ await handleGenerateImagePrompt({
   
 
   async function handleGenerateImage() {
+  const isWorldSeed = !referenceImage;
+
   setImageGenerationStatus(
-    referenceImage
-      ? "基準画像を使って編集生成しています..."
-      : "画像を生成しています..."
+    isWorldSeed
+      ? "🌎 Witness World を生成しています..."
+      : "🌎 Witness World を編集しています..."
   );
 
   const promptsToGenerate =
@@ -658,18 +726,34 @@ await handleGenerateImagePrompt({
     const generated: any[] = [];
 
     for (const item of promptsToGenerate) {
+      const isScene1 =
+        !referenceImage && (item.scene ?? 1) === 1;
+
       setImageGenerationStatus(
-        referenceImage
-          ? `Scene ${item.scene} を基準画像から編集しています...`
+        isScene1
+          ? "🌎 World Seed Candidates を生成しています..."
+          : referenceImage
+          ? `Scene ${item.scene} を編集しています...`
           : `Scene ${item.scene} を生成しています...`
       );
 
       const res = await fetch("/api/generate-image", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          mode: referenceImage ? "edit" : "generate",
-          referenceImageUrl: referenceImage?.imageUrl,
+          mode: isScene1
+            ? "world-seed"
+            : referenceImage
+            ? "edit"
+            : "generate",
+
+          count: 4,
+
+          referenceImageUrl:
+            referenceImage?.imageUrl,
+
           imagePrompts: [item],
         }),
       });
@@ -702,9 +786,9 @@ await handleGenerateImagePrompt({
     setGeneratedImages(generated);
 
     setImageGenerationStatus(
-      referenceImage
-        ? "基準画像からの編集生成が完了しました。"
-        : "画像生成が完了しました。Compare with Blueprint を押してください。"
+      isWorldSeed
+        ? "🌎 候補世界が生成されました。最も近い世界を選んでください。"
+        : "🌎 Witness World を更新しました。"
     );
 
     setCard((prev) => ({
@@ -714,11 +798,17 @@ await handleGenerateImagePrompt({
 
     spiral.next();
   } catch (error) {
-    setImageGenerationStatus("画像生成中にエラーが発生しました。");
+    setImageGenerationStatus(
+      "画像生成中にエラーが発生しました。"
+    );
 
-    console.error("IMAGE GENERATION ERROR", error);
+    console.error(
+      "IMAGE GENERATION ERROR",
+      error
+    );
   }
 }
+
 async function handleGenerateImagePrompt(overrides?: {
   characterBible?: any;
   environmentBible?: any;
@@ -1570,7 +1660,7 @@ async function handleMemoryEmergence() {
   </div>
 )}
 
-           {generatedImages.length > 0 ? (
+         {generatedImages.length > 0 ? (
   <div style={{ display: "grid", gap: 24, marginTop: 16 }}>
     {generatedImages.map((image) => (
       <div key={image.scene}>
@@ -1589,38 +1679,61 @@ async function handleMemoryEmergence() {
 
         <button
           type="button"
-          onClick={() =>
-            setReferenceImage({
+          onClick={() => {
+            const ref = {
               scene: image.scene,
               imageUrl: image.imageUrl,
               createdAt: new Date().toISOString(),
-            })
-          }
+            };
+
+            setReferenceImage(ref);
+
+            setWorldSeed(
+              createWorldSeed({
+                selectedReferenceImageUrl: image.imageUrl,
+              })
+            );
+          }}
           style={{
             marginTop: 12,
-            padding: "10px 16px",
-            borderRadius: 8,
+            padding: "12px 18px",
+            borderRadius: 10,
             border: "none",
-            background: "#2563eb",
+            background: "#15803d",
             color: "#fff",
             cursor: "pointer",
-            fontWeight: 600,
+            fontWeight: 700,
+            fontSize: 15,
           }}
         >
-          ⭐ この画像を基準画像にする
+          🌎 この世界を採用する
         </button>
 
-        {referenceImage?.imageUrl === image.imageUrl && (
-          <div
-            style={{
-              marginTop: 8,
-              color: "#16a34a",
-              fontWeight: 700,
-            }}
-          >
-            ✅ 現在の基準画像
-          </div>
-        )}
+        {worldSeed?.acceptedByWitness &&
+          referenceImage?.imageUrl === image.imageUrl && (
+            <div
+              style={{
+                marginTop: 8,
+                padding: "10px 14px",
+                borderRadius: 8,
+                background: "#ecfdf5",
+                color: "#166534",
+                fontWeight: 700,
+                lineHeight: 1.5,
+              }}
+            >
+              🌎 Witness World Confirmed
+              <div
+                style={{
+                  fontSize: 13,
+                  fontWeight: 500,
+                  marginTop: 4,
+                }}
+              >
+                証言者によって、この世界が「私の見た世界」として承認されました。
+              </div>
+            </div>
+          )}
       </div>
     ))}
   </div>

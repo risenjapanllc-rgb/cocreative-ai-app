@@ -11,7 +11,7 @@ export type GeneratedImage = {
   imageUrl: string;
 };
 
-export async function generateOpenAIImage({
+async function generateOne({
   prompt,
   scene,
   title,
@@ -38,6 +38,37 @@ export async function generateOpenAIImage({
     title,
     imageUrl: `data:image/png;base64,${b64}`,
   };
+}
+
+export async function generateOpenAIImage(args: {
+  prompt: string;
+  scene: number;
+  title: string;
+}): Promise<GeneratedImage> {
+  return generateOne(args);
+}
+
+export async function generateOpenAICandidates(args: {
+  prompt: string;
+  scene: number;
+  title: string;
+  count?: number;
+}): Promise<GeneratedImage[]> {
+  const count = args.count ?? 4;
+
+  const images: GeneratedImage[] = [];
+
+  for (let i = 0; i < count; i++) {
+    console.log(
+      `WORLD SEED CANDIDATE ${i + 1}/${count}`
+    );
+
+    const image = await generateOne(args);
+
+    images.push(image);
+  }
+
+  return images;
 }
 
 export async function editOpenAIImage({

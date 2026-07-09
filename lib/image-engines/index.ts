@@ -2,6 +2,7 @@ console.log("LOADED image-engines/index.ts");
 
 import {
   generateOpenAIImage,
+  generateOpenAICandidates,
   editOpenAIImage,
 } from "./openai-image";
 
@@ -17,9 +18,7 @@ export type EditImageItem = ImagePromptItem & {
   referenceImageUrl: string;
 };
 
-export async function generateImage(
-  item: ImagePromptItem
-) {
+export async function generateImage(item: ImagePromptItem) {
   const engine = process.env.IMAGE_ENGINE || "openai";
 
   console.log("================================");
@@ -35,9 +34,21 @@ export async function generateImage(
   return generateOpenAIImage(item);
 }
 
-export async function editImage(
-  item: EditImageItem
+export async function generateWorldSeedCandidates(
+  item: ImagePromptItem & { count?: number }
 ) {
+  const engine = process.env.IMAGE_ENGINE || "openai";
+
+  if (engine === "gemini") {
+    throw new Error("World Seed Candidates are only implemented for OpenAI.");
+  }
+
+  console.log("USING OPENAI WORLD SEED CANDIDATES");
+
+  return generateOpenAICandidates(item);
+}
+
+export async function editImage(item: EditImageItem) {
   const engine = process.env.IMAGE_ENGINE || "openai";
 
   console.log("================================");
@@ -45,9 +56,7 @@ export async function editImage(
   console.log("================================");
 
   if (engine === "gemini") {
-    throw new Error(
-      "Gemini image editing is not implemented yet."
-    );
+    throw new Error("Gemini image editing is not implemented yet.");
   }
 
   console.log("USING OPENAI IMAGE EDIT");

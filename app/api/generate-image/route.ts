@@ -1,4 +1,9 @@
-import { generateImage, editImage } from "@/lib/image-engines";
+import {
+  generateImage,
+  generateWorldSeedCandidates,
+  editImage,
+} from "@/lib/image-engines";
+
 import { NextResponse } from "next/server";
 
 type ImagePromptScene = {
@@ -25,7 +30,8 @@ export async function POST(req: Request) {
         ]
       : [];
 
-    const targetScene = body.scene ?? imagePrompts[0]?.scene ?? 1;
+    const targetScene =
+      body.scene ?? imagePrompts[0]?.scene ?? 1;
 
     const item =
       imagePrompts.find((p) => p.scene === targetScene) ??
@@ -38,29 +44,63 @@ export async function POST(req: Request) {
       );
     }
 
-    let image;
+    // ==========================
+    // World Seed Candidates
+    // ==========================
+
+    if (mode === "world-seed") {
+      const images =
+        await generateWorldSeedCandidates({
+          scene: item.scene ?? 1,
+          title: item.title ?? `Scene ${item.scene ?? 1}`,
+          prompt: sanitizeImagePrompt(item.prompt),
+          count: body.count ?? 4,
+        });
+
+      return NextResponse.json({
+        images,
+      });
+    }
+
+    // ==========================
+    // Edit
+    // ==========================
 
     if (mode === "edit") {
       if (!body.referenceImageUrl) {
         return NextResponse.json(
-          { error: "referenceImageUrl required" },
-          { status: 400 }
+          {
+            error: "referenceImageUrl required",
+          },
+          {
+            status: 400,
+          }
         );
       }
 
-      image = await editImage({
+      const image = await editImage({
         referenceImageUrl: body.referenceImageUrl,
         scene: item.scene ?? 1,
         title: item.title ?? `Scene ${item.scene ?? 1}`,
         prompt: sanitizeImagePrompt(item.prompt),
       });
-    } else {
-      image = await generateImage({
-        scene: item.scene ?? 1,
-        title: item.title ?? `Scene ${item.scene ?? 1}`,
-        prompt: sanitizeImagePrompt(item.prompt),
+
+      return NextResponse.json({
+        image,
+        images: [image],
+        imageUrl: image.imageUrl,
       });
     }
+
+    // ==========================
+    // Normal Generate
+    // ==========================
+
+    const image = await generateImage({
+      scene: item.scene ?? 1,
+      title: item.title ?? `Scene ${item.scene ?? 1}`,
+      prompt: sanitizeImagePrompt(item.prompt),
+    });
 
     return NextResponse.json({
       image,
@@ -77,26 +117,35 @@ export async function POST(req: Request) {
             ? error.message
             : "Unknown Error",
       },
-      { status: 500 }
+      {
+        status: 500,
+      }
     );
   }
 }
 
 function sanitizeImagePrompt(prompt: string) {
   return prompt
-    .replaceAll("胸から上", "肩から上")
-    .replaceAll("胸", "上衣部分")
-    .replaceAll("上半身", "見える範囲")
-    .replaceAll("密着", "近くにいる")
-    .replaceAll("頬が触れ合う", "顔が近い")
+    .replaceAll("face-to-face", "facing each other")
+    .replaceAll("fully face-to-face", "facing each other")
+    .replaceAll("full embrace", "family reunion hug")
+    .replaceAll(
+      "fully embracing",
+      "sharing a respectful family hug"
+    )
+    .replaceAll("prolonged", "gentle")
+    .replaceAll(
+      "wrapped around",
+      "resting around the shoulders"
+    )
+    .replaceAll("body contact", "family closeness")
     .replaceAll("身体の接触", "家族の抱擁")
-    .replaceAll("触れ合い", "抱擁")
-    .replaceAll("肌", "人物")
-    .replaceAll("intimate", "family")
+    .replaceAll("密着", "近くで抱き合う")
+    .replaceAll("upper body", "visible person")
+    .replaceAll("torso", "visible person")
     .replaceAll("chest", "upper clothing area")
-    .replaceAll("torso", "upper clothing area")
-    .replaceAll("skin contact", "family embrace")
-    .replaceAll("body contact", "family embrace")
+    .replaceAll("skin contact", "family hug")
     .replaceAll("pressed together", "standing close")
-    .replaceAll("cheek touching", "faces near each other");
+    .replaceAll("intimate", "family")
+    .replaceAll("romantic", "family");
 }
