@@ -1662,8 +1662,9 @@ async function handleMemoryEmergence() {
 
          {generatedImages.length > 0 ? (
   <div style={{ display: "grid", gap: 24, marginTop: 16 }}>
-    {generatedImages.map((image) => (
-      <div key={image.scene}>
+    {generatedImages.map((image, index) => (
+  <div key={`${image.scene}-${index}`}>
+
         <h3 style={{ color: "#111827", marginBottom: 8 }}>
           Scene {image.scene}: {image.title}
         </h3>

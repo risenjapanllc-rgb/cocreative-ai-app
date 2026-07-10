@@ -27,6 +27,93 @@ or much later in life.
 
 ---
 
+# Witness World Philosophy
+
+The AI does not determine the world.
+
+The AI proposes candidate worlds.
+
+The witness determines the world.
+
+The moment the witness says,
+
+> "Yes.
+> This is the world I remember."
+
+the Witness World is established.
+
+From that moment forward,
+
+the world becomes the authoritative source.
+
+The world is never regenerated.
+
+Only time advances.
+
+Only actions, expressions, and events change.
+
+Identity remains.
+
+Relationships remain.
+
+The room remains.
+
+Impossible conditions remain.
+
+The witness's remembered reality remains.
+
+---
+
+## World Seed
+
+Every Witness World begins with a World Seed.
+
+The system generates several candidate worlds.
+
+The witness chooses the one that most faithfully reflects remembered experience.
+
+That accepted world becomes the World Seed.
+
+Every later scene is derived from this same world.
+
+---
+
+## Rendering Principle
+
+Generate once.
+
+Accept once.
+
+Edit forever.
+
+Images do not create the world.
+
+Images reveal moments within an already established world.
+
+---
+
+## Recognition Goal
+
+The purpose of rendering is not beauty.
+
+The purpose is faithful recognition.
+
+The witness should immediately be able to say,
+
+> "Yes.
+> This is the world I experienced."
+
+Recognition has higher priority than:
+
+- artistic variation
+- cinematic beauty
+- physical realism
+- visual novelty
+
+Faithful recognition is the highest priority.
+
+---
+
 # Witness World
 
 Witness World is the World Engine of Co-Creative Field.
@@ -59,7 +146,7 @@ Receive
 Emergence
 ```
 
-### Give
+## Give
 
 The participant offers testimony.
 
@@ -77,7 +164,7 @@ Everything may become part of the witness.
 
 ---
 
-### Receive
+## Receive
 
 The system faithfully receives what has been given.
 
@@ -91,7 +178,7 @@ It first constructs a world.
 
 ---
 
-### Emergence
+## Emergence
 
 Through dialogue,
 reflection,
@@ -142,9 +229,9 @@ Testimony
     ↓
 World
     ↓
-Events
+Timeline
     ↓
-Shots
+Current Event
     ↓
 Director Decision
     ↓
@@ -161,6 +248,73 @@ The creative work happens before the prompt.
 
 ---
 
+# Witness World Lifecycle
+
+```text
+Testimony
+      │
+      ▼
+Visual Clarification
+      │
+      ▼
+Blueprint
+      │
+      ▼
+World Seed Generation
+      │
+      ▼
+Candidate Worlds
+      │
+      ▼
+Witness Acceptance
+      │
+      ▼
+Witness World Established
+      │
+      ▼
+World Bible
+      │
+      ▼
+Timeline
+      │
+      ▼
+Director
+      │
+      ▼
+Renderer
+      │
+      ▼
+Image
+```
+
+The witness establishes the world only once.
+
+Every later image is an edit of that established world.
+
+---
+
+# World Bible
+
+The established Witness World becomes the single source of truth.
+
+It contains:
+
+- Character Bible
+- Environment Bible
+- Camera Bible
+- Composition Bible
+- Object Bible
+- Timeline
+- Identity Lock
+- Room Lock
+- Impossible Condition Lock
+- Emotional Fidelity Lock
+- Scene Continuity Lock
+
+Every renderer derives from this World Bible.
+
+---
+
 # Renderer
 
 Gemini.
@@ -171,11 +325,13 @@ Imagen.
 
 Flux.
 
+OpenAI.
+
 Future renderers.
 
 These systems do not create the world.
 
-They render the world.
+They faithfully render the current state of the world.
 
 ---
 
@@ -218,7 +374,9 @@ The system must not:
 - embellish testimony
 - simplify testimony
 - replace unusual observations
-- force interpretation
+- reinterpret impossible conditions
+- redesign established identity
+- regenerate an accepted world
 
 The question is always:
 
@@ -261,18 +419,20 @@ World Builder
       ▼
 World Model
       │
-      ├──────────────┐
-      ▼              ▼
-Event Builder   World Updater
-      │              │
-      ▼              │
-Shot Builder         │
-      ▼              │
-Director Engine ◄────┘
+      ├─────────────────────┐
+      ▼                     ▼
+Event Builder         World Updater
+      │                     │
+      ▼                     │
+Timeline Builder            │
+      ▼                     │
+Director Engine ◄───────────┘
       ▼
 Prompt Translator
       ▼
 Renderer
+      ▼
+OpenAI / Gemini / Flux / ...
 ```
 
 The World Model is the single source of truth.
@@ -288,6 +448,9 @@ All downstream systems derive from the World.
 - World Before Prompt
 - Dialogue Before Image
 - Fidelity Before Beauty
+- Generate Once
+- Witness Acceptance
+- Edit Forever
 - Give → Receive → Emergence
 
 ---
@@ -309,8 +472,23 @@ The AI accompanies the dialogue.
 
 The world remains at the center.
 
+---
+
 # Witness World
 
 Witness World is a World Understanding Engine.
 
-It faithfully receives testimony, cultivates a living world through dialogue, and provides faithful visual and linguistic windows into that world.
+It faithfully receives testimony,
+cultivates a living world through dialogue,
+allows the witness to establish that world,
+and provides faithful visual and linguistic windows into that living world.
+
+The AI proposes.
+
+The witness confirms.
+
+The world becomes established.
+
+Time advances.
+
+The world remains.
