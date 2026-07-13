@@ -21,57 +21,143 @@ export type ShotGraph = {
   shots: Shot[];
 };
 
+type UnknownRecord = Record<string, unknown>;
+
+function isRecord(
+  value: unknown
+): value is UnknownRecord {
+  return Boolean(
+    value &&
+      typeof value === "object" &&
+      !Array.isArray(value)
+  );
+}
+
+function toStringArray(
+  value: unknown
+): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter(
+    (item): item is string =>
+      typeof item === "string" &&
+      item.trim().length > 0
+  );
+}
+
+function getString(
+  value: unknown,
+  fallback = ""
+): string {
+  return typeof value === "string"
+    ? value
+    : fallback;
+}
+
 export function buildShotGraph(
-  compositionBible: any,
-  sceneBible: any
+  compositionBible: unknown,
+  sceneBible: unknown
 ): ShotGraph {
-  if (!sceneBible?.scenes) {
+  if (!isRecord(sceneBible)) {
     return {
       shots: [],
     };
   }
 
+  const scenes = Array.isArray(sceneBible.scenes)
+    ? sceneBible.scenes
+    : [];
+
+  const composition =
+    isRecord(compositionBible) &&
+    isRecord(compositionBible.composition)
+      ? compositionBible.composition
+      : {};
+
+  const camera =
+    isRecord(composition.camera)
+      ? composition.camera
+      : {};
+
+  const continuity =
+    isRecord(composition.continuity)
+      ? composition.continuity
+      : {};
+
   return {
-    shots: sceneBible.scenes.map((scene: any, index: number) => ({
-      shot: index + 1,
+    shots: scenes.map(
+      (sceneValue, index): Shot => {
+        const scene = isRecord(sceneValue)
+          ? sceneValue
+          : {};
 
-      event: scene.title,
+        const sceneMustPreserve =
+          toStringArray(scene.mustPreserve);
 
-      camera: {
-        viewpoint:
-          compositionBible?.composition?.camera?.viewpoint ??
-          "Third Person",
+        const sceneMustNotShow =
+          toStringArray(scene.mustNotShow);
 
-        position:
-          compositionBible?.composition?.camera?.position ??
-          "",
+        const continuityRules: string[] = [];
 
-        height:
-          compositionBible?.composition?.camera?.height ??
-          "",
+        if (
+          continuity.sameAcrossScenes === true
+        ) {
+          continuityRules.push(
+            "Preserve the established composition across scenes."
+          );
+        }
 
-        framing:
-          compositionBible?.composition?.camera?.framing ??
-          "",
-      },
+        continuityRules.push(
+          "Preserve confirmed character identities.",
+          "Preserve the established environment.",
+          "Preserve confirmed impossible conditions.",
+          "Preserve the witnessed event order."
+        );
 
-      mustShow: scene.mustPreserve ?? [],
+        return {
+          shot: index + 1,
 
-      mustNotShow: [
-        "camera angle change",
-        "identity change",
-        "room change",
-        "hole in tatami",
-        "trap door",
-        "floor opening",
-      ],
+          event: getString(
+            scene.title,
+            `Scene ${index + 1}`
+          ),
 
-      continuity: [
-        "same characters",
-        "same room",
-        "same camera",
-        "same impossible condition",
-      ],
-    })),
+          camera: {
+            viewpoint: getString(
+              camera.viewpoint,
+              "Third-person observation"
+            ),
+
+            position: getString(
+              camera.position
+            ),
+
+            height: getString(
+              camera.height
+            ),
+
+            framing: getString(
+              camera.framing
+            ),
+          },
+
+          /*
+            Scene Bible に保存された事実を使用する。
+            特定の証言専用ルールをここへ直書きしない。
+          */
+          mustShow: sceneMustPreserve,
+
+          /*
+            明示的な禁止事項だけを使用する。
+            畳、穴、扉などを一般ルールとして追加しない。
+          */
+          mustNotShow: sceneMustNotShow,
+
+          continuity: continuityRules,
+        };
+      }
+    ),
   };
 }

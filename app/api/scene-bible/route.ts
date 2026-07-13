@@ -8,9 +8,27 @@ const openai = new OpenAI({
 });
 
 const sceneBiblePrompt = fs.readFileSync(
-  path.join(process.cwd(), "docs", "scene-bible.md"),
+  path.join(
+    process.cwd(),
+    "docs",
+    "scene-bible.md"
+  ),
   "utf8"
 );
+
+type SceneBibleItem = {
+  scene: number;
+  title: string;
+  purpose: string;
+  characters: string[];
+  environment: string;
+  objects: string[];
+  actions: string[];
+  dialogue: string[];
+  viewpoint: string;
+  emotion: string;
+  mustPreserve: string[];
+};
 
 export async function POST(req: Request) {
   try {
@@ -19,7 +37,6 @@ export async function POST(req: Request) {
       visualExtraction,
       characterBible,
       environmentBible,
-      compositionBible,
       objectBible,
     } = await req.json();
 
@@ -62,10 +79,21 @@ Use exactly this JSON shape:
           content:
             `Blueprint:\n${blueprint || ""}\n\n` +
             `Visual Extraction:\n${visualExtraction || ""}\n\n` +
-            `Character Bible:\n${JSON.stringify(characterBible || {}, null, 2)}\n\n` +
-            `Environment Bible:\n${JSON.stringify(environmentBible || {}, null, 2)}\n\n` +
-            `Composition Bible:\n${JSON.stringify(compositionBible || {}, null, 2)}\n\n` +
-            `Object Bible:\n${JSON.stringify(objectBible || {}, null, 2)}`,
+            `Character Bible:\n${JSON.stringify(
+              characterBible || {},
+              null,
+              2
+            )}\n\n` +
+            `Environment Bible:\n${JSON.stringify(
+              environmentBible || {},
+              null,
+              2
+            )}\n\n` +
+            `Object Bible:\n${JSON.stringify(
+              objectBible || {},
+              null,
+              2
+            )}`,
         },
       ],
     });
@@ -75,25 +103,119 @@ Use exactly this JSON shape:
     console.log("SCENE BIBLE RAW");
     console.log(outputText);
 
-    let parsed: any;
+    let parsed: unknown;
 
     try {
-      parsed = JSON.parse(outputText);
+      const cleaned = outputText
+        .replace(/^```json\s*/i, "")
+        .replace(/^```\s*/i, "")
+        .replace(/\s*```$/, "")
+        .trim();
+
+      parsed = JSON.parse(cleaned);
     } catch {
       return NextResponse.json(
         {
-          error: "Failed to parse scene bible JSON",
+          error:
+            "Failed to parse scene bible JSON",
           raw: outputText,
         },
         { status: 500 }
       );
     }
 
+    const result =
+      parsed &&
+      typeof parsed === "object" &&
+      Array.isArray(
+        (parsed as { scenes?: unknown }).scenes
+      )
+        ? (
+            parsed as {
+              scenes: Partial<SceneBibleItem>[];
+            }
+          ).scenes
+        : [];
+
+    const scenes: SceneBibleItem[] = result.map(
+      (item, index) => ({
+        scene:
+          typeof item.scene === "number"
+            ? item.scene
+            : index + 1,
+
+        title:
+          typeof item.title === "string"
+            ? item.title
+            : `Scene ${index + 1}`,
+
+        purpose:
+          typeof item.purpose === "string"
+            ? item.purpose
+            : "",
+
+        characters: Array.isArray(item.characters)
+          ? item.characters.filter(
+              (value): value is string =>
+                typeof value === "string"
+            )
+          : [],
+
+        environment:
+          typeof item.environment === "string"
+            ? item.environment
+            : "",
+
+        objects: Array.isArray(item.objects)
+          ? item.objects.filter(
+              (value): value is string =>
+                typeof value === "string"
+            )
+          : [],
+
+        actions: Array.isArray(item.actions)
+          ? item.actions.filter(
+              (value): value is string =>
+                typeof value === "string"
+            )
+          : [],
+
+        dialogue: Array.isArray(item.dialogue)
+          ? item.dialogue.filter(
+              (value): value is string =>
+                typeof value === "string"
+            )
+          : [],
+
+        viewpoint:
+          typeof item.viewpoint === "string"
+            ? item.viewpoint
+            : "",
+
+        emotion:
+          typeof item.emotion === "string"
+            ? item.emotion
+            : "",
+
+        mustPreserve: Array.isArray(
+          item.mustPreserve
+        )
+          ? item.mustPreserve.filter(
+              (value): value is string =>
+                typeof value === "string"
+            )
+          : [],
+      })
+    );
+
     return NextResponse.json({
-      scenes: Array.isArray(parsed.scenes) ? parsed.scenes : [],
+      scenes,
     });
   } catch (error) {
-    console.error("SCENE BIBLE ERROR =", error);
+    console.error(
+      "SCENE BIBLE ERROR =",
+      error
+    );
 
     return NextResponse.json(
       {

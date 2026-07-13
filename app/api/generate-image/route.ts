@@ -21,14 +21,14 @@ export async function POST(req: Request) {
     const imagePrompts: ImagePromptScene[] = Array.isArray(body.imagePrompts)
       ? body.imagePrompts
       : body.imagePrompt
-      ? [
-          {
-            scene: 1,
-            title: "Scene 1",
-            prompt: body.imagePrompt,
-          },
-        ]
-      : [];
+        ? [
+            {
+              scene: 1,
+              title: "Scene 1",
+              prompt: body.imagePrompt,
+            },
+          ]
+        : [];
 
     const targetScene =
       body.scene ?? imagePrompts[0]?.scene ?? 1;
@@ -44,27 +44,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // ==========================
-    // World Seed Candidates
-    // ==========================
-
     if (mode === "world-seed") {
-      const images =
-        await generateWorldSeedCandidates({
-          scene: item.scene ?? 1,
-          title: item.title ?? `Scene ${item.scene ?? 1}`,
-          prompt: sanitizeImagePrompt(item.prompt),
-          count: body.count ?? 4,
-        });
+      const images = await generateWorldSeedCandidates({
+        scene: item.scene ?? 1,
+        title: item.title ?? `Scene ${item.scene ?? 1}`,
+        prompt: sanitizeImagePrompt(item.prompt),
+        count: body.count ?? 4,
+      });
 
       return NextResponse.json({
         images,
       });
     }
-
-    // ==========================
-    // Edit
-    // ==========================
 
     if (mode === "edit") {
       if (!body.referenceImageUrl) {
@@ -92,10 +83,6 @@ export async function POST(req: Request) {
       });
     }
 
-    // ==========================
-    // Normal Generate
-    // ==========================
-
     const image = await generateImage({
       scene: item.scene ?? 1,
       title: item.title ?? `Scene ${item.scene ?? 1}`,
@@ -107,19 +94,44 @@ export async function POST(req: Request) {
       images: [image],
       imageUrl: image.imageUrl,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (error: unknown) {
+    console.error("GENERATE IMAGE API ERROR =", error);
+
+    const apiError = error as {
+      status?: number;
+      code?: string;
+      type?: string;
+      message?: string;
+    };
+
+    const message =
+      apiError?.message ||
+      (error instanceof Error
+        ? error.message
+        : "Unknown image generation error");
+
+    const isBillingLimit =
+      /billing hard limit|billing limit|insufficient_quota/i.test(
+        message
+      );
+
+    const status =
+      typeof apiError?.status === "number"
+        ? apiError.status
+        : isBillingLimit
+          ? 402
+          : 500;
 
     return NextResponse.json(
       {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown Error",
+        error: message,
+        code:
+          apiError?.code ||
+          (isBillingLimit
+            ? "billing_hard_limit"
+            : "image_generation_error"),
       },
-      {
-        status: 500,
-      }
+      { status }
     );
   }
 }

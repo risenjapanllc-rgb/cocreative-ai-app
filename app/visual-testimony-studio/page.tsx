@@ -213,7 +213,8 @@ async function handleReceive() {
 
 
 async function handleVisualClarification() {
-  const baseTestimony = originalTestimony || testimony.trim();
+  const baseTestimony =
+    originalTestimony || testimony.trim();
 
   if (
     !baseTestimony &&
@@ -232,7 +233,8 @@ async function handleVisualClarification() {
     }
 
     const answer =
-      clarificationAnswer.trim() || blueprintCorrection.trim();
+      clarificationAnswer.trim() ||
+      blueprintCorrection.trim();
 
     console.log("SENDING VISUAL CLARIFICATION", {
       testimony: baseTestimony,
@@ -240,17 +242,21 @@ async function handleVisualClarification() {
       previousClarification: visualClarification,
     });
 
-    const res = await fetch("/api/visual-clarification", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        testimony: baseTestimony,
-        previousClarification: visualClarification,
-        answer,
-      }),
-    });
+    const res = await fetch(
+      "/api/visual-clarification",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          testimony: baseTestimony,
+          previousClarification:
+            visualClarification,
+          answer,
+        }),
+      }
+    );
 
     if (!res.ok) {
       const errorText = await res.text();
@@ -270,23 +276,43 @@ async function handleVisualClarification() {
 
     const data = await res.json();
 
-    console.log("VISUAL CLARIFICATION =", data);
+    console.log(
+      "VISUAL CLARIFICATION =",
+      data
+    );
 
-    setVisualClarification(data);
+    const unknowns = Array.isArray(data.unknowns)
+      ? data.unknowns
+      : [];
 
-    const hasQuestions =
-  Array.isArray(data.questions) && data.questions.length > 0;
+    const hasUnknowns = unknowns.length > 0;
 
-const answerText =
-  clarificationAnswer.trim() || blueprintCorrection.trim();
+    const shouldProceed =
+      data.readyForVisualExtraction === true ||
+      !hasUnknowns;
 
-const witnessAcceptedUnknowns =
-  /不明|わからない|覚えていない|unknown/i.test(answerText);
+    const normalizedData = {
+      ...data,
+      unknowns,
+      readyForVisualExtraction: shouldProceed,
+      questions: shouldProceed
+        ? []
+        : Array.isArray(data.questions)
+          ? data.questions
+          : [],
+      missingInformation: shouldProceed
+        ? []
+        : Array.isArray(data.missingInformation)
+          ? data.missingInformation
+          : [],
+    };
 
-const shouldProceed =
-  data.readyForVisualExtraction ||
-  !hasQuestions ||
-  witnessAcceptedUnknowns;
+    console.log(
+      "NORMALIZED VISUAL CLARIFICATION =",
+      normalizedData
+    );
+
+    setVisualClarification(normalizedData);
 
     if (!shouldProceed) {
       setVisualFormStatus(
@@ -305,12 +331,19 @@ const shouldProceed =
     setBlueprintCorrection("");
 
     setBlueprintUpdateMessage(
-      "修正を反映しました。Build Witness World を押してください。"
+      "証言内容を確定しました。次は「Build Witness World」を押してください。"
+    );
+
+    setVisualFormStatus(
+      "Visual Clarification Completed.\n\nBuild Witness World を押してください。"
     );
 
     spiral.goTo("visual-extraction");
   } catch (error) {
-    console.error("VISUAL CLARIFICATION ERROR =", error);
+    console.error(
+      "VISUAL CLARIFICATION ERROR =",
+      error
+    );
 
     setVisualFormStatus(
       "Visual Clarification の生成中にエラーが発生しました。"
@@ -322,12 +355,16 @@ const shouldProceed =
 }
 
 function handleRecognitionAccepted() {
-  if (!card.recognition) return;
+  if (!card.recognition) {
+    return;
+  }
 
   setCard((prev) => ({
     ...prev,
     coreWitness: prev.recognition,
-    title: prev.recognition.replace(/^- /, "") || "Visual Testimony",
+    title:
+      prev.recognition.replace(/^- /, "") ||
+      "Visual Testimony",
   }));
 
   setTestimony(card.recognition);
@@ -464,27 +501,29 @@ async function handleGenerateCharacterBible(
       return;
     }
 
-    const data = await res.json();
+    const characterData = await res.json();
 
-    console.log("CHARACTER BIBLE =", data);
+    console.log("CHARACTER BIBLE =", characterData);
 
-    setCharacterBible(data);
+    setCharacterBible(characterData);
 
     setWitnessWorldProgress(33);
     setWitnessWorldStep("場所を整理しています...");
 
     await handleGenerateEnvironmentBible(
       blueprint,
-      visualExtraction
+      visualExtraction,
+      characterData
     );
   } catch (error) {
     console.error("CHARACTER BIBLE ERROR =", error);
   }
 }
 
-  async function handleGenerateEnvironmentBible(
+async function handleGenerateEnvironmentBible(
   blueprint: string,
-  visualExtraction: string
+  visualExtraction: string,
+  latestCharacterBible: any
 ) {
   try {
     const res = await fetch("/api/environment-bible", {
@@ -500,40 +539,41 @@ async function handleGenerateCharacterBible(
 
     if (!res.ok) {
       const errorText = await res.text();
+
       console.error(
         "ENVIRONMENT BIBLE API ERROR",
         res.status,
         errorText
       );
+
       return;
     }
 
-    const data = await res.json();
+    const environmentData = await res.json();
 
-    console.log("ENVIRONMENT BIBLE =", data);
+    console.log("ENVIRONMENT BIBLE =", environmentData);
 
-    setEnvironmentBible(data);
+    setEnvironmentBible(environmentData);
 
     setWitnessWorldProgress(50);
-setWitnessWorldStep("構図を整理しています...");
+    setWitnessWorldStep("構図を整理しています...");
 
-    // Composition Bible を続けて生成
     await handleGenerateCompositionBible(
       blueprint,
-      visualExtraction
+      visualExtraction,
+      latestCharacterBible,
+      environmentData
     );
-
   } catch (error) {
-    console.error(
-      "ENVIRONMENT BIBLE ERROR =",
-      error
-    );
+    console.error("ENVIRONMENT BIBLE ERROR =", error);
   }
 }
 
 async function handleGenerateCompositionBible(
   blueprint: string,
-  visualExtraction: string
+  visualExtraction: string,
+  latestCharacterBible: any,
+  latestEnvironmentBible: any
 ) {
   try {
     const res = await fetch("/api/composition-bible", {
@@ -544,42 +584,56 @@ async function handleGenerateCompositionBible(
       body: JSON.stringify({
         blueprint,
         visualExtraction,
-        characterBible,
-        environmentBible,
+        characterBible: latestCharacterBible,
+        environmentBible: latestEnvironmentBible,
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
+
       console.error(
         "COMPOSITION BIBLE API ERROR",
         res.status,
         errorText
       );
+
       return;
     }
 
-    const data = await res.json();
+    const compositionData = await res.json();
 
-    console.log("COMPOSITION BIBLE =", data);
+    console.log(
+      "COMPOSITION BIBLE =",
+      compositionData
+    );
 
-    setCompositionBible(data);
+    setCompositionBible(compositionData);
 
     setWitnessWorldProgress(67);
-setWitnessWorldStep("物体を整理しています...");
+    setWitnessWorldStep("物体を整理しています...");
 
     await handleGenerateObjectBible(
-  blueprint,
-  visualExtraction
-);
+      blueprint,
+      visualExtraction,
+      latestCharacterBible,
+      latestEnvironmentBible,
+      compositionData
+    );
   } catch (error) {
-    console.error("COMPOSITION BIBLE ERROR =", error);
+    console.error(
+      "COMPOSITION BIBLE ERROR =",
+      error
+    );
   }
 }
 
 async function handleGenerateObjectBible(
   blueprint: string,
-  visualExtraction: string
+  visualExtraction: string,
+  latestCharacterBible: any,
+  latestEnvironmentBible: any,
+  latestCompositionBible: any
 ) {
   try {
     const res = await fetch("/api/object-bible", {
@@ -590,64 +644,68 @@ async function handleGenerateObjectBible(
       body: JSON.stringify({
         blueprint,
         visualExtraction,
-        characterBible,
-        environmentBible,
-        compositionBible,
+        characterBible: latestCharacterBible,
+        environmentBible: latestEnvironmentBible,
+        compositionBible: latestCompositionBible,
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
+
       console.error(
         "OBJECT BIBLE API ERROR",
         res.status,
         errorText
       );
+
       return;
     }
 
-    const data = await res.json();
+    const objectData = await res.json();
 
-    console.log("OBJECT BIBLE =", data);
+    console.log("OBJECT BIBLE =", objectData);
 
-    setObjectBible(data);
+    setObjectBible(objectData);
 
     setWitnessWorldProgress(83);
-setWitnessWorldStep("シーンを整理しています...");
+    setWitnessWorldStep("シーンを整理しています...");
 
-await handleGenerateSceneBible(
+    await handleGenerateSceneBible(
   blueprint,
-  visualExtraction
+  visualExtraction,
+  latestCharacterBible,
+  latestEnvironmentBible,
+  latestCompositionBible,
+  objectData
 );
   } catch (error) {
     setVisualFormStatus(
       "Object Bible の生成中にエラーが発生しました。"
     );
 
-    console.error(
-      "OBJECT BIBLE ERROR =",
-      error
-    );
+    console.error("OBJECT BIBLE ERROR =", error);
   }
 }
 
-
 async function handleGenerateSceneBible(
   blueprint: string,
-  visualExtraction: string
+  visualExtraction: string,
+  latestCharacterBible: any,
+  latestEnvironmentBible: any,
+  latestCompositionBible: any,
+  latestObjectBible: any
 ) {
   try {
+    console.log("CHARACTER BIBLE =", latestCharacterBible);
+    console.log("ENVIRONMENT BIBLE =", latestEnvironmentBible);
+    console.log("COMPOSITION BIBLE =", latestCompositionBible);
+    console.log("OBJECT BIBLE =", latestObjectBible);
 
-    console.log("CHARACTER BIBLE =", characterBible);
-console.log("ENVIRONMENT BIBLE =", environmentBible);
-console.log("COMPOSITION BIBLE =", compositionBible);
-console.log("OBJECT BIBLE =", objectBible);
-console.log("SCENE INPUT =", {
-  blueprint,
-  visualExtraction,
-});
-
-
+    console.log("SCENE INPUT =", {
+      blueprint,
+      visualExtraction,
+    });
 
     const res = await fetch("/api/scene-bible", {
       method: "POST",
@@ -657,47 +715,61 @@ console.log("SCENE INPUT =", {
       body: JSON.stringify({
         blueprint,
         visualExtraction,
-        characterBible,
-        environmentBible,
-        compositionBible,
-        objectBible,
+        characterBible: latestCharacterBible,
+        environmentBible: latestEnvironmentBible,
+        compositionBible: latestCompositionBible,
+        objectBible: latestObjectBible,
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error("SCENE BIBLE API ERROR", res.status, errorText);
+
+      console.error(
+        "SCENE BIBLE API ERROR",
+        res.status,
+        errorText
+      );
+
+      setVisualFormStatus(
+        "Scene Bible の生成に失敗しました。"
+      );
+
       return;
     }
 
-    const data = await res.json();
+    const sceneData = await res.json();
 
-console.log("SCENE BIBLE =", data);
+    console.log("SCENE BIBLE =", sceneData);
 
-setSceneBible(data);
+    setSceneBible(sceneData);
 
-setWitnessWorldProgress(100);
-setWitnessWorldStep("Witness World が完成しました。");
+    setWitnessWorldProgress(100);
+    setWitnessWorldStep(
+      "Witness World が完成しました。"
+    );
 
-spiral.goTo("image-prompt");
+    spiral.goTo("image-prompt");
 
-setVisualFormStatus(
-  "Witness World Completed.\n\nImage Prompt を準備しています..."
-);
+    setVisualFormStatus(
+      "Witness World Completed.\n\nImage Prompt を準備しています..."
+    );
 
-setIsGeneratingVisualForm(false);
-
-await handleGenerateImagePrompt({
-  characterBible,
-  environmentBible,
-  compositionBible,
-  objectBible,
-  sceneBible: data,
-});
+    await handleGenerateImagePrompt({
+      characterBible: latestCharacterBible,
+      environmentBible: latestEnvironmentBible,
+      compositionBible: latestCompositionBible,
+      objectBible: latestObjectBible,
+      sceneBible: sceneData,
+    });
   } catch (error) {
-    setIsGeneratingVisualForm(false);
-    setVisualFormStatus("Scene Bible の生成中にエラーが発生しました。");
     console.error("SCENE BIBLE ERROR =", error);
+
+    setVisualFormStatus(
+      "Scene Bible の生成中にエラーが発生しました。"
+    );
+  } finally {
+    setIsGeneratingVisualForm(false);
   }
 }
   
@@ -818,32 +890,109 @@ async function handleGenerateImagePrompt(overrides?: {
 }) {
   setImagePromptStatus("Image Prompt を生成しています...");
 
+  const resolvedCharacterBible =
+    overrides?.characterBible ?? characterBible;
+
+  const resolvedEnvironmentBible =
+    overrides?.environmentBible ?? environmentBible;
+
+  const resolvedCompositionBible =
+    overrides?.compositionBible ?? compositionBible;
+
+  const resolvedObjectBible =
+    overrides?.objectBible ?? objectBible;
+
+  const resolvedSceneBible =
+    overrides?.sceneBible ?? sceneBible;
+
+  const missingBible =
+    !resolvedCharacterBible ||
+    !resolvedEnvironmentBible ||
+    !resolvedCompositionBible ||
+    !resolvedObjectBible ||
+    !resolvedSceneBible;
+
+  if (missingBible) {
+    console.error("IMAGE PROMPT BIBLE MISSING", {
+      characterBible: resolvedCharacterBible,
+      environmentBible: resolvedEnvironmentBible,
+      compositionBible: resolvedCompositionBible,
+      objectBible: resolvedObjectBible,
+      sceneBible: resolvedSceneBible,
+    });
+
+    setImagePromptStatus(
+      "Witness World の情報がまだ揃っていません。先に Build Witness World を実行してください。"
+    );
+
+    setVisualFormStatus(
+      "Character / Environment / Composition / Object / Scene Bible のいずれかが不足しています。"
+    );
+
+    setIsGeneratingVisualForm(false);
+    return;
+  }
+
   try {
+    console.log("IMAGE PROMPT INPUT BIBLES =", {
+      characterBibleLength: JSON.stringify(
+        resolvedCharacterBible
+      ).length,
+
+      environmentBibleLength: JSON.stringify(
+        resolvedEnvironmentBible
+      ).length,
+
+      compositionBibleLength: JSON.stringify(
+        resolvedCompositionBible
+      ).length,
+
+      objectBibleLength: JSON.stringify(
+        resolvedObjectBible
+      ).length,
+
+      sceneBibleLength: JSON.stringify(
+        resolvedSceneBible
+      ).length,
+    });
+
     const res = await fetch("/api/image-prompt", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         whatHappened: card.whatHappened,
         whatRemained: card.whatRemained,
         namedEmotions: card.namedEmotions,
         visualExtraction: card.visualForm,
 
-        characterBible: overrides?.characterBible ?? characterBible,
-        environmentBible: overrides?.environmentBible ?? environmentBible,
-        compositionBible: overrides?.compositionBible ?? compositionBible,
-        objectBible: overrides?.objectBible ?? objectBible,
-        sceneBible: overrides?.sceneBible ?? sceneBible,
+        characterBible: resolvedCharacterBible,
+        environmentBible: resolvedEnvironmentBible,
+        compositionBible: resolvedCompositionBible,
+        objectBible: resolvedObjectBible,
+        sceneBible: resolvedSceneBible,
       }),
     });
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error("IMAGE PROMPT API ERROR", res.status, errorText);
 
-      setImagePromptStatus("Image Prompt の生成に失敗しました。");
-      setVisualFormStatus("Image Prompt の生成に失敗しました。");
+      console.error(
+        "IMAGE PROMPT API ERROR",
+        res.status,
+        errorText
+      );
+
+      setImagePromptStatus(
+        "Image Prompt の生成に失敗しました。"
+      );
+
+      setVisualFormStatus(
+        "Image Prompt の生成に失敗しました。"
+      );
+
       setIsGeneratingVisualForm(false);
-
       return;
     }
 
@@ -852,7 +1001,6 @@ async function handleGenerateImagePrompt(overrides?: {
     console.log("IMAGE PROMPT RESPONSE =", data);
     console.log("imagePrompts =", data.imagePrompts);
     console.log("imagePrompt =", data.imagePrompt);
-    console.log("card.imagePrompt(before setCard) =", card.imagePrompt);
 
     if (Array.isArray(data.imagePrompts)) {
       setImagePrompts(data.imagePrompts);
@@ -864,7 +1012,10 @@ async function handleGenerateImagePrompt(overrides?: {
 
     setCard((prev) => ({
       ...prev,
-      imagePrompt: data.imagePrompt || "",
+      imagePrompt:
+        typeof data.imagePrompt === "string"
+          ? data.imagePrompt
+          : "",
     }));
 
     setImagePromptStatus(
@@ -874,13 +1025,17 @@ async function handleGenerateImagePrompt(overrides?: {
     setVisualFormStatus(
       "Witness World Completed.\n\nImage Prompt Ready.\nReveal Light を押してください。"
     );
-
-    setIsGeneratingVisualForm(false);
   } catch (error) {
     console.error("IMAGE PROMPT ERROR =", error);
 
-    setImagePromptStatus("Image Prompt の生成に失敗しました。");
-    setVisualFormStatus("Image Prompt の生成に失敗しました。");
+    setImagePromptStatus(
+      "Image Prompt の生成に失敗しました。"
+    );
+
+    setVisualFormStatus(
+      "Image Prompt の生成に失敗しました。"
+    );
+  } finally {
     setIsGeneratingVisualForm(false);
   }
 }
@@ -1599,9 +1754,11 @@ async function handleMemoryEmergence() {
             )}
 
 {witnessReflection && (
+
   <div
     style={{
       marginTop: 16,
+
       padding: 12,
       borderRadius: 12,
       background: "#0f172a",
